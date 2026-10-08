@@ -1,0 +1,47 @@
+---
+import { ArrowUpRight } from '@untitledui/icons';
+import { contourRings } from '../../lib/contour';
+import { href, langFrom, useUi } from '../../i18n/utils';
+import Clock from '../instrument/Clock.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang).hero;
+const rings = contourRings({ cx: 100, cy: 262, rings: 9, r0: 26, step: 16, seed: 11 });
+---
+
+<section
+    aria-labelledby="hero-name"
+    class="mx-auto grid w-full max-w-[70rem] items-end gap-10 px-4 pb-8 pt-10 md:grid-cols-[1.05fr_1fr] md:px-6 md:pb-14 md:pt-16"
+>
+    <div class="md:pb-6">
+        <p class="mono faint">{t.kicker}</p>
+        <h1 id="hero-name" class="hero-name mt-3">Osheen<br />Turner</h1>
+        <p class="mt-6 text-xl font-medium">{t.role}</p>
+        <p class="muted mt-1">{t.org}</p>
+        <p class="muted mt-4 max-w-md">{t.line}</p>
+        <div class="mt-8 flex flex-wrap gap-2 sm:gap-3">
+            <a class="pill-btn pill-btn--primary" href="#contact">{t.contact}</a>
+            <a class="pill-btn" href={href(lang, 'cv/')}>{t.cv}</a>
+            <a class="pill-btn" href={href(lang, 'card/')}>
+                {t.card}
+                <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+        </div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-md md:max-w-none">
+        <div class="arch ml-10 h-96 md:h-[25rem]">
+            <span class="sun-disc" aria-hidden="true"></span>
+            <svg viewBox="0 0 200 310" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                {
+                    rings.map((d, i) => (
+                        <path class="contour-ring" style={`opacity:${(0.55 - i * 0.04).toFixed(2)}`} d={d} />
+                    ))
+                }
+            </svg>
+        </div>
+        <div class="absolute bottom-6 left-0 w-56">
+            <Clock />
+        </div>
+    </div>
+</section>

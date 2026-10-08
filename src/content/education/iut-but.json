@@ -1,0 +1,15 @@
+{
+  "order": 2,
+  "school": "IUT Montpellier",
+  "place": "Montpellier, France",
+  "start": "2021-09",
+  "end": "2024-06",
+  "en": {
+    "title": "Bachelor’s degree (BUT) in Computer Science",
+    "detail": "Option: application integration and information-system management. Final year as a work-study developer."
+  },
+  "fr": {
+    "title": "BUT Informatique",
+    "detail": "Parcours : intégration d’applications et management du système d’information. Dernière année en alternance comme développeur."
+  }
+}

@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import { profile } from '../../data/profile';
+import { langFrom, monthYear, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const ui = useUi(lang);
+const t = ui.cv;
+const experience = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+const education = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+
+function range(start: string | null, end: string | null, current = false): string {
+    const s = monthYear(start);
+    const e = monthYear(end);
+    if (current) return s ? `${s} → ${ui.log.now}` : ui.log.now;
+    if (s && e && s !== e) return `${s} → ${e}`;
+    return s ?? e ?? '';
+}
+---
+
+<Section class="max-w-[54rem]">
+    <article class="cv">
+        <header class="flex flex-wrap items-end justify-between gap-6 border-b border-hair pb-6">
+            <div>
+                <p class="mono faint">{t.title}</p>
+                <h1 class="page-title mt-2">{profile.name}</h1>
+                <p class="mt-3 text-xl font-medium">{ui.hero.role}</p>
+                <p class="muted">{ui.hero.org}</p>
+            </div>
+            <button type="button" class="no-print pill-btn" data-print>{ui.contact.print}</button>
+        </header>
+
+        <dl class="spec mt-6">
+            <dt>{ui.contact.email}</dt>
+            <dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd>
+            <dt>{ui.contact.linkedin}</dt>
+            <dd><a href={profile.linkedin} rel="me noopener" class="break-all">{profile.linkedin}</a></dd>
+            <dt>Web</dt>
+            <dd><a href={siteUrl} class="break-all">{siteUrl}</a></dd>
+            {
+                profile.phones.length > 0 && (
+                    <>
+                        <dt class="no-print">{ui.contact.phone}</dt>
+                        <dd class="no-print flex flex-wrap gap-2">
+                            {profile.phones.map((p) => (
+                                <button
+                                    type="button"
+                                    class="sq-btn"
+                                    data-reveal
+                                    data-number={p.e164}
+                                    data-display={p.display}
+                                >
+                                    {ui.contact.reveal} {p.label}
+                                </button>
+                            ))}
+                        </dd>
+                    </>
+                )
+            }
+        </dl>
+
+        <section class="mt-10" aria-labelledby="cv-profile">
+            <h2 id="cv-profile" class="mono border-b border-hair pb-2">{t.profile}</h2>
+            <p class="mt-3 max-w-2xl">{t.summary}</p>
+        </section>
+
+        <section class="mt-10" aria-labelledby="cv-experience">
+            <h2 id="cv-experience" class="mono border-b border-hair pb-2">{t.experience}</h2>
+            <ol class="mt-4 grid gap-6">
+                {
+                    experience.map((entry) => {
+                        const d = entry.data;
+                        const text = d[lang];
+                        return (
+                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:gap-5">
+                                <p class="mono faint">{range(d.start, d.end, d.current)}</p>
+                                <div>
+                                    <h3 class="font-medium">{text.role}</h3>
+                                    <p class="muted text-sm">
+                                        {d.org}
+                                        {d.unit ? ` · ${d.unit}` : ''} · {d.place}
+                                        {text.contract ? ` · ${text.contract}` : ''}
+                                    </p>
+                                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm marker:text-ink-faint">
+                                        {text.points.map((p) => (
+                                            <li>{p}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </li>
+                        );
+                    })
+                }
+            </ol>
+        </section>
+
+        <section class="mt-10" aria-labelledby="cv-education">
+            <h2 id="cv-education" class="mono border-b border-hair pb-2">{t.education}</h2>
+            <ol class="mt-4 grid gap-4">
+                {
+                    education.map((entry) => {
+                        const d = entry.data;
+                        const text = d[lang];
+                        return (
+                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:gap-5">
+                                <p class="mono faint">{range(d.start, d.end)}</p>
+                                <div>
+                                    <h3 class="font-medium">{text.title}</h3>
+                                    <p class="muted text-sm">
+                                        {d.school} · {d.place}
+                                        {text.detail ? ` · ${text.detail}` : ''}
+                                    </p>
+                                </div>
+                            </li>
+                        );
+                    })
+                }
+            </ol>
+        </section>
+
+        <section class="mt-10" aria-labelledby="cv-skills">
+            <h2 id="cv-skills" class="mono border-b border-hair pb-2">{t.skills}</h2>
+            <dl class="spec mt-4">
+                {
+                    t.skillGroups.map((g) => (
+                        <>
+                            <dt>{g.label}</dt>
+                            <dd>{g.items}</dd>
+                        </>
+                    ))
+                }
+            </dl>
+        </section>
+
+        <section class="mt-10" aria-labelledby="cv-languages">
+            <h2 id="cv-languages" class="mono border-b border-hair pb-2">{t.languages}</h2>
+            <dl class="spec mt-4">
+                {
+                    ui.education.languageList.map((l) => (
+                        <>
+                            <dt>{l.name}</dt>
+                            <dd>{l.level}</dd>
+                        </>
+                    ))
+                }
+            </dl>
+        </section>
+    </article>
+</Section>

@@ -1,0 +1,35 @@
+{
+  "order": 2,
+  "org": "Xref",
+  "place": "Sydney, Australia",
+  "start": "2024-11",
+  "end": "2025-05",
+  "current": false,
+  "tags": [
+    "Jira",
+    "Confluence",
+    "Requirements",
+    "Deployments",
+    "WCAG"
+  ],
+  "en": {
+    "role": "Junior project manager",
+    "points": [
+      "Scoped and drove software-implementation projects, acting as the link between enterprise clients and developers.",
+      "Wrote requirements and documentation; handled risk assessment, estimation and deployment planning.",
+      "Ran squad stand-ups and ticket triage across global, cross-functional teams.",
+      "Ran squad projects such as accessibility (WCAG) fixes, a component library and language upgrades.",
+      "Organised an internal collaboration day for the whole team."
+    ]
+  },
+  "fr": {
+    "role": "Chef de projet junior",
+    "points": [
+      "Cadrage et pilotage de projets d’implémentation logicielle, en lien entre les clients grands comptes et les développeurs.",
+      "Rédaction des exigences et de la documentation ; analyse des risques, estimation et planification des déploiements.",
+      "Animation des points quotidiens et tri des tickets au sein d’équipes internationales et pluridisciplinaires.",
+      "Pilotage de projets d’équipe : corrections d’accessibilité (WCAG), bibliothèque de composants, montées de version de langages.",
+      "Organisation d’une journée de collaboration interne pour toute l’équipe."
+    ]
+  }
+}

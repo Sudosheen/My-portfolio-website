@@ -1,0 +1,47 @@
+{
+  "order": 4,
+  "featured": false,
+  "status": "done",
+  "start": "2022-02",
+  "end": "2022-02",
+  "stack": [
+    "Unreal Engine 5"
+  ],
+  "caseStudy": true,
+  "en": {
+    "title": "Code Game Jam: a game in 30 hours",
+    "summary": "A 30-hour game jam: a small adventure game, about a character trying to return to their own time, built by a team of five in Unreal Engine 5.",
+    "role": "Developer and project manager",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Decisions and management",
+        "body": [
+          "We were free to choose the technology and the type of game. We picked Unreal Engine 5 so that everyone would learn it at the same time, and early research showed development would be faster than with other engines.",
+          "We were five, and coordinating the team was the number-one priority. I naturally took the project-manager role to keep the project moving."
+        ]
+      }
+    ]
+  },
+  "fr": {
+    "title": "Code Game Jam : un jeu en 30 heures",
+    "summary": "Un concours de 30 heures : un petit jeu d’aventure, où l’on incarne un personnage qui tente de retrouver sa temporalité, réalisé à cinq sous Unreal Engine 5.",
+    "role": "Développeur et chef de projet",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Décisions et management",
+        "body": [
+          "Nous avions toute liberté sur la technologie et le type de jeu. Nous avons choisi Unreal Engine 5 pour l’apprendre tous en même temps, et nos premières recherches montraient un développement plus rapide qu’avec d’autres moteurs.",
+          "Nous étions cinq, et la coordination de l’équipe était la priorité numéro un. J’ai naturellement pris le rôle de chef de projet pour faire avancer le projet."
+        ]
+      }
+    ]
+  }
+}

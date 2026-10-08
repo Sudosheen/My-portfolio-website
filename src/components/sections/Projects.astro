@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import { langFrom, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+import ProjectCard from '../instrument/ProjectCard.astro';
+
+const t = useUi(langFrom(Astro.currentLocale)).projects;
+const entries = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Section id="projects" labelledby="projects-title">
+    <h2 id="projects-title" class="display text-4xl md:text-5xl">{t.title}</h2>
+    <p class="muted mt-3 max-w-2xl">{t.intro}</p>
+    <div class="mt-8 grid items-start gap-4 md:grid-cols-2">
+        {entries.map((entry, i) => <ProjectCard entry={entry} index={i} />)}
+    </div>
+</Section>

@@ -1,0 +1,69 @@
+{
+  "order": 5,
+  "featured": false,
+  "status": "done",
+  "start": "2022-09",
+  "end": "2022-12",
+  "stack": [
+    "Java"
+  ],
+  "caseStudy": true,
+  "en": {
+    "title": "Motron: an arcade game in Java",
+    "summary": "An arcade game written in Java without a game engine, for “clients” played by two teachers.",
+    "role": "Developer",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Choices",
+        "body": [
+          "As a team we proposed ideas and picked a game everyone knows. We chose Java because it was the language the whole group was most comfortable with."
+        ]
+      },
+      {
+        "heading": "Gameplay and architecture",
+        "body": [
+          "The game is simple in principle but raised many complications, so we paid close attention to architecture and code quality, working on separate modules in small teams."
+        ]
+      },
+      {
+        "heading": "Customization",
+        "body": [
+          "Customization was a module the clients asked for, and the one I worked on most. It connects directly to the rest of the game, so coordination and communication were key to our success."
+        ]
+      }
+    ]
+  },
+  "fr": {
+    "title": "Motron : un jeu d’arcade en Java",
+    "summary": "Un jeu d’arcade écrit en Java sans moteur de jeu, pour des « clients » joués par deux enseignants.",
+    "role": "Développeur",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Les choix",
+        "body": [
+          "En équipe, chacun a proposé ses idées et nous avons retenu un jeu que tout le monde connaît. Nous avons choisi Java, le langage avec lequel tout le groupe était le plus à l’aise."
+        ]
+      },
+      {
+        "heading": "Gameplay et architecture",
+        "body": [
+          "Le jeu est simple sur le principe mais a soulevé de nombreuses complications ; nous avons donc soigné l’architecture et la qualité du code, en travaillant sur des modules distincts en petites équipes."
+        ]
+      },
+      {
+        "heading": "La personnalisation",
+        "body": [
+          "La personnalisation était un module demandé par les clients, et celui sur lequel j’ai le plus travaillé. Elle est directement liée au reste du jeu : la coordination et la communication ont été déterminantes."
+        ]
+      }
+    ]
+  }
+}

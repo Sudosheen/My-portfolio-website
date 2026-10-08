@@ -1,0 +1,86 @@
+{
+  "order": 2,
+  "featured": true,
+  "status": "done",
+  "start": "2023-09",
+  "end": "2024-08",
+  "stack": [
+    "FlutterFlow",
+    "Dart",
+    "Cloud Functions",
+    "LLM API"
+  ],
+  "caseStudy": true,
+  "en": {
+    "title": "Job-posting generator for CDC Habitat",
+    "summary": "A tool that generates job descriptions from a set of criteria for the HR teams of CDC Habitat, built with FlutterFlow and a large language model.",
+    "role": "Developer (low-code)",
+    "architecture": "Markdown to .docx conversion in a cloud function: no server to operate.",
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "The brief",
+        "body": [
+          "CDC Habitat wanted a tool that generates job descriptions from criteria, to cut repetitive work for HR teams.",
+          "We built it with FlutterFlow combined with a large language model."
+        ]
+      },
+      {
+        "heading": "Interface",
+        "body": [
+          "The first version was purely functional. The final design follows CDC Habitat’s visual identity (colors, structure) so the tool feels familiar and fits into their information system."
+        ]
+      },
+      {
+        "heading": "Features added at the client’s request",
+        "body": [
+          "Several options were added to match the client’s workflow, and the app was published so they could test it freely."
+        ]
+      },
+      {
+        "heading": "Architecture choice",
+        "body": [
+          "The most requested extra was exporting the generated job description as a .docx file. I wrote a cloud function that converts Markdown to .docx, called from FlutterFlow through Dart, so no dedicated server or runtime is needed."
+        ]
+      }
+    ]
+  },
+  "fr": {
+    "title": "Générateur de fiches de poste pour CDC Habitat",
+    "summary": "Un outil qui génère des fiches de poste à partir de critères pour les équipes RH de CDC Habitat, construit avec FlutterFlow et un grand modèle de langage.",
+    "role": "Développeur (low-code)",
+    "architecture": "Conversion Markdown vers .docx dans une fonction cloud : aucun serveur à exploiter.",
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Le besoin",
+        "body": [
+          "CDC Habitat souhaitait un outil générant des fiches de poste à partir de critères, pour alléger le travail répétitif des équipes RH.",
+          "Nous l’avons construit avec FlutterFlow, combiné à un grand modèle de langage."
+        ]
+      },
+      {
+        "heading": "L’interface",
+        "body": [
+          "La première version était purement fonctionnelle. Le design final reprend l’identité visuelle de CDC Habitat (couleurs, structure) pour que l’outil soit familier et s’intègre à leur système d’information."
+        ]
+      },
+      {
+        "heading": "Fonctionnalités demandées par le client",
+        "body": [
+          "Plusieurs options ont été ajoutées pour répondre aux besoins du client, et l’application a été publiée pour qu’il puisse la tester librement."
+        ]
+      },
+      {
+        "heading": "Choix d’architecture",
+        "body": [
+          "La fonctionnalité secondaire la plus demandée était l’export de la fiche au format .docx. J’ai écrit une fonction cloud qui convertit le Markdown en .docx, appelée depuis FlutterFlow via Dart, sans serveur ni environnement d’exécution dédié."
+        ]
+      }
+    ]
+  }
+}

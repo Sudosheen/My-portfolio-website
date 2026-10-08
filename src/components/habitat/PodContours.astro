@@ -1,0 +1,23 @@
+---
+/** Quiet topographic lines rising from a pod corner. Shared by "How I work" and "Contact". */
+import { contourRings } from '../../lib/contour';
+
+interface Props {
+    corner?: 'left' | 'right';
+    seed?: number;
+}
+
+const { corner = 'left', seed = 5 } = Astro.props;
+const right = corner === 'right';
+const rings = contourRings({ cx: right ? 400 : 0, cy: 400, rings: 8, r0: 60, step: 44, seed });
+---
+
+<svg
+    class="pod-contours"
+    viewBox="0 0 400 400"
+    preserveAspectRatio={right ? 'xMaxYMax slice' : 'xMinYMax slice'}
+    aria-hidden="true"
+    focusable="false"
+>
+    {rings.map((d) => <path d={d} />)}
+</svg>

@@ -3,43 +3,45 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@splinetool/viewer": "^1.9.44",
+    "@astrojs/react": "^7.0.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@splinetool/boolean-wasm": "1.9.44",
+    "@splinetool/modelling-wasm": "1.9.44",
+    "@splinetool/navmesh-wasm": "1.9.44",
+    "@splinetool/ui-wasm": "1.9.44",
+    "@splinetool/viewer": "1.9.44",
     "@tailwindcss/typography": "^0.5.20",
-    "framer-motion": "^11.11.11",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router": "^6.27.0",
-    "react-router-dom": "^6.27.0",
+    "@untitledui/icons": "^0.0.23",
+    "astro": "^7.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-react-aria-components": "^2.2.0"
   },
-  "homepage": "https://Lordelowlow.github.io/My-portfolio-website",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "vite",
-    "build": "vite build",
-    "dev": "vite",
-    "preview": "vite preview"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/prune-orphans.mjs",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "test": "vitest run",
+    "audit:site": "node scripts/audit.mjs",
+    "audit:write": "node scripts/audit.mjs --write",
+    "a11y": "node scripts/a11y.mjs"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/plugin-react": "^6.1.2",
-    "gh-pages": "^6.2.0",
-    "vite": "^8.3.3"
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "axe-core": "^4.14.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
   },
   "type": "module"
 }

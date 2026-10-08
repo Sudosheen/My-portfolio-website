@@ -1,82 +1,95 @@
-# Deploying to GitHub pages
+# Osheen Turner: personal site
 
-On the 'main' branch in terminal run :
+Bilingual (EN at `/`, FR at `/fr/`) static site. Astro, Tailwind v4, Untitled UI tokens and icons.
+Design concept: a warm, still **habitat** (narrative: intro, values, quotes) with an open-hardware
+**instrument** interface set inside it (facts: log, project specs, schematic, status, contact).
 
-### `npm run build`
+Live: <https://sudosheen.github.io/My-portfolio-website/>
 
-Then :
+## Commands
 
-### `npm run deploy`
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server at `http://localhost:4321/My-portfolio-website/` |
+| `npm run build` | Static build to `dist/`, then prunes unreferenced assets |
+| `npm run preview` | Serve `dist/` (use this to test the real CSP) |
+| `npm run check` | `astro check` (types, templates) |
+| `npm test` | Unit tests (solar maths, EN/FR parity, art generators) |
+| `npm run audit:site` | Page-weight budgets, third-party origins, page structure |
+| `npm run audit:write` | Same, and records the numbers in `src/data/audit.json` (shown on the colophon) |
+| `npm run a11y` | axe-core (WCAG 2.2 A/AA + best practices) on every built page |
 
-# Getting Started with Create React App
+Telemetry is disabled in the scripts. If `npm` fails to write its cache in a locked-down sandbox,
+set `npm_config_cache` to a writable directory.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Where things live
 
-## Available Scripts
+```
+src/content/        experience, projects, education (JSON, schema in content.config.ts)
+src/i18n/ui.ts      every UI string, EN source of truth, FR type-checked against it
+src/data/           profile.ts (identity, contact), card.ts (Spline scenes + card CSP), audit.json
+src/components/     habitat/ (shell), instrument/ (modules), sections/, pages/
+src/styles/         open-spec.css (tokens), habitat.css, instrument.css, theme.css (Untitled UI, untouched)
+src/scripts/        clock, scope, theme, contact, card (vanilla, ~2 KB gzipped on the home page)
+scripts/            audit.mjs, a11y.mjs, prune-orphans.mjs
+```
 
-In the project directory, you can run:
+## Editing content
 
-### `npm start`
+- **Add an experience or project**: copy a JSON file in `src/content/<collection>/`. Every text field
+  has `en` and `fr`. Unknown values stay `null` and render as an honest "—".
+- **Strings**: edit `src/i18n/ui.ts`. `npm test` fails if EN and FR drift apart, and checks French
+  spacing (non-breaking space before `: ; ! ?`).
+- **Contact details** live in `src/data/profile.ts`. Phone numbers render only after a click.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Design system
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Tokens are in `src/styles/open-spec.css`: a raw palette that flips with `.dark-mode`, and Untitled UI's
+semantic tokens re-pointed at it so any Untitled UI component inherits the look. Contrast rules worth
+remembering: light-mode amber fill is 1.8:1 so it never carries meaning alone; terracotta text on a
+clay tint must use `--terracotta-strong`; functional borders use `--edge` (>= 3:1), decorative
+dividers use `--hair`.
 
-### `npm test`
+Add Untitled UI components on demand (`npx untitledui@latest add <name>`); presentational ones render
+at build time with no client JavaScript.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Budgets and checks
 
-### `npm run build`
+`npm run audit:site` fails the build when, for the EN home page (gzip): HTML > 25 KB, CSS > 20 KB,
+JS > 10 KB, fonts > 110 KB, total > 230 KB, or any third-party origin appears. A strict CSP
+(`default-src 'self'`, hashed inline scripts) enforces the same at runtime.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## The 3D card (`/card/`)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Spline's runtime is large (about 1.5 MB gzipped), so nothing loads until the visitor clicks.
+Production testing showed the viewer needs more than a bundled script, handled in `src/scripts/card.ts`
+and `src/data/card.ts`:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- It fetches four WebAssembly modules from `unpkg.com`. They are installed as pinned packages
+  (`@splinetool/*-wasm@1.9.44`, same version as the viewer), bundled as local assets, and the fetches
+  are redirected. Keep these five versions identical when upgrading.
+- Its scene text loads Google Fonts files, so `fonts.gstatic.com` is allowed on this page only.
+- It needs `eval` and two inline `<style>` blocks, allowed on this page only (the style blocks by exact
+  hash). If the viewer is upgraded, load `/card/` from `npm run preview` with the console open and copy
+  any new hashes the browser reports.
+- The stage is landscape (16:10) for the desktop scene and portrait (5:8) for the phone scene, chosen by the same media query the script uses, and never taller than the visible viewport.
+- Text baked into the scene (title, employer, dates, website URL, QR codes) is edited in Spline, not here.
 
-### `npm run eject`
+## Deploy
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+GitHub Actions (`.github/workflows/deploy.yml`) runs tests, type-check, build, audit and axe, then
+publishes `dist/`. One-time setup: repository Settings, Pages, Source: **GitHub Actions**.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The phone number is not stored in the repository. It is read from `PUBLIC_PHONE_FR_E164` (E.164, for
+example `+33612345678`): put it in a local `.env` (git-ignored) and in a repository secret of the same
+name for CI. When unset, the phone row is not rendered.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The build is host-portable. For a custom domain or another static host:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+SITE_URL=https://example.eu SITE_BASE=/ npm run build
+```
 
-## Learn More
+## Licence
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# My-portfolio-website
-A React-based interactive portfolio website with a business card-style homepage featuring realistic effects and flipping animations. Includes modular sections like About, Portfolio, Resume, and Contact for a clean, organized presentation.
+Not yet chosen. The code is public; texts and design are © Osheen Turner.

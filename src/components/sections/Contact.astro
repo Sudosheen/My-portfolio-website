@@ -1,0 +1,88 @@
+---
+import { ArrowUpRight, Check, Copy01 } from '@untitledui/icons';
+import { profile } from '../../data/profile';
+import { href, langFrom, useUi } from '../../i18n/utils';
+import PodContours from '../habitat/PodContours.astro';
+import Wave from '../habitat/Wave.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang).contact;
+---
+
+<section
+    id="contact"
+    aria-labelledby="contact-title"
+    class="mx-auto w-full max-w-[70rem] px-4 py-10 md:px-6 md:py-14"
+>
+    <Wave />
+
+    <!-- Same habitat pod as "How I work": contour lines behind, the instrument module set inside. -->
+    <div class="pod relative mt-8 overflow-hidden p-6 md:p-12">
+        <PodContours corner="left" seed={9} />
+
+        <div class="relative grid gap-10 lg:grid-cols-[1fr_1.15fr]">
+            <div>
+                <h2 id="contact-title" class="display text-5xl md:text-6xl">{t.title}</h2>
+                <p class="mt-4 max-w-xs text-lg">{t.line}</p>
+            </div>
+
+            <div class="module tk">
+                <div class="module-head">
+                    <span class="mono" aria-hidden="true">MOD.07 / CONTACT</span>
+                    <i class="led" aria-hidden="true"></i>
+                </div>
+                <div class="ruler" aria-hidden="true"></div>
+                <dl class="spec spec--rows module-body">
+                <dt>{t.email}</dt>
+                <dd class="flex flex-wrap items-center gap-2">
+                    <a href={`mailto:${profile.email}`} class="break-all">{profile.email}</a>
+                    <button
+                        type="button"
+                        class="sq-btn sq-btn--icon"
+                        data-copy={profile.email}
+                        data-copied={t.copied}
+                        aria-label={t.copy}
+                        title={t.copy}
+                    >
+                        <Copy01 size={16} aria-hidden="true" />
+                        <Check size={16} aria-hidden="true" />
+                    </button>
+                    <span class="sr-only" role="status" data-copy-status></span>
+                </dd>
+
+                <dt>{t.linkedin}</dt>
+                <dd>
+                    <a class="inline-flex items-center gap-1" href={profile.linkedin} rel="me noopener">
+                        {profile.name}
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                </dd>
+
+                {
+                    profile.phones.length > 0 && (
+                        <>
+                            <dt>{t.phone}</dt>
+                            <dd class="flex flex-wrap items-center gap-2">
+                                {profile.phones.map((p) => (
+                                    <button
+                                        type="button"
+                                        class="sq-btn sq-btn--sm"
+                                        data-reveal
+                                        data-number={p.e164}
+                                        data-display={p.display}
+                                    >
+                                        {t.reveal} {p.label}
+                                    </button>
+                                ))}
+                            </dd>
+                        </>
+                    )
+                }
+
+                <dt>{t.cv}</dt>
+                <dd><a href={href(lang, 'cv/')}>{t.cvLink}</a></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</section>

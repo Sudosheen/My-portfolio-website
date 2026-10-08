@@ -1,0 +1,75 @@
+---
+import { languages, type Lang } from '../i18n/ui';
+import { href, langFrom, otherLangHref, useUi } from '../i18n/utils';
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang);
+const home = href(lang);
+
+const links = [
+    { label: t.nav.scope, href: `${home}#scope` },
+    { label: t.nav.log, href: `${home}#log` },
+    { label: t.nav.projects, href: `${home}#projects` },
+    { label: t.nav.education, href: `${home}#education` },
+    { label: t.nav.contact, href: `${home}#contact` },
+    { label: t.nav.card, href: href(lang, 'card/') },
+];
+
+const switcher = (Object.keys(languages) as Lang[]).map((l) => ({
+    lang: l,
+    label: l.toUpperCase(),
+    href: otherLangHref(Astro.url.pathname, l),
+    current: l === lang,
+}));
+---
+
+<header class="no-print top-3 z-40 mx-auto w-full max-w-[70rem] px-4 pt-3 md:sticky md:px-6">
+    <div class="module tk flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-3 py-2">
+        <div class="flex items-center gap-4">
+            <a href={home} class="has-led inline-flex min-h-6 items-center gap-2 no-underline">
+                <i class="led" aria-hidden="true"></i>
+                <span class="mono text-ink">Osheen Turner</span>
+            </a>
+            <span class="mono faint hidden lg:inline">{t.chrome.state}</span>
+        </div>
+
+        <nav aria-label={t.a11y.nav} class="order-last w-full md:order-none md:w-auto">
+            <ul class="mono flex flex-wrap gap-x-4 gap-y-1">
+                {
+                    links.map((l) => (
+                        <li>
+                            <a
+                                class="muted inline-flex min-h-6 items-center no-underline hover:text-ink hover:underline"
+                                href={l.href}
+                            >
+                                {l.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+
+        <div class="flex items-center gap-2">
+            <div class="seg" role="group" aria-label={t.a11y.theme}>
+                <button type="button" data-theme-set="light" aria-pressed="true">{t.chrome.day}</button>
+                <button type="button" data-theme-set="dark" aria-pressed="false">{t.chrome.night}</button>
+            </div>
+            <div class="seg" role="group" aria-label={t.a11y.language}>
+                {
+                    switcher.map((s) => (
+                        <a
+                            href={s.href}
+                            hreflang={s.lang}
+                            lang={s.lang}
+                            aria-current={s.current ? 'true' : undefined}
+                            class="no-underline"
+                        >
+                            {s.label}
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</header>

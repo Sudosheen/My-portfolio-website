@@ -1,0 +1,15 @@
+{
+  "order": 3,
+  "school": "Lycée",
+  "place": "France",
+  "start": null,
+  "end": "2021-07",
+  "en": {
+    "title": "STI2D baccalaureate, with distinction (Mention Bien)",
+    "detail": "Option: information systems and digital (SIN)."
+  },
+  "fr": {
+    "title": "Baccalauréat STI2D, mention Bien",
+    "detail": "Option : systèmes d’information et numérique (SIN)."
+  }
+}

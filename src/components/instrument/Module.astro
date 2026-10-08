@@ -1,0 +1,27 @@
+---
+/**
+ * Instrument module: hairline frame, corner ticks, a mono code strip, a real heading.
+ * The code ("MOD.03 / LOG") is decorative and hidden from assistive tech.
+ */
+interface Props {
+    code: string;
+    title: string;
+    id?: string;
+    status?: string;
+    class?: string;
+    bodyClass?: string;
+}
+const { code, title, id, status, class: className = '', bodyClass = '' } = Astro.props;
+const headingId = id ? `${id}-title` : undefined;
+---
+
+<section id={id} aria-labelledby={headingId} class:list={['module tk', className]}>
+    <div class="module-head">
+        <span class="mono" aria-hidden="true">{code}</span>
+        {status && <span class="mono faint">{status}</span>}
+    </div>
+    <div class:list={['module-body', bodyClass]}>
+        <h2 id={headingId} class="module-title mb-3">{title}</h2>
+        <slot />
+    </div>
+</section>

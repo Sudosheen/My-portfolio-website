@@ -1,0 +1,67 @@
+---
+import { Minus, Plus } from '@untitledui/icons';
+import { dotMatrix } from '../../lib/dotmatrix';
+import { langFrom, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+import PodContours from './PodContours.astro';
+import Wave from './Wave.astro';
+
+const t = useUi(langFrom(Astro.currentLocale)).principles;
+const count = dotMatrix(String(t.items.length).padStart(2, '0'));
+---
+
+<Section id="principles" labelledby="principles-title">
+    <Wave />
+
+    <!-- Habitat: the pod holds the narrative. Instrument: the checklist module set inside it. -->
+    <div class="pod relative mt-8 overflow-hidden p-6 md:p-10 lg:p-12">
+        <PodContours corner="left" seed={5} />
+
+        <div class="relative grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-14">
+            <div class="flex flex-col gap-6">
+                <h2 id="principles-title" class="display text-4xl md:text-5xl">{t.title}</h2>
+                <p class="max-w-sm text-lg">{t.intro}</p>
+                <div class="flex items-end gap-4" aria-hidden="true">
+                    <svg class="dm w-24" viewBox={count.viewBox} focusable="false" set:html={count.inner} />
+                    <span class="mono pb-0.5">{t.checks}</span>
+                </div>
+            </div>
+
+            <div class="module tk">
+                <div class="module-head">
+                    <span class="mono" aria-hidden="true">MOD.02A / CHECKS</span>
+                    <span class="mono faint">{t.module}</span>
+                </div>
+                <div class="ruler" aria-hidden="true"></div>
+                <ol class="module-body py-1">
+                    {
+                        t.items.map((item, i) => (
+                            <li>
+                                <details class="check" name="principle" open={i === 0}>
+                                    <summary>
+                                        <span class="grid gap-1">
+                                            <span class="mono text-ink">
+                                                <span class="faint">{String(i + 1).padStart(2, '0')}</span>
+                                                {' / '}
+                                                {item.code}
+                                            </span>
+                                            <span class="text-lg font-medium leading-snug">{item.question}</span>
+                                        </span>
+                                        <span class="check-toggle" aria-hidden="true">
+                                            <Plus size={14} strokeWidth={2.5} />
+                                            <Minus size={14} strokeWidth={2.5} />
+                                        </span>
+                                    </summary>
+                                    <div class="check-body">
+                                        <p class="mono faint mb-1">{t.practice}</p>
+                                        <p class="muted">{item.practice}</p>
+                                    </div>
+                                </details>
+                            </li>
+                        ))
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</Section>

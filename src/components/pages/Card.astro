@@ -1,0 +1,84 @@
+---
+import { ArrowUpRight, Download01 } from '@untitledui/icons';
+import { cardScenes } from '../../data/card';
+import { profile } from '../../data/profile';
+import { href, langFrom, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+import Module from '../instrument/Module.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const ui = useUi(lang);
+const t = ui.card;
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+const vcard = `${import.meta.env.BASE_URL}card/osheen-turner-${lang}.vcf`;
+---
+
+<Section class="pt-8 md:pt-12">
+    <p class="mono faint"><a class="no-underline hover:underline" href={href(lang)}>← {t.back}</a></p>
+    <h1 class="page-title mt-4">{t.title}</h1>
+    <p class="muted mt-4 max-w-xl text-lg">{t.intro}</p>
+
+    <div
+        class="module tk mt-10"
+        data-card
+        data-scene-mobile={cardScenes.mobile}
+        data-scene-desktop={cardScenes.desktop}
+        data-text-loading={t.loading}
+        data-text-failed={t.failed}
+    >
+        <div class="module-head">
+            <span class="mono" aria-hidden="true">MOD.08 / CARD</span>
+            <span class="mono faint">{t.stageLabel}</span>
+        </div>
+
+        <div data-card-stage class="card-stage">
+            <div class="card-poster" aria-hidden="true">
+                <div class="card-face">
+                    <div class="flex items-start justify-between gap-4">
+                        <p class="display text-3xl leading-none md:text-5xl">Osheen<br />Turner</p>
+                        <svg viewBox="0 0 32 32" class="h-9 w-9 flex-none md:h-12 md:w-12" focusable="false">
+                            <path class="fill-ink" d="M4 28V16a12 12 0 0 1 24 0v12z"></path>
+                            <circle class="sun" cx="16" cy="17" r="6"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium md:text-base">{ui.hero.role}</p>
+                        <p class="mono faint mt-2">Région Occitanie · DIN</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-body flex flex-col items-start gap-3" data-card-body>
+            <button type="button" class="pill-btn pill-btn--primary" data-card-load>{t.load}</button>
+            <p class="muted max-w-xl text-sm" data-card-note>{t.loadNote}</p>
+            <p class="mono faint" role="status" data-card-status></p>
+        </div>
+    </div>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-[1.2fr_1fr]">
+        <Module id="card-plain" code="MOD.08.1 / PLAIN" title={t.plain}>
+            <dl class="spec">
+                <dt>{ui.contact.email}</dt>
+                <dd><a href={`mailto:${profile.email}`} class="break-all">{profile.email}</a></dd>
+                <dt>{ui.contact.linkedin}</dt>
+                <dd>
+                    <a class="inline-flex items-center gap-1" href={profile.linkedin} rel="me noopener">
+                        {profile.name}
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                </dd>
+                <dt>{t.website}</dt>
+                <dd><a href={siteUrl} class="break-all">{siteUrl}</a></dd>
+            </dl>
+            <a class="sq-btn mt-5" href={vcard} download>
+                <Download01 size={16} aria-hidden="true" />
+                {t.vcard}
+            </a>
+        </Module>
+    </div>
+</Section>
+
+<script>
+    import '../../scripts/card';
+</script>
