@@ -1,0 +1,32 @@
+{
+  "order": 3,
+  "org": "Younicorns",
+  "place": "Levallois-Perret, France",
+  "start": "2023-04",
+  "end": "2024-08",
+  "current": false,
+  "tags": [
+    "FlutterFlow",
+    "Dart",
+    "Cloud functions",
+    "LLM APIs"
+  ],
+  "en": {
+    "role": "Developer, low-code and AI apps",
+    "contract": "Internship, then work-study",
+    "points": [
+      "Built and evolved web and mobile apps in FlutterFlow, extended with Dart custom functions and cloud functions.",
+      "Delivered AI-assisted tools that remove repetitive work for client employees.",
+      "Worked directly with the team and clients, from internship (Apr–Jul 2023) to work-study (Sep 2023–Aug 2024)."
+    ]
+  },
+  "fr": {
+    "role": "Développeur, low-code et applications IA",
+    "contract": "Stage, puis alternance",
+    "points": [
+      "Développement et évolution d’applications web et mobiles sous FlutterFlow, étendues par des fonctions Dart personnalisées et des fonctions cloud.",
+      "Livraison d’outils assistés par IA qui suppriment des tâches répétitives pour les collaborateurs des clients.",
+      "Travail en direct avec l’équipe et les clients, du stage (avr.–juil. 2023) à l’alternance (sept. 2023–août 2024)."
+    ]
+  }
+}

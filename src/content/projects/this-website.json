@@ -1,0 +1,34 @@
+{
+  "order": 3,
+  "featured": true,
+  "status": "active",
+  "start": "2026-10",
+  "end": null,
+  "stack": [
+    "Astro",
+    "Tailwind CSS",
+    "Untitled UI",
+    "TypeScript"
+  ],
+  "caseStudy": false,
+  "en": {
+    "title": "This website",
+    "summary": "Open, lean and bilingual: a static build with no cookies, no analytics and no third-party requests.",
+    "role": "Design and build",
+    "architecture": "Static HTML first. JavaScript only for small instruments: clock, schematic, toggles.",
+    "privacy": "No cookies, no analytics, no third-party requests.",
+    "hosting": "GitHub Pages (static); portable to any static host.",
+    "license": null,
+    "sections": []
+  },
+  "fr": {
+    "title": "Ce site",
+    "summary": "Ouvert, sobre et bilingue : un build statique sans cookies, sans analytique et sans requête tierce.",
+    "role": "Conception et réalisation",
+    "architecture": "HTML statique d’abord. JavaScript seulement pour de petits instruments : horloge, schéma, bascules.",
+    "privacy": "Aucun cookie, aucune analytique, aucune requête tierce.",
+    "hosting": "GitHub Pages (statique) ; portable vers n’importe quel hébergeur statique.",
+    "license": null,
+    "sections": []
+  }
+}

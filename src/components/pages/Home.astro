@@ -1,0 +1,36 @@
+---
+import { profile } from '../../data/profile';
+import { langFrom, useUi } from '../../i18n/utils';
+import Hero from '../habitat/Hero.astro';
+import Principles from '../habitat/Principles.astro';
+import Scope from '../instrument/Scope.astro';
+import Section from '../Section.astro';
+import Contact from '../sections/Contact.astro';
+import Education from '../sections/Education.astro';
+import Log from '../sections/Log.astro';
+import Projects from '../sections/Projects.astro';
+
+const t = useUi(langFrom(Astro.currentLocale));
+const person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    jobTitle: t.hero.role,
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    sameAs: [profile.linkedin],
+    knowsLanguage: ['fr', 'en', 'es'],
+    worksFor: { '@type': 'Organization', name: 'Région Occitanie' },
+    address: { '@type': 'PostalAddress', addressLocality: profile.location.city, addressCountry: 'FR' },
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(person)} />
+<Hero />
+<Principles />
+<Section>
+    <Scope />
+</Section>
+<Log />
+<Projects />
+<Education />
+<Contact />

@@ -1,0 +1,48 @@
+---
+import { langFrom, useUi } from '../../i18n/utils';
+import Module from './Module.astro';
+
+const t = useUi(langFrom(Astro.currentLocale)).scope;
+---
+
+<Module id="scope" code="MOD.02 / SCOPE" title={t.title} status={t.hint}>
+    <p class="muted max-w-xl">{t.intro}</p>
+
+    <div class="mt-5" data-scope>
+        <!-- Hidden until the script is ready; without JS the readouts below are all visible. -->
+        <div role="group" aria-label={t.title} data-node-list hidden>
+            <ul class="scope-nodes">
+                {
+                    t.nodes.map((n) => (
+                        <li>
+                            <button
+                                type="button"
+                                class="node has-led"
+                                data-node={n.id}
+                                aria-pressed="false"
+                                aria-controls={`scope-panel-${n.id}`}
+                            >
+                                <i class="led" aria-hidden="true" />
+                                {n.label}
+                            </button>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <div class="mt-4" aria-live="polite">
+            {
+                t.nodes.map((n) => (
+                    <div id={`scope-panel-${n.id}`} class="readout scope-panel" data-panel={n.id}>
+                        <h3 class="mono mb-2 text-ink">{n.label}</h3>
+                        <p>{n.body}</p>
+                        <p class="mono faint mt-3">
+                            {t.usedIn} {n.usedIn.join(' · ')}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Module>

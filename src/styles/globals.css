@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "./theme.css";
 @import "./typography.css";
+@import "./open-spec.css";
+@import "./instrument.css";
+@import "./habitat.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-react-aria-components";
@@ -9,17 +12,15 @@
 @custom-variant dark (&:where(.dark-mode, .dark-mode *));
 @custom-variant label (& [data-label]);
 @custom-variant focus-input-within (&:has(input:focus));
+@custom-variant js (:where(.js) &);
 
 @utility scrollbar-hide {
-    /* For Webkit-based browsers (Chrome, Safari and Opera) */
     &::-webkit-scrollbar {
         display: none;
         -webkit-appearance: none;
     }
-
-    /* For IE, Edge and Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 @utility transition-inherit-all {
@@ -28,42 +29,99 @@
     transition-timing-function: inherit;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+
+    /*
+      Everything is sized in rem, so scaling the root scales the whole layout, like browser
+      zoom. Up to 1280px wide it is exactly the visitor's own font size; beyond that it grows
+      with the viewport (1.0x at 1280px, about 1.5x at 1890px, capped at 1.75x), so the page
+      fills a large screen the way a 150% zoom would, instead of floating in a narrow column.
+      `max(100%, ...)` means a visitor who has set a larger default size in their browser is
+      never scaled down.
+    */
+    font-size: min(175%, max(100%, calc(1.311vw - 0.049rem)));
+}
+
 html,
 body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-font-variant-ligatures: contextual;
-    font-variant-ligatures: contextual;
-    -webkit-font-kerning: normal;
     font-kerning: normal;
 }
 
-/* Hide the default expand arrow on Safari.  */
+body {
+    min-height: 100dvh;
+    background: var(--canvas);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+::selection {
+    background: var(--amber);
+    color: #1f2620;
+}
+
+/* One focus language everywhere: 2px ink ring, offset, >= 3:1 on every surface. */
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+a {
+    text-underline-offset: 0.2em;
+}
+
 details summary::-webkit-details-marker {
     display: none;
 }
 
-/* Hide default arrows from number inputs. */
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-/* Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
+/* Page transitions: CSS only, no JS. A short stepped cross-fade reads as a "snap". */
+@view-transition {
+    navigation: auto;
 }
 
-/* Hide the default clear button (X) from search inputs. */
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: none;
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 120ms;
+    animation-timing-function: steps(4, end);
 }
 
-/* Hide the default outline on chart elements. */
-.recharts-surface,
-.recharts-surface g,
-.recharts-surface path {
-    outline: none;
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+@media print {
+    :root,
+    .dark-mode {
+        --canvas: #fff;
+        --surface: #fff;
+        --ink: #000;
+        --ink-muted: #222;
+        --ink-faint: #444;
+        --hair: rgb(0 0 0 / 0.25);
+    }
+
+    .no-print {
+        display: none !important;
+    }
 }

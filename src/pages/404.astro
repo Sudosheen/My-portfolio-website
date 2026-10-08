@@ -1,0 +1,20 @@
+---
+import Section from '../components/Section.astro';
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/utils';
+import { ui } from '../i18n/ui';
+---
+
+<Base title="404 ⠇ Osheen Turner" noindex>
+    <Section class="min-h-[50dvh]">
+        <p class="mono faint">404</p>
+        <h1 class="page-title mt-3">{ui.en.notFound.title}</h1>
+        <p class="muted mt-4 max-w-md">{ui.en.notFound.body}</p>
+        <p class="mt-6"><a class="pill-btn pill-btn--primary" href={href('en')}>{ui.en.notFound.home}</a></p>
+        <div lang="fr" class="mt-12 border-t border-hair pt-6">
+            <h2 class="display text-3xl">{ui.fr.notFound.title}</h2>
+            <p class="muted mt-2 max-w-md">{ui.fr.notFound.body}</p>
+            <p class="mt-4"><a class="pill-btn" href={href('fr')}>{ui.fr.notFound.home}</a></p>
+        </div>
+    </Section>
+</Base>

@@ -1,0 +1,42 @@
+---
+import { profile } from '../../data/profile';
+import { href, langFrom, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+import Module from '../instrument/Module.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const ui = useUi(lang);
+const t = ui.legal;
+---
+
+<Section class="pt-8 md:pt-12">
+    <p class="mono faint"><a class="no-underline hover:underline" href={href(lang)}>← {ui.card.back}</a></p>
+    <h1 class="page-title mt-4">{t.title}</h1>
+
+    <div class="mt-10 grid max-w-3xl gap-4">
+        <Module id="publisher" code="MOD.13.1 / PUB" title={t.publisherTitle}>
+            <p>{t.publisher} <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+        </Module>
+
+        <Module id="host" code="MOD.13.2 / HOST" title={t.hostTitle}>
+            <p>
+                {t.host}
+                <a href="https://support.github.com/contact" rel="noopener">{t.hostLink}</a>.
+            </p>
+        </Module>
+
+        <Module id="privacy" code="MOD.13.3 / PRIVACY" title={t.privacyTitle}>
+            <div class="grid gap-3">
+                {t.privacy.map((p) => <p>{p}</p>)}
+            </div>
+        </Module>
+
+        <Module id="rights" code="MOD.13.4 / RIGHTS" title={t.rightsTitle}>
+            <p>{t.rights}</p>
+        </Module>
+
+        <Module id="content" code="MOD.13.5 / CONTENT" title={t.contentTitle}>
+            <p>{t.content}</p>
+        </Module>
+    </div>
+</Section>

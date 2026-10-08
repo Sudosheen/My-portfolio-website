@@ -1,0 +1,490 @@
+/*
+  Instrument register: open-hardware interface set inside the habitat.
+  Square, hairline, mono-labelled, mechanical (snap) motion only.
+*/
+@layer components {
+    .mono {
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        line-height: 1.45;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .faint {
+        color: var(--ink-faint);
+    }
+
+    .muted {
+        color: var(--ink-muted);
+    }
+
+    /* Corner ticks: the "bolted-in module" cue. */
+    .tk {
+        position: relative;
+    }
+
+    .tk::before,
+    .tk::after {
+        content: "";
+        position: absolute;
+        width: 0.4375rem;
+        height: 0.4375rem;
+        border: 0 solid var(--ink);
+        pointer-events: none;
+    }
+
+    .tk::before {
+        top: -1px;
+        left: -1px;
+        border-top-width: 1px;
+        border-left-width: 1px;
+    }
+
+    .tk::after {
+        right: -1px;
+        bottom: -1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+    }
+
+    /* Indicator light. Meaning is always also in text, never colour alone. */
+    .led {
+        display: inline-block;
+        flex: none;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        background: var(--led);
+    }
+
+    .led[data-state="idle"] {
+        background: var(--ink-faint);
+    }
+
+    .has-led:hover .led,
+    .has-led:focus-within .led {
+        animation: led-pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes led-pulse {
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    .module {
+        background: var(--surface);
+        border: 1px solid var(--hair);
+    }
+
+    .module-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.125rem 0.75rem;
+        padding: 0.4375rem 0.75rem;
+        border-bottom: 1px solid var(--hair);
+    }
+
+    .module-body {
+        padding: 1rem;
+    }
+
+    .module-title {
+        font-size: 1.125rem;
+        line-height: 1.4;
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+    /* Segmented toggle (theme, language). */
+    .seg {
+        display: inline-flex;
+        border: 1px solid var(--edge);
+        border-radius: 0.125rem;
+        overflow: hidden;
+    }
+
+    .seg > :is(button, a) {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.5rem;
+        padding: 0.125rem 0.5625rem;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .seg > :is(button, a)[aria-pressed="true"],
+    .seg > :is(button, a)[aria-current="true"] {
+        background: var(--ink);
+        color: var(--on-ink);
+    }
+
+    .seg > :is(button, a):not([aria-pressed="true"], [aria-current="true"]):hover {
+        background: var(--sunken);
+    }
+
+    /* Square instrument button. */
+    .sq-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.25rem;
+        padding: 0.375rem 0.875rem;
+        border: 1px solid var(--edge);
+        border-radius: 0.125rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        background: transparent;
+        cursor: pointer;
+        transition: transform var(--dur-snap) steps(2, end);
+    }
+
+    .sq-btn:hover {
+        background: var(--sunken);
+    }
+
+    .sq-btn:active {
+        transform: translate(1px, 1px);
+    }
+
+    /* Compact text button (phone reveal). Stays above the 24px minimum target size. */
+    .sq-btn--sm {
+        min-height: 1.75rem;
+        padding: 0.125rem 0.625rem;
+        font-size: 0.75rem;
+    }
+
+    /* Icon-only square button (copy). The second icon (a tick) shows briefly once copied. */
+    .sq-btn--icon {
+        justify-content: center;
+        width: 1.75rem;
+        min-height: 1.75rem;
+        padding: 0;
+    }
+
+    .sq-btn--icon svg:last-child,
+    .sq-btn--icon[data-done] svg:first-child {
+        display: none;
+    }
+
+    .sq-btn--icon[data-done] svg:last-child {
+        display: block;
+    }
+
+    /* Tag / status pill. */
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 1px 0.4375rem;
+        border: 1px solid var(--edge);
+        border-radius: 0.125rem;
+        font-family: var(--font-mono);
+        font-size: 0.65625rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        white-space: nowrap;
+    }
+
+    .tag[data-current] {
+        color: var(--ink);
+        border-color: var(--ink);
+    }
+
+    /* Key / value readout rows. */
+    .spec {
+        display: grid;
+        grid-template-columns: minmax(6.5rem, 9rem) minmax(0, 1fr);
+        gap: 0.375rem 0.875rem;
+        font-size: 0.875rem;
+    }
+
+    /* Very narrow screens: label above value, so long values never push the page sideways. */
+    @media (max-width: 479px) {
+        .spec {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.125rem;
+        }
+
+        .spec dd {
+            margin-bottom: 0.625rem;
+            min-width: 0;
+        }
+    }
+
+    .spec dt {
+        padding-top: 0.125rem;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+    }
+
+    .spec dd {
+        margin: 0;
+        color: var(--ink);
+    }
+
+    /* Rows with controls: every row gets the same height, so spacing stays equal whatever sits in it. */
+    .spec--rows {
+        row-gap: 0.75rem;
+    }
+
+    .spec--rows dd {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 1.75rem;
+    }
+
+    @media (min-width: 480px) {
+        .spec--rows dt {
+            display: flex;
+            align-items: center;
+            min-height: 1.75rem;
+            padding-top: 0;
+        }
+    }
+
+    .spec dd[data-empty] {
+        color: var(--ink-faint);
+    }
+
+    /* Native <details> drawer: snaps open, one at a time via the name attribute. */
+    .drawer > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        min-height: 2.25rem;
+        padding: 0.25rem 0;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    .drawer > summary .chev {
+        transition: transform var(--dur-snap) steps(2, end);
+    }
+
+    .drawer[open] > summary .chev {
+        transform: rotate(180deg);
+    }
+
+    /* Scope schematic. */
+    .scope-nodes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .scope-nodes > li {
+        display: flex;
+        align-items: center;
+    }
+
+    .scope-nodes > li + li::before {
+        content: "";
+        width: 1.25rem;
+        height: 1px;
+        background: var(--edge);
+    }
+
+    /* Narrow screens: a tidy 2x2 grid instead of wires that dangle across wrapped rows. */
+    @media (max-width: 639px) {
+        .scope-nodes {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .scope-nodes > li + li::before {
+            display: none;
+        }
+
+        .scope-nodes .node {
+            width: 100%;
+        }
+    }
+
+    .js [data-scope][data-ready] .scope-panel > h3 {
+        display: none;
+    }
+
+    .node {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.25rem;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid var(--edge);
+        border-radius: 0.125rem;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .node .led {
+        background: var(--ink-faint);
+    }
+
+    .node[aria-pressed="true"] {
+        border-color: var(--ink);
+        box-shadow: inset 0 -0.1875rem 0 var(--amber);
+    }
+
+    .node[aria-pressed="true"] .led {
+        background: var(--led);
+    }
+
+    .readout {
+        padding: 0.75rem 0.875rem;
+        border: 1px dashed var(--edge);
+        color: var(--ink-muted);
+        font-size: 0.9375rem;
+    }
+
+    /* Progressive enhancement: without JS every readout is visible. */
+    .js .scope-panel[hidden] {
+        display: none;
+    }
+
+    .scope-panel + .scope-panel {
+        margin-top: 0.5rem;
+    }
+
+    /* Ruler strip: minor ticks every 0.5rem, major every 2.5rem. Decorative (aria-hidden). */
+    .ruler {
+        height: 0.5625rem;
+        background-image: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 2.5rem),
+            repeating-linear-gradient(90deg, var(--edge) 0 1px, transparent 1px 0.5rem);
+        background-size: 100% 0.5625rem, 100% 0.25rem;
+        background-position: left bottom;
+        background-repeat: no-repeat;
+        opacity: 0.7;
+    }
+
+    /* Pre-flight checklist rows (native <details>, one open at a time). */
+    .check + .check {
+        border-top: 1px solid var(--hair);
+    }
+
+    .check > summary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 1.25rem;
+        align-items: start;
+        gap: 0.75rem;
+        padding: 1rem 0;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    /*
+      Accordion indicator: a plus in a hairline square when closed, a minus on amber when open.
+      The glyph carries the state (never colour alone). Decorative only: the native <summary>
+      already exposes its expanded state to assistive tech.
+    */
+    .check-toggle {
+        display: grid;
+        place-items: center;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-top: 0.0625rem;
+        border: 1px solid var(--edge);
+        border-radius: 0.125rem;
+        color: var(--ink);
+        transition: background var(--dur-snap) steps(2, end);
+    }
+
+    .check-toggle svg {
+        grid-area: 1 / 1;
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+
+    .check-toggle svg:last-child,
+    .check[open] .check-toggle svg:first-child {
+        display: none;
+    }
+
+    /* --on-amber stays dark in both themes (7:1+ on amber); --ink flips light in dark mode. */
+    .check[open] .check-toggle {
+        background: var(--amber);
+        border-color: var(--ink);
+        color: var(--on-amber);
+    }
+
+    .check[open] .check-toggle svg:last-child {
+        display: block;
+    }
+
+    .check-body {
+        padding: 0 0 1.125rem;
+        max-width: 38rem;
+    }
+
+    .grid-bg {
+        background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: 1.5rem 1.5rem;
+        background-position: -1px -1px;
+    }
+
+    /* Dot-matrix display (SVG circles). */
+    .dm {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .dm .on {
+        fill: var(--lit);
+    }
+
+    .dm .off {
+        fill: var(--unlit);
+    }
+
+    .dm .colon[data-off] .on {
+        fill: var(--unlit);
+    }
+
+    .daytrack {
+        position: relative;
+        height: 1px;
+        margin: 0.875rem 0.25rem 0.625rem;
+        background: var(--edge);
+    }
+
+    .daytrack > i {
+        position: absolute;
+        top: -0.25rem;
+        width: 0.5625rem;
+        height: 0.5625rem;
+        border-radius: 9999px;
+        background: var(--amber);
+        border: 1px solid var(--ink);
+        transform: translateX(-50%);
+    }
+}

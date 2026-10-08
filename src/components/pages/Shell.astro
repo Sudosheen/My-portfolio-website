@@ -1,0 +1,40 @@
+---
+/** Wraps Base for the secondary pages so EN and FR wrappers stay one-liners. */
+import Base from '../../layouts/Base.astro';
+import { cardCsp } from '../../data/card';
+import { langFrom, useUi } from '../../i18n/utils';
+
+interface Props {
+    page: 'card' | 'cv' | 'colophon' | 'legal';
+}
+
+const { page } = Astro.props;
+const ui = useUi(langFrom(Astro.currentLocale));
+const base = import.meta.env.BASE_URL;
+
+const titles = {
+    card: ui.card.title,
+    cv: ui.cv.title,
+    colophon: ui.colophon.title,
+    legal: ui.legal.title,
+};
+const descriptions = {
+    card: ui.card.intro,
+    cv: ui.cv.summary,
+    colophon: ui.colophon.intro,
+    legal: ui.legal.title,
+};
+const icons =
+    page === 'card'
+        ? { light: `${base}card/icon-light-48.png`, dark: `${base}card/icon-dark-48.png` }
+        : undefined;
+---
+
+<Base
+    title={`${titles[page]} ⠇ ${ui.meta.siteName}`}
+    description={descriptions[page]}
+    icons={icons}
+    csp={page === 'card' ? cardCsp : undefined}
+>
+    <slot />
+</Base>

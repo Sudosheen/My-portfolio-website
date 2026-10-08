@@ -1,0 +1,37 @@
+{
+  "order": 1,
+  "org": "Région Occitanie",
+  "unit": "Direction de l’Information et du Numérique (DIN)",
+  "place": "Montpellier, France",
+  "start": null,
+  "end": null,
+  "current": true,
+  "tags": [
+    "Competitive dialogue",
+    "Specifications",
+    "Budget",
+    "Training plan"
+  ],
+  "en": {
+    "role": "Digital sovereignty project manager",
+    "contract": "Work-study (apprenticeship)",
+    "points": [
+      "Supporting the replacement of GAFAM tools with a sovereign European collaborative suite for the regional council’s staff.",
+      "Needs analysis, feasibility study and specifications (cahier des charges).",
+      "Budget planning and follow-up in the project-management tool.",
+      "Public procurement by competitive dialogue: running the dialogue and selecting solutions.",
+      "Testing, deployment validation, and the training and user-support plan."
+    ]
+  },
+  "fr": {
+    "role": "Chef de projet souveraineté numérique",
+    "contract": "Alternance",
+    "points": [
+      "Appui au remplacement des outils GAFAM par une suite collaborative souveraine européenne pour les agents du conseil régional.",
+      "Analyse des besoins, étude de faisabilité et rédaction du cahier des charges.",
+      "Planification et suivi du budget dans l’outil de gestion de projet.",
+      "Marché public en dialogue compétitif : mise en œuvre du dialogue et sélection des solutions.",
+      "Tests, validation du déploiement, plan de formation et d’accompagnement des utilisateurs."
+    ]
+  }
+}

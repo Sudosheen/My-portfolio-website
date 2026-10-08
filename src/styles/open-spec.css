@@ -1,0 +1,298 @@
+/*
+  Open-spec tokens: "Habitat + Instrument".
+  - Raw palette flips with .dark-mode (set on <html> before first paint).
+  - Untitled UI's semantic tokens are re-pointed at it below, so every Untitled UI
+    component inherits the look. theme.css itself stays untouched (diffable upstream).
+  - All text pairings were contrast-checked (WCAG 2.x). Rules worth remembering:
+    light-mode amber fill is 1.8:1, never the only carrier of meaning;
+    terracotta text on a clay tint must use --terracotta-strong;
+    functional borders use --edge (>= 3:1), decorative dividers use --hair.
+*/
+
+:root {
+    color-scheme: light;
+
+    --canvas: #f1ecdf;
+    --surface: #faf7ee;
+    --sunken: #e8e2d2;
+    --sunken-2: #ddd6c3;
+    --sage: #dce5ce;
+    --sage-strong: #c6d6b4;
+    --clay: #eed8cb;
+    --clay-strong: #e4c3b1;
+    --sun: #f6e3b4;
+    --sun-strong: #efcb78;
+
+    --ink: #1f2620;
+    --ink-hover: #323c34;
+    --ink-muted: #46503f;
+    --ink-faint: #5b6556;
+    --on-ink: #f1ecdf;
+
+    --moss: #3a5a2e;
+    --leaf: #6e9a4f;
+    --amber: #e3a82b;
+    --on-amber: #1f2620;
+    --amber-ink: #8a5a00;
+    --terracotta: #a5472f;
+    --terracotta-strong: #8f3b25;
+    --led: #3f8f3f;
+
+    --edge: #7a8077;
+    --hair: rgb(31 38 32 / 0.16);
+    --grid: rgb(31 38 32 / 0.06);
+    --lit: #1f2620;
+    --unlit: rgb(31 38 32 / 0.11);
+
+    --dur-snap: 90ms;
+    --dur-base: 140ms;
+}
+
+.dark-mode {
+    color-scheme: dark;
+
+    --canvas: #121713;
+    --surface: #1a211b;
+    --sunken: #0e120f;
+    --sunken-2: #0a0d0b;
+    --sage: #243024;
+    --sage-strong: #2f4030;
+    --clay: #3a2a22;
+    --clay-strong: #4b352b;
+    --sun: #3a2f14;
+    --sun-strong: #4d3e1a;
+
+    --ink: #ede8da;
+    --ink-hover: #f7f3e8;
+    --ink-muted: #b8bdb0;
+    --ink-faint: #919888;
+    --on-ink: #121713;
+
+    --moss: #a8d08d;
+    --leaf: #7fb069;
+    --amber: #f0b63a;
+    --amber-ink: #f0b63a;
+    --terracotta: #e8896c;
+    --terracotta-strong: #e8896c;
+    --led: #8fdc9f;
+
+    --edge: #6e7569;
+    --hair: rgb(237 232 218 / 0.15);
+    --grid: rgb(237 232 218 / 0.05);
+    --lit: #f0b63a;
+    --unlit: rgb(237 232 218 / 0.09);
+}
+
+/* Shape, depth, type: flat, square instrument controls; pods are the exception. */
+@theme {
+    --font-body: var(--font-face-sans), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-display: var(--font-face-display), Georgia, "Times New Roman", serif;
+    --font-mono: var(--font-face-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --radius-xs: 0px;
+    --radius-sm: 1px;
+    --radius-DEFAULT: 2px;
+    --radius-md: 2px;
+    --radius-lg: 2px;
+    --radius-xl: 3px;
+    --radius-2xl: 4px;
+    --radius-3xl: 6px;
+    --radius-pod: 1.75rem;
+
+    --shadow-xs: none;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow-xl: none;
+    --shadow-2xl: none;
+    --shadow-3xl: none;
+    --shadow-skeuomorphic: none;
+    --shadow-xs-skeuomorphic: none;
+}
+
+/* Utilities for the raw palette (bg-canvas, text-ink-muted, border-hair, ...). */
+@theme inline {
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-sunken: var(--sunken);
+    --color-sage: var(--sage);
+    --color-clay: var(--clay);
+    --color-sun: var(--sun);
+    --color-ink: var(--ink);
+    --color-ink-hover: var(--ink-hover);
+    --color-ink-muted: var(--ink-muted);
+    --color-ink-faint: var(--ink-faint);
+    --color-on-ink: var(--on-ink);
+    --color-moss: var(--moss);
+    --color-leaf: var(--leaf);
+    --color-amber: var(--amber);
+    --color-amber-ink: var(--amber-ink);
+    --color-terracotta: var(--terracotta);
+    --color-terracotta-strong: var(--terracotta-strong);
+    --color-led: var(--led);
+    --color-edge: var(--edge);
+    --color-hair: var(--hair);
+    --color-grid: var(--grid);
+    --color-lit: var(--lit);
+    --color-unlit: var(--unlit);
+}
+
+/* Untitled UI semantic tokens -> open-spec palette (same mapping in both modes
+   because the raw palette above already flips). Declared after theme.css so it
+   wins over both the light @theme values and the .dark-mode block. */
+@layer base {
+    :root,
+    .dark-mode {
+        --color-text-primary: var(--ink);
+        --color-text-secondary: var(--ink-muted);
+        --color-text-secondary_hover: var(--ink);
+        --color-text-tertiary: var(--ink-muted);
+        --color-text-tertiary_hover: var(--ink);
+        --color-text-quaternary: var(--ink-faint);
+        --color-text-placeholder: var(--ink-faint);
+        --color-text-brand-primary: var(--moss);
+        --color-text-brand-secondary: var(--moss);
+        --color-text-brand-secondary_hover: var(--ink);
+        --color-text-brand-tertiary: var(--moss);
+        --color-text-brand-tertiary_alt: var(--moss);
+        --color-text-error-primary: var(--terracotta);
+        --color-text-error-primary_hover: var(--terracotta-strong);
+        --color-text-warning-primary: var(--amber-ink);
+        --color-text-success-primary: var(--moss);
+        --color-text-primary_on-brand: var(--on-ink);
+        --color-text-secondary_on-brand: var(--on-ink);
+        --color-text-tertiary_on-brand: var(--on-ink);
+        --color-text-quaternary_on-brand: var(--on-ink);
+
+        --color-border-primary: var(--edge);
+        --color-border-secondary: var(--hair);
+        --color-border-secondary_alt: var(--hair);
+        --color-border-tertiary: var(--hair);
+        --color-border-brand: var(--moss);
+        --color-border-brand_alt: var(--moss);
+        --color-border-error: var(--terracotta);
+        --color-border-error_subtle: var(--terracotta);
+
+        --color-fg-primary: var(--ink);
+        --color-fg-secondary: var(--ink-muted);
+        --color-fg-secondary_hover: var(--ink);
+        --color-fg-tertiary: var(--ink-faint);
+        --color-fg-tertiary_hover: var(--ink-muted);
+        --color-fg-quaternary: var(--edge);
+        --color-fg-quaternary_hover: var(--ink-faint);
+        --color-fg-brand-primary: var(--moss);
+        --color-fg-brand-primary_alt: var(--moss);
+        --color-fg-brand-secondary: var(--moss);
+        --color-fg-brand-secondary_alt: var(--moss);
+        --color-fg-brand-secondary_hover: var(--ink);
+        --color-fg-error-primary: var(--terracotta);
+        --color-fg-error-secondary: var(--terracotta);
+        --color-fg-success-primary: var(--moss);
+        --color-fg-success-secondary: var(--moss);
+        --color-fg-warning-primary: var(--amber-ink);
+        --color-fg-warning-secondary: var(--amber);
+
+        --color-bg-primary: var(--surface);
+        --color-bg-primary_alt: var(--surface);
+        --color-bg-primary_hover: var(--canvas);
+        --color-bg-secondary: var(--canvas);
+        --color-bg-secondary_alt: var(--canvas);
+        --color-bg-secondary_hover: var(--sunken);
+        --color-bg-tertiary: var(--sunken);
+        --color-bg-quaternary: var(--sunken-2);
+        --color-bg-active: var(--sunken);
+        --color-bg-brand-solid: var(--ink);
+        --color-bg-brand-solid_hover: var(--ink-hover);
+        --color-bg-brand-primary: var(--sage);
+        --color-bg-brand-primary_alt: var(--sage);
+        --color-bg-brand-secondary: var(--sage-strong);
+        --color-bg-brand-section: var(--ink);
+        --color-bg-brand-section_subtle: var(--ink-hover);
+        --color-bg-primary-solid: var(--ink);
+        --color-bg-secondary-solid: var(--ink-muted);
+        --color-bg-error-primary: var(--clay);
+        --color-bg-error-secondary: var(--clay-strong);
+        --color-bg-error-solid: var(--terracotta);
+        --color-bg-error-solid_hover: var(--terracotta-strong);
+        --color-bg-warning-primary: var(--sun);
+        --color-bg-warning-secondary: var(--sun-strong);
+        --color-bg-warning-solid: var(--amber);
+        --color-bg-success-primary: var(--sage);
+        --color-bg-success-secondary: var(--sage-strong);
+        --color-bg-success-solid: var(--moss);
+        --color-bg-overlay: var(--ink);
+
+        --color-focus-ring: var(--ink);
+        --color-focus-ring-error: var(--terracotta);
+        --color-icon-fg-brand: var(--moss);
+        --color-toggle-border: var(--edge);
+
+        /* Badge and tag families */
+        --color-utility-brand-50: var(--sage);
+        --color-utility-brand-100: var(--sage);
+        --color-utility-brand-200: var(--sage-strong);
+        --color-utility-brand-300: var(--sage-strong);
+        --color-utility-brand-400: var(--leaf);
+        --color-utility-brand-500: var(--moss);
+        --color-utility-brand-600: var(--moss);
+        --color-utility-brand-700: var(--moss);
+        --color-utility-success-50: var(--sage);
+        --color-utility-success-100: var(--sage);
+        --color-utility-success-200: var(--sage-strong);
+        --color-utility-success-300: var(--sage-strong);
+        --color-utility-success-400: var(--leaf);
+        --color-utility-success-500: var(--moss);
+        --color-utility-success-600: var(--moss);
+        --color-utility-success-700: var(--moss);
+        --color-utility-green-50: var(--sage);
+        --color-utility-green-100: var(--sage);
+        --color-utility-green-200: var(--sage-strong);
+        --color-utility-green-300: var(--sage-strong);
+        --color-utility-green-400: var(--leaf);
+        --color-utility-green-500: var(--moss);
+        --color-utility-green-600: var(--moss);
+        --color-utility-green-700: var(--moss);
+        --color-utility-error-50: var(--clay);
+        --color-utility-error-100: var(--clay);
+        --color-utility-error-200: var(--clay-strong);
+        --color-utility-error-300: var(--clay-strong);
+        --color-utility-error-400: var(--terracotta);
+        --color-utility-error-500: var(--terracotta);
+        --color-utility-error-600: var(--terracotta-strong);
+        --color-utility-error-700: var(--terracotta-strong);
+        --color-utility-red-50: var(--clay);
+        --color-utility-red-100: var(--clay);
+        --color-utility-red-200: var(--clay-strong);
+        --color-utility-red-300: var(--clay-strong);
+        --color-utility-red-400: var(--terracotta);
+        --color-utility-red-500: var(--terracotta);
+        --color-utility-red-600: var(--terracotta-strong);
+        --color-utility-red-700: var(--terracotta-strong);
+        --color-utility-warning-50: var(--sun);
+        --color-utility-warning-100: var(--sun);
+        --color-utility-warning-200: var(--sun-strong);
+        --color-utility-warning-300: var(--sun-strong);
+        --color-utility-warning-400: var(--amber);
+        --color-utility-warning-500: var(--amber);
+        --color-utility-warning-600: var(--amber-ink);
+        --color-utility-warning-700: var(--amber-ink);
+        --color-utility-yellow-50: var(--sun);
+        --color-utility-yellow-100: var(--sun);
+        --color-utility-yellow-200: var(--sun-strong);
+        --color-utility-yellow-300: var(--sun-strong);
+        --color-utility-yellow-400: var(--amber);
+        --color-utility-yellow-500: var(--amber);
+        --color-utility-yellow-600: var(--amber-ink);
+        --color-utility-yellow-700: var(--amber-ink);
+        --color-utility-neutral-50: var(--canvas);
+        --color-utility-neutral-100: var(--sunken);
+        --color-utility-neutral-200: var(--sunken-2);
+        --color-utility-neutral-300: var(--edge);
+        --color-utility-neutral-400: var(--edge);
+        --color-utility-neutral-500: var(--ink-faint);
+        --color-utility-neutral-600: var(--ink-muted);
+        --color-utility-neutral-700: var(--ink);
+        --color-utility-neutral-800: var(--ink);
+        --color-utility-neutral-900: var(--ink);
+    }
+}

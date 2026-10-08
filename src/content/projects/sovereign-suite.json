@@ -1,0 +1,29 @@
+{
+  "order": 1,
+  "featured": true,
+  "status": "active",
+  "start": null,
+  "end": null,
+  "stack": [],
+  "caseStudy": false,
+  "en": {
+    "title": "Sovereign collaboration suite",
+    "summary": "Replacing GAFAM collaboration tools with a sovereign European suite for the staff of a regional council, procured through a competitive dialogue.",
+    "role": "Digital sovereignty project manager (apprenticeship)",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": []
+  },
+  "fr": {
+    "title": "Suite collaborative souveraine",
+    "summary": "Remplacement des outils collaboratifs GAFAM par une suite souveraine européenne pour les agents d’un conseil régional, achetée en dialogue compétitif.",
+    "role": "Chef de projet souveraineté numérique (alternance)",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": []
+  }
+}

@@ -1,0 +1,260 @@
+/*
+  Habitat register: the warm, still, organic shell. Narrative content lives here.
+  Large radii, pods in sage / clay / sun, topographic contour lines, a flat sun.
+*/
+@layer components {
+    /* Fraunces: a soft, wide, warm serif. Light-ish weight keeps big sizes airy, not heavy. */
+    .display {
+        font-family: var(--font-display);
+        font-weight: 360;
+        line-height: 1.08;
+        letter-spacing: -0.005em;
+        text-wrap: balance;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    /* Titles of secondary pages: fluid size, so long French words fit at 17.5rem and still sing at 120rem. */
+    .page-title {
+        font-family: var(--font-display);
+        font-weight: 360;
+        font-size: clamp(2rem, 7.5vw, 4.5rem);
+        line-height: 1.08;
+        letter-spacing: -0.005em;
+        text-wrap: balance;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .hero-name {
+        font-family: var(--font-display);
+        font-weight: 340;
+        font-size: clamp(3rem, 9.5vw, 5.25rem);
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        overflow-wrap: break-word;
+    }
+
+    .pod {
+        border-radius: var(--radius-pod);
+        background: var(--sage);
+        color: var(--ink);
+    }
+
+    .pod--clay {
+        background: var(--clay);
+    }
+
+    .pod--sun {
+        background: var(--sun);
+    }
+
+    .arch {
+        position: relative;
+        border-radius: 9999px 9999px 0 0;
+        background: var(--sage);
+        overflow: hidden;
+    }
+
+    /*
+      The sun is placed by percentage inside the arch (never inside the cropped SVG), so it
+      stays a perfect circle fully clear of the curved edge at any arch size or aspect.
+    */
+    .sun-disc {
+        position: absolute;
+        left: 52%;
+        top: 7%;
+        width: 26%;
+        aspect-ratio: 1;
+        border-radius: 9999px;
+        background: var(--amber);
+    }
+
+    /* Dark mode: the sun becomes a crescent moon. The mask cuts the crescent out of the disc, so
+       the arch and contour lines show through the cut (nothing is painted over them). */
+    .dark-mode .sun-disc {
+        background: var(--ink);
+        -webkit-mask-image: radial-gradient(ellipse 52% 52% at 66% 38%, transparent 0, transparent 99%, #000 100%);
+        mask-image: radial-gradient(ellipse 52% 52% at 66% 38%, transparent 0, transparent 99%, #000 100%);
+    }
+
+    /* Wider layouts: the clock card sits lower, so the sun can sit lower too. */
+    @media (min-width: 768px) {
+        .sun-disc {
+            left: 44%;
+            top: 16%;
+            width: 24%;
+        }
+    }
+
+    .arch svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .contour-ring {
+        fill: none;
+        stroke: var(--moss);
+        stroke-width: 1;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .sun {
+        fill: var(--amber);
+    }
+
+    .contour-line {
+        fill: none;
+        stroke: var(--moss);
+        stroke-width: 1;
+        opacity: 0.45;
+        vector-effect: non-scaling-stroke;
+    }
+
+    /* Habitat buttons are pills; instrument buttons (.sq-btn) stay square. */
+    .pill-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.75rem;
+        padding: 0.625rem 1.375rem;
+        border: 1px solid var(--ink);
+        border-radius: 9999px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        background: transparent;
+        cursor: pointer;
+        transition:
+            transform var(--dur-snap) steps(2, end),
+            background-color var(--dur-snap) steps(2, end),
+            color var(--dur-snap) steps(2, end);
+    }
+
+    /*
+      Hover and keyboard focus flip the pill so the change reads at a glance: outlined -> solid ink,
+      solid ink (primary) -> amber, the palette's signal colour. Ink on --on-ink and --on-amber on
+      amber both clear 7:1 in light and dark. Hover only where a pointer can hover (no sticky taps);
+      focus-visible also keeps the global 2px ring. The colour change snaps in two steps, like the
+      rest of the instrument motion, and is instant under prefers-reduced-motion.
+    */
+    .pill-btn:focus-visible {
+        background: var(--ink);
+        color: var(--on-ink);
+    }
+
+    @media (hover: hover) {
+        .pill-btn:hover {
+            background: var(--ink);
+            color: var(--on-ink);
+        }
+    }
+
+    .pill-btn:active {
+        transform: translate(1px, 1px);
+    }
+
+    /* Phones: slightly tighter pills so three labels fit one row in both languages. */
+    @media (max-width: 479px) {
+        .pill-btn {
+            padding-inline: 1.125rem;
+        }
+    }
+
+    @media (max-width: 399px) {
+        .pill-btn {
+            padding-inline: 0.9375rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    .pill-btn--primary {
+        background: var(--ink);
+        color: var(--on-ink);
+    }
+
+    .pill-btn--primary:focus-visible {
+        background: var(--amber);
+        color: var(--on-amber);
+    }
+
+    @media (hover: hover) {
+        .pill-btn--primary:hover {
+            background: var(--amber);
+            color: var(--on-amber);
+        }
+    }
+
+    /* The 3D card stage: a static poster until the visitor opts in to the scene. */
+    /*
+      Landscape screens get the landscape scene; phones and portrait screens get the portrait
+      scene (card turned upright). The media query mirrors the script's scene choice, so the
+      stage is already the right shape before the 3D engine loads. Height never exceeds the
+      visible viewport (svh), so the card is always fully on screen.
+    */
+    .card-stage {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        max-height: min(78svh, 46rem);
+        overflow: hidden;
+        background: var(--sage);
+    }
+
+    @media (max-width: 768px), (orientation: portrait) {
+        .card-stage {
+            aspect-ratio: 5 / 8;
+            max-height: 80svh;
+        }
+
+        .card-poster .card-face {
+            width: min(66%, 17.5rem);
+            aspect-ratio: 1 / 1.6;
+        }
+    }
+
+    .card-poster {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+    }
+
+    .card-face {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: min(82%, 32.5rem);
+        aspect-ratio: 1.75 / 1;
+        padding: clamp(0.875rem, 3vw, 1.75rem);
+        background: var(--surface);
+        border: 1px solid var(--hair);
+        transform: rotate(-3deg);
+    }
+
+    spline-viewer {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Topographic backdrop inside a pod: quiet lines, never behind body text at full strength. */
+    .pod-contours {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .pod-contours path {
+        fill: none;
+        stroke: var(--moss);
+        stroke-width: 1;
+        opacity: 0.28;
+        vector-effect: non-scaling-stroke;
+    }
+}

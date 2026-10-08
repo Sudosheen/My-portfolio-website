@@ -1,0 +1,15 @@
+{
+  "order": 1,
+  "school": "IAE Montpellier",
+  "place": "Montpellier, France",
+  "start": "2023-09",
+  "end": "2024-06",
+  "en": {
+    "title": "Bachelor’s degree (Licence MTS): Management, Technologies and Sciences",
+    "detail": "Distance learning, alongside the final year of the BUT."
+  },
+  "fr": {
+    "title": "Licence MTS : Management, Technologies et Sciences",
+    "detail": "En e-learning, en parallèle de la dernière année de BUT."
+  }
+}

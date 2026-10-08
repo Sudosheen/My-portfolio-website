@@ -1,0 +1,108 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/globals.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { languages, type Lang } from '../i18n/ui';
+import { langFrom, otherLangHref, useUi } from '../i18n/utils';
+import { applyCsp, type PageCsp } from '../lib/csp';
+
+interface Props {
+    title?: string;
+    description?: string;
+    noindex?: boolean;
+    /** Optional light/dark favicon pair (the card page uses its own). */
+    icons?: { light: string; dark: string };
+    /** Extra CSP for this page only. Applied here because the policy is rendered with <head>. */
+    csp?: PageCsp;
+}
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang);
+const { title = t.meta.title, description = t.meta.description, noindex = false, icons, csp } = Astro.props;
+const base = import.meta.env.BASE_URL;
+applyCsp(Astro.csp, csp);
+
+const site = Astro.site!;
+const canonical = new URL(Astro.url.pathname, site).href;
+const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
+    lang: l,
+    href: new URL(otherLangHref(Astro.url.pathname, l), site).href,
+}));
+---
+
+<!doctype html>
+<html lang={lang}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        {noindex && <meta name="robots" content="noindex" />}
+        <link rel="canonical" href={canonical} />
+        {
+            !noindex &&
+                alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)
+        }
+        {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
+        <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" content="#f1ecdf" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#121713" media="(prefers-color-scheme: dark)" />
+        {
+            icons ? (
+                <>
+                    <link rel="icon" href={icons.light} media="(prefers-color-scheme: light)" />
+                    <link rel="icon" href={icons.dark} media="(prefers-color-scheme: dark)" />
+                </>
+            ) : (
+                <>
+                    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+                    <link rel="icon" href={`${base}favicon.ico`} sizes="48x48" />
+                </>
+            )
+        }
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={t.meta.siteName} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
+        <meta name="twitter:card" content="summary" />
+
+        <Font cssVariable="--font-face-display" preload={[{ style: 'normal' }]} />
+        <Font cssVariable="--font-face-sans" preload />
+        <Font cssVariable="--font-face-mono" />
+
+        <!-- Runs before first paint: no flash. Reads a stored choice, never writes one. -->
+        <script is:inline>
+            (function () {
+                var d = document.documentElement;
+                d.classList.add('js');
+                var dark;
+                try {
+                    var s = localStorage.getItem('theme');
+                    dark = s ? s === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+                } catch (e) {
+                    dark = matchMedia('(prefers-color-scheme: dark)').matches;
+                }
+                if (dark) d.classList.add('dark-mode');
+            })();
+        </script>
+    </head>
+    <body>
+        <a
+            href="#main"
+            class="no-print sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-on-ink"
+        >
+            {t.a11y.skip}
+        </a>
+        <Header />
+        <main id="main">
+            <slot />
+        </main>
+        <Footer />
+        <script>
+            import '../scripts/site';
+        </script>
+    </body>
+</html>

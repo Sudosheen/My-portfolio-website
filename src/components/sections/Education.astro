@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import { langFrom, monthYear, useUi } from '../../i18n/utils';
+import Section from '../Section.astro';
+import Module from '../instrument/Module.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang).education;
+const entries = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
+
+function range(start: string | null, end: string | null): string {
+    const s = monthYear(start);
+    const e = monthYear(end);
+    if (s && e) return `${s} → ${e}`;
+    return e ?? s ?? '';
+}
+---
+
+<Section id="education" class="grid gap-4 md:grid-cols-[1.7fr_1fr]">
+    <Module id="education-list" code="MOD.05 / EDU" title={t.title}>
+        <ol class="grid gap-5">
+            {
+                entries.map((entry) => {
+                    const d = entry.data;
+                    const text = d[lang];
+                    return (
+                        <li class="grid gap-1 md:grid-cols-[9rem_1fr] md:gap-4">
+                            <p class="mono faint">{range(d.start, d.end)}</p>
+                            <div>
+                                <p class="font-medium">{text.title}</p>
+                                <p class="muted text-sm">
+                                    {d.school} · {d.place}
+                                </p>
+                                {text.detail && <p class="muted mt-1 text-sm">{text.detail}</p>}
+                            </div>
+                        </li>
+                    );
+                })
+            }
+        </ol>
+    </Module>
+
+    <Module id="languages" code="MOD.06 / LANG" title={t.languages}>
+        <dl class="spec">
+            {
+                t.languageList.map((l) => (
+                    <>
+                        <dt>{l.name}</dt>
+                        <dd>{l.level}</dd>
+                    </>
+                ))
+            }
+        </dl>
+    </Module>
+</Section>
