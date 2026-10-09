@@ -1,0 +1,273 @@
+/*
+  Motion. Everything animated is declared under :root[data-motion="on"] (set before paint by the head
+  script in Base.astro; "off" is also forced to instant in globals.css), so the page is fully static
+  without scripts, with motion off, under prefers-reduced-motion, and in print.
+
+  Two rules of feel (hybrid):
+  - Instrument things (modules, readouts, LEDs, text) move mechanically: steps(), never easing, and
+    monotonically (no flicker; WCAG 2.3.1).
+  - Ambient things (contour drift, parallax) may be smooth, but are scroll-linked or finite.
+  Scroll-linked rules sit inside @supports, so browsers without scroll timelines show the final state.
+*/
+
+/*
+  Registered so the halftone radius can be animated (must be top level; an initial value cannot use
+  rem). The large fallback means that once the animation is over, the mask is fully opaque.
+*/
+@property --r {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 999px;
+}
+
+/* ---- Power-on sequence (hero). Skipped for internal navigation / reload (data-boot="skip"),
+        and ended early on first input or after ~1.6 s by boot.ts (html.booted). ---- */
+:root[data-motion="on"]:not([data-boot="skip"]):not(.booted) {
+    /* The name resolves from a halftone: dots grow into letters in 6 steps. The h1 stays real text
+       and is never faded from opacity 0 (that would delay the largest contentful paint). */
+    .hero-name {
+        mask-image: radial-gradient(circle at center, #000 var(--r), transparent calc(var(--r) + 0.5px));
+        mask-size: 0.5rem 0.5rem;
+        animation: resolve 600ms steps(6, end) backwards;
+    }
+
+    /* Text lines appear top to bottom. */
+    .hero-text > :not(.hero-name) {
+        animation: power-on 300ms steps(3, end) backwards;
+        animation-delay: calc(240ms + var(--n, 0) * 70ms);
+    }
+
+    .hero-text > :nth-child(2) { --n: 0; }
+    .hero-text > :nth-child(3) { --n: 1; }
+    .hero-text > :nth-child(4) { --n: 2; }
+    .hero-text > :nth-child(5) { --n: 3; }
+
+    /* Modules power on one by one, then their LEDs come alive. */
+    .hero-panel > * {
+        animation: power-on 480ms steps(4, end) backwards;
+        animation-delay: calc(300ms + var(--n, 0) * 90ms);
+    }
+
+    .hero-panel > :nth-child(1) { --n: 0; }
+    .hero-panel > :nth-child(2) { --n: 1; }
+    .hero-panel > :nth-child(3) { --n: 2; }
+    .hero-panel > :nth-child(4) { --n: 3; }
+
+    .hero-panel .led {
+        animation: led-on 240ms steps(2, end) backwards;
+        animation-delay: calc(520ms + var(--n, 0) * 90ms);
+    }
+
+    header .led {
+        animation: led-on 240ms steps(2, end) backwards;
+    }
+}
+
+/* 0.36rem is just past half the 0.5rem tile's diagonal, so the last step covers every pixel. */
+@keyframes resolve {
+    from {
+        --r: 0.12rem;
+    }
+
+    to {
+        --r: 0.36rem;
+    }
+}
+
+/* The clip grows downward in four steps; -2px keeps the corner ticks (drawn just outside the box). */
+@keyframes power-on {
+    from {
+        opacity: 0;
+        clip-path: inset(-2px -2px 100% -2px);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(-2px);
+    }
+}
+
+@keyframes led-on {
+    from {
+        background: var(--ink-faint);
+    }
+}
+
+/* ---- Live contour fields. Hosts ([data-field-host]) carry a canvas.field-canvas over a static
+        poster (the SVG contour lines). When the WebGL field has drawn its first frame it
+        cross-fades over the poster in four steps; the poster stays as the fallback. ---- */
+.field-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Colour probe read by the shader script (resolves the theme token to rgb). */
+.field-probe {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    color: var(--moss);
+}
+
+[data-field-host][data-field-ready] > .pod-contours {
+    opacity: 0;
+}
+
+:root[data-motion="on"] [data-field-host] > .pod-contours {
+    transition: opacity 480ms steps(4, end);
+}
+
+:root[data-motion="on"] [data-field-host][data-field-ready] > .field-canvas {
+    animation: field-in 480ms steps(4, end) backwards;
+}
+
+@keyframes field-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@media print {
+    .field-canvas {
+        display: none;
+    }
+
+    [data-field-host][data-field-ready] > .pod-contours {
+        opacity: 1;
+    }
+}
+
+/* ---- Rolling digits: when a dot-matrix glyph changes (tick.ts adds .roll to that glyph's group only),
+        it drops in from above in five steps. The svg clips at its own box, so the glyph appears to roll
+        into place. ---- */
+:root[data-motion="on"] .dm .roll {
+    transform-box: fill-box;
+    animation: dm-roll 300ms steps(5, end) backwards;
+}
+
+@keyframes dm-roll {
+    from {
+        transform: translateY(-100%);
+    }
+}
+
+/* ---- Dot-matrix colon: a mechanical 1 Hz blink, CSS only (no script tick). ---- */
+:root[data-motion="on"] .dm .colon .on {
+    animation: colon-blink 2s steps(1, end) infinite;
+}
+
+@keyframes colon-blink {
+    0% {
+        fill: var(--lit);
+    }
+
+    50% {
+        fill: var(--unlit);
+    }
+}
+
+/* ---- Scroll reveal: every instrument module below the hero unrolls downward in five steps as it
+        enters the viewport (and rolls back up if you scroll back). Applied by selector, so section
+        markup stays untouched; .reveal opts in anything else. A module that already sits in view
+        at load is past its range, so nothing above the fold is ever hidden.
+        Scroll-driven rules use LONGHANDS only: the minifier folds `animation` + `animation-timeline`
+        into one shorthand ending in view(), which browsers reject (the audit checks for it). ---- */
+@supports (animation-timeline: view()) {
+    :root[data-motion="on"] :is(main .module:not(#intro *), .reveal) {
+        animation-name: reveal;
+        animation-duration: 1ms;
+        animation-timing-function: steps(5, end);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 45%;
+    }
+
+    /* Keyboard focus inside a module that is still rolling in: show it at once. */
+    :root[data-motion="on"] :is(main .module:not(#intro *), .reveal):focus-within {
+        animation: none;
+    }
+
+    /* Section titles resolve from the same halftone dots as the name as they scroll into view
+       (stepped; the mask is fully open once the title has entered, and above-the-fold titles are
+       already past their range). */
+    :root[data-motion="on"] main h2.display {
+        mask-image: radial-gradient(circle at center, #000 var(--r), transparent calc(var(--r) + 0.5px));
+        mask-size: 0.5rem 0.5rem;
+        animation-name: resolve;
+        animation-duration: 1ms;
+        animation-timing-function: steps(6, end);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 80%;
+    }
+
+    /* ---- Ambient (smooth, scroll-linked): the habitat drifts a little as you pass it. ---- */
+
+    /* Contour lines inside the sage pods (How I work, Contact) sink slowly behind the content. */
+    :root[data-motion="on"] .pod > .pod-contours {
+        animation-name: pod-drift;
+        animation-duration: 1ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+    }
+
+    /* The two wave dividers slide past each other. The svg carries the timeline (SVG paths do not
+       get a box of their own), scaled a little so the shifted lines still reach both edges. */
+    :root[data-motion="on"] .wave {
+        view-timeline-name: --wave;
+        view-timeline-axis: block;
+    }
+
+    :root[data-motion="on"] .wave path {
+        transform-box: view-box;
+        transform-origin: center;
+        animation-name: wave-drift;
+        animation-duration: 1ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --wave;
+        animation-range: cover 0% cover 100%;
+    }
+
+    :root[data-motion="on"] .wave path + path {
+        animation-direction: reverse;
+    }
+}
+
+@keyframes pod-drift {
+    from {
+        transform: translateY(-3%) scale(1.08);
+    }
+
+    to {
+        transform: translateY(3%) scale(1.08);
+    }
+}
+
+@keyframes wave-drift {
+    from {
+        transform: translateX(-2.5%) scaleX(1.06);
+    }
+
+    to {
+        transform: translateX(2.5%) scaleX(1.06);
+    }
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        clip-path: inset(-2px -2px 100% -2px);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(-2px);
+    }
+}

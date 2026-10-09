@@ -10,8 +10,8 @@ const t = useUi(langFrom(Astro.currentLocale)).scope;
 
     <div class="mt-5" data-scope>
         <!-- Hidden until the script is ready; without JS the readouts below are all visible. -->
-        <div role="group" aria-label={t.title} data-node-list hidden>
-            <ul class="scope-nodes">
+        <div role="group" aria-label={t.title} class="scope-track" data-node-list hidden>
+            <ul class="scope-nodes" data-active="0">
                 {
                     t.nodes.map((n) => (
                         <li>
@@ -29,6 +29,7 @@ const t = useUi(langFrom(Astro.currentLocale)).scope;
                     ))
                 }
             </ul>
+            <span class="scope-packet" aria-hidden="true"></span>
         </div>
 
         <div class="mt-4" aria-live="polite">

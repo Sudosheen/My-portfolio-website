@@ -15,6 +15,8 @@ export const profile = {
     email: 'turnosh@gmail.com',
     linkedin: 'https://www.linkedin.com/in/osheen-turner-54068420a/',
     repo: 'https://github.com/Sudosheen/My-portfolio-website',
+    /** First role in digital projects (Younicorns, "YYYY-MM"): drives the live career counter. */
+    digitalSince: '2023-04',
     location: {
         city: 'Montpellier',
         country: 'France',

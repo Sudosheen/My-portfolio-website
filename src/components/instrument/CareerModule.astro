@@ -1,0 +1,53 @@
+---
+/**
+ * Career tile: "in digital projects" since the first developer role, counted live in the browser
+ * (tick.ts). No "time in role" figure: that needs a start date that is not known yet.
+ */
+import { profile } from '../../data/profile';
+import { dotMatrix } from '../../lib/dotmatrix';
+import { idleValues } from '../../lib/snapshot';
+import { langFrom, monthYear, useUi } from '../../i18n/utils';
+
+const t = useUi(langFrom(Astro.currentLocale)).hero.panel;
+const idle = idleValues(new Date(), profile.digitalSince);
+const years = dotMatrix(idle['career-years']);
+const months = dotMatrix(idle['career-months']);
+---
+
+<div class="module tk tile" role="group" aria-label={t.career}>
+    <div class="module-head">
+        <span class="mono" aria-hidden="true">MOD.01D / CAREER</span>
+    </div>
+    <div class="tile-body">
+        <p class="mono faint">{t.career}</p>
+        <div class="career-digits" aria-hidden="true">
+            <div>
+                <svg
+                    class="dm"
+                    data-dm-live="career-years"
+                    data-value={idle['career-years']}
+                    viewBox={years.viewBox}
+                    focusable="false"
+                    set:html={years.inner}
+                />
+                <span class="mono">{t.years}</span>
+            </div>
+            <div>
+                <svg
+                    class="dm"
+                    data-dm-live="career-months"
+                    data-value={idle['career-months']}
+                    viewBox={months.viewBox}
+                    focusable="false"
+                    set:html={months.inner}
+                />
+                <span class="mono">{t.months}</span>
+            </div>
+        </div>
+        <p class="sr-only">
+            {t.career}: <span data-live="career-years">{idle['career-years']}</span> {t.years},
+            <span data-live="career-months">{idle['career-months']}</span> {t.months}
+        </p>
+        <p class="mono faint mt-2">{t.since} {monthYear(profile.digitalSince)}</p>
+    </div>
+</div>

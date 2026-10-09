@@ -1,0 +1,31 @@
+---
+import { PauseCircle, PlayCircle } from '@untitledui/icons';
+import { profile } from '../../data/profile';
+import { langFrom, useUi } from '../../i18n/utils';
+import { buildInfo } from '../../lib/build-info';
+import { factHtml } from '../../lib/readout';
+import { idleValues } from '../../lib/snapshot';
+
+const lang = langFrom(Astro.currentLocale);
+const ui = useUi(lang);
+const t = ui.readout;
+const idle = idleValues(new Date(), profile.digitalSince);
+// The system state opens the strip (it used to sit in the header, which now needs the room).
+const facts = [ui.chrome.state, ...t.facts].map((fact) => factHtml(fact, idle, buildInfo.sha));
+---
+
+<div class="readout no-print mx-auto w-full max-w-[70rem] px-4 md:px-6" role="group" aria-label={t.label} data-readout>
+    <div class="readout-bar tk">
+        <span class="mono faint readout-code">MOD.01E / STATUS</span>
+        <span class="led" aria-hidden="true"></span>
+        <div class="readout-window" aria-hidden="true">
+            <ul class="readout-facts">
+                {facts.map((html, i) => <li data-fact data-active={i === 0 ? '' : undefined} set:html={html} />)}
+            </ul>
+        </div>
+        <button type="button" class="sq-btn sq-btn--icon readout-pause" aria-label={t.pause} aria-pressed="false" hidden>
+            <PauseCircle size={18} aria-hidden="true" />
+            <PlayCircle size={18} aria-hidden="true" />
+        </button>
+    </div>
+</div>

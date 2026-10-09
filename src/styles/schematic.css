@@ -1,0 +1,169 @@
+/*
+  Schematic motion: the Scope pipeline (wires and signal) and the Log timeline spine.
+  Static structure first (final state: energized path shown, spine drawn, every log node lit);
+  animation only under :root[data-motion="on"] and @supports scroll timelines. Packet moves smoothly (it was stepped and felt laggy); stepped for
+  instrument things (packet, nodes), smooth allowed for the ambient spine fill.
+*/
+
+/* ---- Scope: the packet is hidden unless it can be scroll-linked. ---- */
+.scope-packet {
+    position: absolute;
+    top: calc(50% - 0.25rem);
+    left: 0;
+    display: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--ink);
+    background: var(--amber);
+    pointer-events: none;
+}
+
+/* Wires re-colour in two steps when the selection moves (state change, not ambient motion). */
+:root[data-motion="on"] .scope-nodes > li + li::before {
+    transition: background-color var(--dur-snap) steps(2, end);
+}
+
+@supports (animation-timeline: view()) {
+    /* The packet sits behind the nodes (z-index), so it travels wire to wire. It only moves
+       while the visitor scrolls: position follows the packet's own pass through the viewport. */
+    :root[data-motion="on"] .scope-packet {
+        display: block;
+        animation-name: packet-x;
+        animation-duration: 1ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 20% cover 80%;
+    }
+
+    @media (max-width: 639px) {
+        :root[data-motion="on"] .scope-packet {
+            top: 0;
+            left: 1rem;
+            animation-name: packet-y;
+        }
+    }
+}
+
+@keyframes packet-x {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: calc(100% - 0.5rem);
+    }
+}
+
+@keyframes packet-y {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: calc(100% - 0.5rem);
+    }
+}
+
+/* ---- Log: a spine down the left of the experience list, one node per entry. ---- */
+.log-list {
+    --pad: 1.25rem;
+    --spine: 0.375rem;
+    --node: 0.625rem;
+
+    position: relative;
+    padding-left: var(--pad);
+}
+
+@media (min-width: 768px) {
+    .log-list {
+        --pad: 2rem;
+        --spine: 0.5rem;
+    }
+}
+
+.log-list::before,
+.log-list::after {
+    content: "";
+    position: absolute;
+    top: 0.9375rem;
+    bottom: 0;
+    left: var(--spine);
+    width: 1px;
+    pointer-events: none;
+}
+
+.log-list::before {
+    background: var(--hair);
+}
+
+/* Fill: fully drawn by default (final state). */
+.log-list::after {
+    background: var(--ink);
+    transform-origin: top;
+}
+
+.log-list > li {
+    position: relative;
+}
+
+/* Node aligned with the module head; lit by default (final state). */
+.log-list > li::before {
+    content: "";
+    position: absolute;
+    top: 0.625rem;
+    left: calc(var(--spine) - var(--pad) - var(--node) / 2 + 0.5px);
+    z-index: 1;
+    box-sizing: border-box;
+    width: var(--node);
+    height: var(--node);
+    border: 1px solid var(--ink);
+    background: var(--led);
+}
+
+@supports (animation-timeline: view()) {
+    /* The list's own view timeline, with the lower half of the viewport excluded, so the fill's
+       head sits on the viewport's middle line: it starts when the list top reaches that line and
+       ends when the list bottom does. */
+    :root[data-motion="on"] .log-list {
+        view-timeline-name: --log;
+        view-timeline-axis: block;
+        view-timeline-inset: 0 50%;
+    }
+
+    :root[data-motion="on"] .log-list::after {
+        animation-name: spine-fill;
+        animation-duration: 1ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --log;
+        animation-range: entry 0% exit 0%;
+    }
+
+    /* Each node snaps lit when it crosses the middle of the viewport (monotonic, no flicker). */
+    :root[data-motion="on"] .log-list > li::before {
+        animation-name: node-lit;
+        animation-duration: 1ms;
+        animation-timing-function: steps(1, end);
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover 49% cover 50%;
+    }
+}
+
+@keyframes spine-fill {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes node-lit {
+    from {
+        border-color: var(--edge);
+        background: transparent;
+    }
+}

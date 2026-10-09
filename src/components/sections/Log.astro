@@ -21,7 +21,7 @@ function range(start: string | null, end: string | null, current: boolean): stri
     <h2 id="log-title" class="display text-4xl md:text-5xl">{t.title}</h2>
     <p class="muted mt-3">{t.intro}</p>
 
-    <ol class="mt-8 grid gap-4">
+    <ol class="log-list mt-8 grid gap-4">
         {
             entries.map((entry, i) => {
                 const d = entry.data;

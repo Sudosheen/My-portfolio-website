@@ -1,9 +1,23 @@
+import { initBoot } from './boot';
 import { initClock } from './clock';
 import { initContact } from './contact';
+import { initField } from './field';
+import { initGridGlow } from './grid-glow';
+import { initMotion } from './motion';
+import { initReadout } from './readout';
 import { initScope } from './scope';
+import { initSpy } from './spy';
 import { initTheme } from './theme';
+import { initTick } from './tick';
 
 initTheme();
+initMotion();
+initBoot();
+initTick();
 initClock();
+initField();
+initGridGlow();
+initReadout();
+initSpy();
 initScope();
 initContact();

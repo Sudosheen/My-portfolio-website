@@ -1,0 +1,110 @@
+/*
+  Status readout strip under the hero. Without scripts, or with motion off, every fact shows as one
+  wrapped line separated by " · ". With motion on and scripts running ([data-rotating]) a fixed-height
+  window shows one fact at a time. All animation under :root[data-motion="on"].
+*/
+@layer components {
+    .readout {
+        margin-bottom: 1.5rem;
+    }
+
+    .readout-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        background: var(--surface);
+        border: 1px solid var(--hair);
+    }
+
+    .readout-code {
+        flex: none;
+        white-space: nowrap;
+    }
+
+    .readout-window {
+        flex: 1 1 auto;
+        min-width: 0;
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1.5rem;
+    }
+
+    .readout-facts {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .readout-facts li {
+        display: inline;
+    }
+
+    .readout-facts li:not(:last-child)::after {
+        content: " \00b7 ";
+        color: var(--ink-faint);
+    }
+
+    .readout-pause[hidden] {
+        display: none;
+    }
+
+    .readout-pause svg:last-child {
+        display: none;
+    }
+
+    .readout-pause[aria-pressed="true"] svg:first-child {
+        display: none;
+    }
+
+    .readout-pause[aria-pressed="true"] svg:last-child {
+        display: block;
+    }
+
+    /* Rotating mode: one fact in a fixed-height window, so changing facts never shifts layout. */
+    :root[data-motion="on"] .readout[data-rotating] {
+        .readout-window {
+            height: 1.5rem;
+            overflow: hidden;
+        }
+
+        .readout-facts li {
+            display: none;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .readout-facts li::after {
+            content: none;
+        }
+
+        .readout-facts li[data-active] {
+            display: block;
+        }
+
+        .readout-facts li[data-enter] {
+            animation: readout-flip 270ms steps(3, end) backwards;
+        }
+    }
+
+    @keyframes readout-flip {
+        from {
+            clip-path: inset(0 0 100% 0);
+            transform: translateY(-0.25rem);
+        }
+
+        to {
+            clip-path: inset(0);
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 30rem) {
+        .readout-code {
+            display: none;
+        }
+    }
+}

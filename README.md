@@ -29,8 +29,11 @@ src/content/        experience, projects, education (JSON, schema in content.con
 src/i18n/ui.ts      every UI string, EN source of truth, FR type-checked against it
 src/data/           profile.ts (identity, contact), card.ts (Spline scenes + card CSP), audit.json
 src/components/     habitat/ (shell), instrument/ (modules), sections/, pages/
-src/styles/         open-spec.css (tokens), habitat.css, instrument.css, theme.css (Untitled UI, untouched)
-src/scripts/        clock, scope, theme, contact, card (vanilla, ~2 KB gzipped on the home page)
+src/styles/         open-spec.css (tokens), habitat.css, instrument.css, motion.css (all animation),
+                    hero-panel.css, schematic.css, header-motion.css, readout.css, theme.css (Untitled UI, untouched)
+src/scripts/        tick (one live loop), motion, boot, clock, field + contour-field (lazy WebGL), readout, spy,
+                    scope, theme, contact, card
+src/lib/            solar, snapshot, dial, career, dotmatrix, contour, readout (pure, unit-tested)
 scripts/            audit.mjs, a11y.mjs, prune-orphans.mjs
 ```
 
@@ -41,6 +44,17 @@ scripts/            audit.mjs, a11y.mjs, prune-orphans.mjs
 - **Strings**: edit `src/i18n/ui.ts`. `npm test` fails if EN and FR drift apart, and checks French
   spacing (non-breaking space before `: ; ! ?`).
 - **Contact details** live in `src/data/profile.ts`. Phone numbers render only after a click.
+
+## Motion
+
+Everything animated is declared under `html[data-motion="on"]`, which a small head script sets before
+first paint: a stored MOTION choice wins (stored only when the visitor clicks the header switch),
+otherwise `prefers-reduced-motion` decides. Instrument things move in steps (power-on, reveals, LEDs,
+readouts); ambient things (pod contours, wave dividers, the log spine) drift smoothly but only as you
+scroll. Scroll effects use CSS scroll-driven animations inside `@supports`, so other browsers get a still
+page. Contour fields (hero Location tile, sage pods) are drawn by one small hand-written
+WebGL2 shader, loaded lazily and only when motion is on; each field's static SVG poster is the fallback.
+There is no animation library.
 
 ## Design system
 
@@ -56,8 +70,10 @@ at build time with no client JavaScript.
 ## Budgets and checks
 
 `npm run audit:site` fails the build when, for the EN home page (gzip): HTML > 25 KB, CSS > 20 KB,
-JS > 10 KB, fonts > 110 KB, total > 230 KB, or any third-party origin appears. A strict CSP
-(`default-src 'self'`, hashed inline scripts) enforces the same at runtime.
+eager JS > 12 KB, lazy JS chunks > 8 KB, fonts > 110 KB, total > 230 KB, or any third-party origin
+appears. It also fails on any inline `style=""` attribute (the production CSP blocks them; the dev
+server has no CSP, so they look fine locally) and on any inline script or style after the CSP meta
+whose hash is missing from the policy. A strict CSP (`default-src 'self'`) enforces the rest at runtime.
 
 ## The 3D card (`/card/`)
 

@@ -3,6 +3,7 @@ import { profile } from '../../data/profile';
 import { langFrom, useUi } from '../../i18n/utils';
 import Hero from '../habitat/Hero.astro';
 import Principles from '../habitat/Principles.astro';
+import Readout from '../instrument/Readout.astro';
 import Scope from '../instrument/Scope.astro';
 import Section from '../Section.astro';
 import Contact from '../sections/Contact.astro';
@@ -26,6 +27,7 @@ const person = {
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(person)} />
 <Hero />
+<Readout />
 <Principles />
 <Section>
     <Scope />

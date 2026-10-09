@@ -12,6 +12,12 @@ More detail: [docs/design.md](docs/design.md) (concept, tokens, decisions), [doc
 Astro 7 static, React 19 only for build-time Untitled UI icons (no islands), Tailwind v4, fonts self-hosted
 through the Astro Fonts API (Fraunces display, IBM Plex Sans, IBM Plex Mono), Spline viewer pinned to exact
 `1.9.44` (with matching `@splinetool/*-wasm@1.9.44`), loaded only on `/card/` after a click. Node 24.
+No animation library: CSS (scroll-driven animations inside `@supports`, static fallback), one shared tick loop
+(`src/scripts/tick.ts`), and one hand-written WebGL2 shader (`src/scripts/contour-field.ts`, a lazy chunk that only
+loads with motion on, no data saving and a capable device). Any element with `data-field-host` and a direct-child
+`canvas[data-field]` becomes a live contour field when near the viewport (hero Location tile, sage pods), tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback.
+Scroll-linked effects must not sit inside `overflow: hidden/auto` boxes (those become the scroller): use
+`overflow-clip` on pods.
 
 ## Commands
 ```bash
@@ -44,13 +50,20 @@ looked at in light AND dark mode, EN AND FR, at about 375 px and 1280 px.
    `src/layouts/Base.astro` frontmatter via `applyCsp` (`src/lib/csp.ts`), never in body components.
 3. No cookies, no analytics. Theme and language persist only after an explicit toggle; default follows the OS.
 4. Layout is rem-based with a fluid root font size. No fixed px except 1px hairlines and `9999px` radii.
-5. Dark mode is the `.dark-mode` class: amber sun in light, crescent moon in dark. Use `--on-amber` for text on amber.
+5. Day/Night is the `.dark-mode` class (the theme toggle). The hero solar dial shows the real sky over Montpellier
+   (sun by day, moon by night), independent of the theme. Use `--on-amber` for text on amber.
 6. French typography: NBSP before `: ; ! ?` and inside « ». Tests enforce it.
-7. Home (EN) budget: total <= 230 KB gzipped (HTML 25, CSS 20, JS 10, fonts 110).
+7. Home (EN) budget: total <= 230 KB gzipped (HTML 25, CSS 20, eager JS 12, lazy JS 8 reported on its own line, fonts 110).
 8. No testimonials or references page. None may be added.
 9. Accessibility target WCAG 2.2 AA; it is a self-assessment, never claim "compliant". Prefer native elements
    (`details/summary`) over ARIA; state is never carried by colour alone.
-10. Motion is stepped (`steps()`, ~90 ms) and instant under `prefers-reduced-motion`. No easing curves.
+10. Motion. Instrument motion (modules, text, LEDs, readouts) is stepped (`steps()`) and never flickers. Ambient motion
+    (contour drift, parallax) may be smooth but is scroll-linked or finite (< 5 s). The only continuous motion (clock
+    colon, readout, optional shader) stops with the MOTION toggle. Everything animated is declared under
+    `:root[data-motion="on"]` (set before paint: a stored choice, else `prefers-reduced-motion`); `off` is instant.
+11. No inline `style=""` attributes: the production CSP blocks them and `npm run audit:site` fails on any. Use classes,
+    data attributes, SVG presentation attributes (`opacity`, `transform`) or CSSOM (`el.style.setProperty`). The dev
+    server has no CSP, so verify policy issues on `npm run preview`.
 
 ## Publication rules (the repo and site are public)
 - Never commit referee quotes or contact details, Xref internals (client name, ticket IDs, colleague names),
