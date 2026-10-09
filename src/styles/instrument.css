@@ -62,12 +62,17 @@
         background: var(--ink-faint);
     }
 
+    /* A stepped blink, not a fade (instrument motion never eases). Only while hovered or focused. */
     .has-led:hover .led,
     .has-led:focus-within .led {
-        animation: led-pulse 1.2s ease-in-out infinite;
+        animation: led-pulse 1.2s steps(1, end) infinite;
     }
 
     @keyframes led-pulse {
+        0% {
+            opacity: 1;
+        }
+
         50% {
             opacity: 0.3;
         }
@@ -211,6 +216,11 @@
         font-size: 0.875rem;
     }
 
+    /* Always one column (a narrow side panel), whatever the viewport. */
+    .spec--stack {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     /* Very narrow screens: label above value, so long values never push the page sideways. */
     @media (max-width: 479px) {
         .spec {
@@ -284,12 +294,47 @@
         transform: rotate(180deg);
     }
 
-    /* Scope schematic. */
-    .scope-nodes {
+    /* Project cards: equal height in a row, footer (spec + case row) pinned to the bottom. */
+    .project-foot {
+        margin-top: 1rem;
+    }
+
+    .project-case {
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
-        gap: 0.5rem 0;
+        min-height: 2.25rem;
+        margin-top: 0.5rem;
+    }
+
+    /* The featured card: summary on the left, the spec always open on the right (wide screens). */
+    @media (min-width: 768px) {
+        .project-feature {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 0 2rem;
+            align-items: stretch;
+        }
+
+        .project-feature .project-foot {
+            margin-top: 0;
+        }
+
+        .project-feature .project-foot > .border-t {
+            border-top: 0;
+            padding-top: 0;
+        }
+    }
+
+    /* Scope schematic: nodes spread across the module, flexible wires between them. */
+    .scope-track {
+        position: relative;
+    }
+
+    .scope-nodes {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -298,25 +343,50 @@
     .scope-nodes > li {
         display: flex;
         align-items: center;
+        flex: none;
+    }
+
+    .scope-nodes > li + li {
+        flex: 1 1 auto;
     }
 
     .scope-nodes > li + li::before {
         content: "";
-        width: 1.25rem;
+        flex: 1 1 auto;
+        min-width: 1rem;
         height: 1px;
         background: var(--edge);
     }
 
-    /* Narrow screens: a tidy 2x2 grid instead of wires that dangle across wrapped rows. */
+    /* Energized path: wires up to the selected node are drawn in ink (state, not motion). */
+    .scope-nodes[data-active="1"] > li:nth-child(-n + 2)::before,
+    .scope-nodes[data-active="2"] > li:nth-child(-n + 3)::before,
+    .scope-nodes[data-active="3"] > li:nth-child(-n + 4)::before,
+    .scope-nodes[data-active="4"] > li:nth-child(-n + 5)::before,
+    .scope-nodes[data-active="5"] > li:nth-child(-n + 6)::before {
+        background: var(--ink);
+    }
+
+    /* Narrow screens: a vertical pipeline, nodes stacked, wires down the left. */
     @media (max-width: 639px) {
         .scope-nodes {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.5rem;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .scope-nodes > li,
+        .scope-nodes > li + li {
+            flex: none;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .scope-nodes > li + li::before {
-            display: none;
+            flex: none;
+            width: 1px;
+            min-width: 0;
+            height: 1.25rem;
+            margin-left: 1.25rem;
         }
 
         .scope-nodes .node {
@@ -341,7 +411,7 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--ink);
-        background: transparent;
+        background: var(--surface);
         cursor: pointer;
     }
 
@@ -466,25 +536,5 @@
         fill: var(--unlit);
     }
 
-    .dm .colon[data-off] .on {
-        fill: var(--unlit);
-    }
 
-    .daytrack {
-        position: relative;
-        height: 1px;
-        margin: 0.875rem 0.25rem 0.625rem;
-        background: var(--edge);
-    }
-
-    .daytrack > i {
-        position: absolute;
-        top: -0.25rem;
-        width: 0.5625rem;
-        height: 0.5625rem;
-        border-radius: 9999px;
-        background: var(--amber);
-        border: 1px solid var(--ink);
-        transform: translateX(-50%);
-    }
 }

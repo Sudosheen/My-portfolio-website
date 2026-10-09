@@ -1,6 +1,6 @@
 /*
   Habitat register: the warm, still, organic shell. Narrative content lives here.
-  Large radii, pods in sage / clay / sun, topographic contour lines, a flat sun.
+  Large radii, pods in sage / clay / sun, topographic contour lines.
 */
 @layer components {
     /* Fraunces: a soft, wide, warm serif. Light-ish weight keeps big sizes airy, not heavy. */
@@ -48,61 +48,6 @@
 
     .pod--sun {
         background: var(--sun);
-    }
-
-    .arch {
-        position: relative;
-        border-radius: 9999px 9999px 0 0;
-        background: var(--sage);
-        overflow: hidden;
-    }
-
-    /*
-      The sun is placed by percentage inside the arch (never inside the cropped SVG), so it
-      stays a perfect circle fully clear of the curved edge at any arch size or aspect.
-    */
-    .sun-disc {
-        position: absolute;
-        left: 52%;
-        top: 7%;
-        width: 26%;
-        aspect-ratio: 1;
-        border-radius: 9999px;
-        background: var(--amber);
-    }
-
-    /* Dark mode: the sun becomes a crescent moon. The mask cuts the crescent out of the disc, so
-       the arch and contour lines show through the cut (nothing is painted over them). */
-    .dark-mode .sun-disc {
-        background: var(--ink);
-        -webkit-mask-image: radial-gradient(ellipse 52% 52% at 66% 38%, transparent 0, transparent 99%, #000 100%);
-        mask-image: radial-gradient(ellipse 52% 52% at 66% 38%, transparent 0, transparent 99%, #000 100%);
-    }
-
-    /* Wider layouts: the clock card sits lower, so the sun can sit lower too. */
-    @media (min-width: 768px) {
-        .sun-disc {
-            left: 44%;
-            top: 16%;
-            width: 24%;
-        }
-    }
-
-    .arch svg {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .contour-ring {
-        fill: none;
-        stroke: var(--moss);
-        stroke-width: 1;
-        vector-effect: non-scaling-stroke;
-    }
-
-    .sun {
-        fill: var(--amber);
     }
 
     .contour-line {

@@ -17,8 +17,17 @@ const t = useUi(lang).contact;
     <Wave />
 
     <!-- Same habitat pod as "How I work": contour lines behind, the instrument module set inside. -->
-    <div class="pod relative mt-8 overflow-hidden p-6 md:p-12">
+    <div
+        class="pod relative mt-8 overflow-clip p-6 md:p-12"
+        data-field-host
+        data-field-alpha="0.32"
+        data-field-zoom="0.7"
+        data-field-seed="3"
+        data-field-ratio="0.75"
+        data-field-fps="24"
+    >
         <PodContours corner="left" seed={9} />
+        <canvas class="field-canvas" data-field aria-hidden="true" hidden></canvas>
 
         <div class="relative grid gap-10 lg:grid-cols-[1fr_1.15fr]">
             <div>

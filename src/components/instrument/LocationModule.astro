@@ -1,0 +1,38 @@
+---
+/**
+ * Location tile: a sage habitat pod set inside the instrument grid, so the hero keeps its warmth.
+ * The contour lines are a static poster (build-time SVG) that a live WebGL field replaces when motion
+ * is on and the device can afford it; the live values come from tick.ts.
+ */
+import { profile } from '../../data/profile';
+import { idleValues } from '../../lib/snapshot';
+import { langFrom, useUi } from '../../i18n/utils';
+import PodContours from '../habitat/PodContours.astro';
+
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang).hero;
+const idle = idleValues(new Date(), profile.digitalSince);
+
+const decimal = (n: number) => n.toFixed(2).replace('.', lang === 'fr' ? ',' : '.');
+const { lat, lon, city } = profile.location;
+const coords = `${decimal(Math.abs(lat))}° ${lat >= 0 ? 'N' : 'S'} · ${decimal(Math.abs(lon))}° ${lon >= 0 ? 'E' : 'W'}`;
+---
+
+<div class="module tk tile tile--location" role="group" aria-label={t.panel.location} data-field-host>
+    <PodContours corner="right" seed={11} />
+    <!-- Live contour field (WebGL, lazy, see src/scripts/field.ts); revealed over the poster once it draws. -->
+    <canvas class="field-canvas" data-field aria-hidden="true" hidden></canvas>
+    <div class="module-head relative">
+        <span class="mono" aria-hidden="true">MOD.01B / LOCATION</span>
+    </div>
+    <div class="tile-body relative">
+        <p class="display tile-place">{city}</p>
+        <p class="mono mt-1">{coords}</p>
+        <dl class="spec spec--tight mt-3">
+            <dt>UTC</dt>
+            <dd><span data-live="utc">{idle.utc}</span> <span data-live="zone">{idle.zone}</span></dd>
+            <dt>{t.panel.elevation}</dt>
+            <dd><span data-live="elevation">{idle.elevation}</span>°</dd>
+        </dl>
+    </div>
+</div>

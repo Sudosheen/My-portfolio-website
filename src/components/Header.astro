@@ -7,12 +7,22 @@ const t = useUi(lang);
 const home = href(lang);
 
 const links = [
-    { label: t.nav.scope, href: `${home}#scope` },
-    { label: t.nav.log, href: `${home}#log` },
-    { label: t.nav.projects, href: `${home}#projects` },
-    { label: t.nav.education, href: `${home}#education` },
-    { label: t.nav.contact, href: `${home}#contact` },
+    { label: t.nav.scope, href: `${home}#scope`, id: 'scope' },
+    { label: t.nav.log, href: `${home}#log`, id: 'log' },
+    { label: t.nav.projects, href: `${home}#projects`, id: 'projects' },
+    { label: t.nav.education, href: `${home}#education`, id: 'education' },
+    { label: t.nav.contact, href: `${home}#contact`, id: 'contact' },
     { label: t.nav.card, href: href(lang, 'card/') },
+];
+
+const sections = [
+    { id: 'intro', label: t.nav.intro },
+    { id: 'principles', label: t.nav.principles },
+    { id: 'scope', label: t.nav.scope },
+    { id: 'log', label: t.nav.log },
+    { id: 'projects', label: t.nav.projects },
+    { id: 'education', label: t.nav.education },
+    { id: 'contact', label: t.nav.contact },
 ];
 
 const switcher = (Object.keys(languages) as Lang[]).map((l) => ({
@@ -23,25 +33,23 @@ const switcher = (Object.keys(languages) as Lang[]).map((l) => ({
 }));
 ---
 
+<div class="hdr-bar no-print" data-spy-bar aria-hidden="true" hidden></div>
 <header class="no-print top-3 z-40 mx-auto w-full max-w-[70rem] px-4 pt-3 md:sticky md:px-6">
-    <div class="module tk flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-3 py-2">
+    <div class="module tk hdr flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-3 pt-2 pb-2 md:pb-3">
         <div class="flex items-center gap-4">
             <a href={home} class="has-led inline-flex min-h-6 items-center gap-2 no-underline">
                 <i class="led" aria-hidden="true"></i>
                 <span class="mono text-ink">Osheen Turner</span>
             </a>
-            <span class="mono faint hidden lg:inline">{t.chrome.state}</span>
         </div>
 
-        <nav aria-label={t.a11y.nav} class="order-last w-full md:order-none md:w-auto">
-            <ul class="mono flex flex-wrap gap-x-4 gap-y-1">
+        <nav aria-label={t.a11y.nav} class="hdr-nav order-last w-full md:order-none md:w-auto">
+            <ul class="mono">
                 {
                     links.map((l) => (
                         <li>
-                            <a
-                                class="muted inline-flex min-h-6 items-center no-underline hover:text-ink hover:underline"
-                                href={l.href}
-                            >
+                            <a class="hdr-link" href={l.href} data-spy-link={l.id}>
+                                {l.id && <i class="led" data-state="idle" aria-hidden="true" />}
                                 {l.label}
                             </a>
                         </li>
@@ -70,6 +78,18 @@ const switcher = (Object.keys(languages) as Lang[]).map((l) => ({
                     ))
                 }
             </div>
+            <button type="button" class="motion-toggle" data-motion-toggle aria-pressed="true">
+                <i class="led" aria-hidden="true"></i>
+                {t.chrome.motion}
+                <span aria-hidden="true">
+                    <span data-state="on">{t.chrome.motionOn}</span><span data-state="off">{t.chrome.motionOff}</span>
+                </span>
+            </button>
+        </div>
+
+        <div class="hdr-meter" data-spy-meter aria-hidden="true" hidden>
+            {sections.map((x) => <i data-spy-cell={x.id} data-label={x.label} data-state="todo" />)}
+            <b class="hdr-fill" data-spy-p></b>
         </div>
     </div>
 </header>

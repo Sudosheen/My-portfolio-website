@@ -4,6 +4,11 @@
 @import "./open-spec.css";
 @import "./instrument.css";
 @import "./habitat.css";
+@import "./hero-panel.css";
+@import "./schematic.css";
+@import "./header-motion.css";
+@import "./readout.css";
+@import "./motion.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-react-aria-components";
@@ -90,27 +95,57 @@ details summary::-webkit-details-marker {
     animation-timing-function: steps(4, end);
 }
 
+/*
+  Motion is gated by html[data-motion], set before paint by the head script in Base.astro: a stored
+  MOTION choice wins, otherwise prefers-reduced-motion decides. "off" means instant: no animation
+  (including scroll-linked ones, which ignore durations), no transition, no smooth scrolling.
+  Decorative animation is only ever declared under :root[data-motion="on"] (see motion.css).
+*/
+:root[data-motion="off"] {
+    scroll-behavior: auto;
+}
+
+:root[data-motion="off"] *,
+:root[data-motion="off"] *::before,
+:root[data-motion="off"] *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+:root[data-motion="off"]::view-transition-group(*),
+:root[data-motion="off"]::view-transition-old(*),
+:root[data-motion="off"]::view-transition-new(*) {
+    animation: none !important;
+}
+
+/* Safety net if the head script did not run: still honour the OS setting. */
 @media (prefers-reduced-motion: reduce) {
-    html {
+    :root:not([data-motion="on"]) {
         scroll-behavior: auto;
     }
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
+    :root:not([data-motion="on"]) *,
+    :root:not([data-motion="on"]) *::before,
+    :root:not([data-motion="on"]) *::after {
+        animation: none !important;
+        transition: none !important;
     }
 
-    ::view-transition-group(*),
-    ::view-transition-old(*),
-    ::view-transition-new(*) {
+    :root:not([data-motion="on"])::view-transition-group(*),
+    :root:not([data-motion="on"])::view-transition-old(*),
+    :root:not([data-motion="on"])::view-transition-new(*) {
         animation: none !important;
     }
 }
 
 @media print {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
     :root,
     .dark-mode {
         --canvas: #fff;

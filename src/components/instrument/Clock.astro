@@ -1,43 +1,40 @@
 ---
 import { profile } from '../../data/profile';
 import { dotMatrix } from '../../lib/dotmatrix';
+import { idleValues } from '../../lib/snapshot';
 import { langFrom, useUi } from '../../i18n/utils';
+import SolarDial from './SolarDial.astro';
 
 const t = useUi(langFrom(Astro.currentLocale)).hero;
-const idle = dotMatrix('--:--');
-const { lat, lon, timeZone } = profile.location;
+const idle = idleValues(new Date(), profile.digitalSince);
+const dots = dotMatrix(idle.time);
 ---
 
-<div
-    class="module tk has-led"
-    role="group"
-    aria-label={t.clock}
-    data-clock
-    data-lat={lat}
-    data-lon={lon}
-    data-tz={timeZone}
-    data-label-sun={t.sun}
-    data-label-daylight={t.daylight}
-    data-label-night={t.night}
->
+<div class="module tk has-led" role="group" aria-label={t.clock} data-clock>
     <div class="module-head">
         <span class="mono" aria-hidden="true">MOD.01 / CLOCK</span>
         <i class="led" aria-hidden="true"></i>
     </div>
-    <div class="px-4 pb-4 pt-3">
-        <svg
-            class="dm max-w-44"
-            data-dm
-            viewBox={idle.viewBox}
-            aria-hidden="true"
-            focusable="false"
-            set:html={idle.inner}
-        />
-        <p class="mono mt-3">
-            <span class="faint">{t.clock}</span><br />
-            <span data-clock-text>--:--</span>
-        </p>
-        <div class="daytrack" aria-hidden="true"><i data-sun-marker style="left: 0%"></i></div>
-        <p class="mono faint" data-sun-text>{t.sun}</p>
+    <div class="clock-body">
+        <div class="clock-time">
+            <svg
+                class="dm"
+                data-dm-live="time"
+                data-value={idle.time}
+                viewBox={dots.viewBox}
+                aria-hidden="true"
+                focusable="false"
+                set:html={dots.inner}
+            />
+            <p class="mono mt-3">
+                <span class="faint">{t.clock}</span><br />
+                <span data-live="time">{idle.time}</span> <span data-live="zone">{idle.zone}</span>
+            </p>
+        </div>
+        <SolarDial />
     </div>
+    <p class="clock-sun mono faint">
+        <span class="when-day">{t.daylight} <span data-live="daylight">{idle.daylight}</span></span>
+        <span class="when-night">{t.night}</span>
+    </p>
 </div>

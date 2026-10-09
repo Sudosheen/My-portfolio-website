@@ -1,0 +1,39 @@
+---
+/** Build tile: real build facts only (git sha, deploy date, the last committed audit). */
+import audit from '../../data/audit.json';
+import { buildInfo } from '../../lib/build-info';
+import { langFrom, useUi } from '../../i18n/utils';
+
+const t = useUi(langFrom(Astro.currentLocale));
+const p = t.hero.panel;
+const home = audit.home as { totalKb: number; jsKb: number; thirdParty: number } | null;
+const kb = (n: number) => `${n} ${p.kb}`;
+---
+
+<div class="module tk tile" role="group" aria-label={t.footer.build}>
+    <div class="module-head">
+        <span class="mono" aria-hidden="true">MOD.01C / BUILD</span>
+        <i class="led" aria-hidden="true"></i>
+    </div>
+    <div class="tile-body">
+        <dl class="spec spec--tight">
+            <dt>{t.footer.build}</dt>
+            <dd>{buildInfo.sha}</dd>
+            <dt>{t.footer.deployed}</dt>
+            <dd>{buildInfo.date}</dd>
+            {
+                home && (
+                    <>
+                        <dt>{p.weight}</dt>
+                        <dd>{kb(home.totalKb)}</dd>
+                        <dt>{p.script}</dt>
+                        <dd>{kb(home.jsKb)}</dd>
+                        <dt>{p.thirdParty}</dt>
+                        <dd>{home.thirdParty}</dd>
+                    </>
+                )
+            }
+        </dl>
+        {audit.audited && <p class="mono faint mt-2">{p.audit} {audit.audited}</p>}
+    </div>
+</div>

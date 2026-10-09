@@ -73,23 +73,42 @@ const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
         <Font cssVariable="--font-face-sans" preload />
         <Font cssVariable="--font-face-mono" />
 
-        <!-- Runs before first paint: no flash. Reads a stored choice, never writes one. -->
+        <!--
+            Runs before first paint: no flash. Reads stored choices, never writes one.
+            It sits before the CSP meta, so the policy does not govern it (and it is not hashed).
+        -->
         <script is:inline>
             (function () {
                 var d = document.documentElement;
                 d.classList.add('js');
-                var dark;
+                var dark, motion;
                 try {
                     var s = localStorage.getItem('theme');
                     dark = s ? s === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+                    motion = localStorage.getItem('motion');
                 } catch (e) {
                     dark = matchMedia('(prefers-color-scheme: dark)').matches;
                 }
                 if (dark) d.classList.add('dark-mode');
+
+                // Motion: a stored choice wins, otherwise follow prefers-reduced-motion.
+                // All decorative animation keys off html[data-motion="on"].
+                var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+                d.dataset.motion = motion === 'on' || motion === 'off' ? motion : reduce ? 'off' : 'on';
+
+                // The boot sequence plays on a fresh visit only: not on internal navigation, back/forward or reload.
+                try {
+                    var nav = performance.getEntriesByType('navigation')[0];
+                    var internal = document.referrer && new URL(document.referrer).origin === location.origin;
+                    if (internal || (nav && nav.type !== 'navigate')) d.dataset.boot = 'skip';
+                } catch (e) {}
             })();
         </script>
     </head>
     <body>
+        <!-- Site-wide: an instrument grid that lights up around the pointer, behind all content
+             (motion on, mouse or pen only; see src/scripts/grid-glow.ts). -->
+        <div class="grid-glow no-print" data-grid-glow aria-hidden="true"></div>
         <a
             href="#main"
             class="no-print sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-on-ink"

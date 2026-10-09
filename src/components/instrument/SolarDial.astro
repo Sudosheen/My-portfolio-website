@@ -1,0 +1,48 @@
+---
+/**
+ * Solar dial: the sun climbs the upper arc from sunrise (left) to sunset (right), then the moon
+ * returns along the lower arc. The marker's position is set by src/scripts/clock.ts from the real
+ * solar phase for Montpellier. Decorative (aria-hidden): the times beside it are real text.
+ */
+import { dialPoint } from '../../lib/dial';
+import { idleValues } from '../../lib/snapshot';
+import { profile } from '../../data/profile';
+import { langFrom, useUi } from '../../i18n/utils';
+
+const t = useUi(langFrom(Astro.currentLocale)).hero;
+const geometry = { cx: 100, cy: 56, rx: 84, ry: 42 };
+const start = dialPoint('day', 0, geometry); // scripts off: the marker rests at sunrise
+const idle = idleValues(new Date(), profile.digitalSince);
+---
+
+<div class="dial-wrap">
+    <svg
+        class="dial"
+        viewBox="0 0 200 112"
+        aria-hidden="true"
+        focusable="false"
+        data-dial
+        data-cx={geometry.cx}
+        data-cy={geometry.cy}
+        data-rx={geometry.rx}
+        data-ry={geometry.ry}
+    >
+        <line class="dial-horizon" x1="6" y1="56" x2="194" y2="56"></line>
+        <path class="dial-day" d="M16 56A84 42 0 0 1 184 56"></path>
+        <path class="dial-night" d="M184 56A84 42 0 0 1 16 56"></path>
+        <path class="dial-tick" d="M16 50V62M184 50V62M100 10V16M100 96V102"></path>
+
+        <g data-dial-marker transform={`translate(${start.x.toFixed(1)} ${start.y.toFixed(1)})`}>
+            <circle class="dial-halo" r="10"></circle>
+            <g class="dial-sun">
+                <circle r="5.5"></circle>
+                <path d="M0 -8.5V-11.5M0 8.5V11.5M-8.5 0H-11.5M8.5 0H11.5M6 6L8.2 8.2M-6 6L-8.2 8.2M6 -6L8.2 -8.2M-6 -6L-8.2 -8.2"></path>
+            </g>
+            <path class="dial-moon" d="M4 -7A7 7 0 0 0 4 7A9 9 0 0 1 4 -7Z"></path>
+        </g>
+    </svg>
+    <p class="dial-labels mono">
+        <span><span class="faint">{t.panel.rise}</span> <span data-live="sunrise">{idle.sunrise}</span></span>
+        <span><span class="faint">{t.panel.set}</span> <span data-live="sunset">{idle.sunset}</span></span>
+    </p>
+</div>
