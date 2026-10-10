@@ -10,25 +10,111 @@
     "Untitled UI",
     "TypeScript"
   ],
-  "caseStudy": false,
+  "caseStudy": true,
   "en": {
     "title": "This website",
     "summary": "Open, lean and bilingual: a static build with no cookies, no analytics and no third-party requests.",
     "role": "Design and build",
-    "architecture": "Static HTML first. JavaScript only for small instruments: clock, schematic, toggles.",
+    "architecture": "Static HTML first, with a little TypeScript for small instruments. One lazy WebGL shader that only loads where motion is on and the device can take it.",
     "privacy": "No cookies, no analytics, no third-party requests.",
     "hosting": "GitHub Pages (static); portable to any static host.",
     "license": null,
-    "sections": []
+    "sections": [
+      {
+        "heading": "The brief",
+        "body": [
+          "I wanted a site that does what I do for a living: open, lean and under my own control. No cookies, no analytics, nothing loaded from somebody else’s server.",
+          "It also had to work in English and French, because I work in both, and I had to be able to keep editing it myself."
+        ]
+      },
+      {
+        "heading": "Keeping it sovereign",
+        "body": [
+          "I chose Astro because it builds plain HTML: the page is readable before any script runs. Tailwind and Untitled UI give me the design tokens, and the fonts are hosted on the site itself, so no request goes to a font provider.",
+          "It runs on GitHub Pages for now, which is American-owned, and the Site info page says so plainly. Nothing ties the site there: the build is static and can move to any host, including a European one. A strict content security policy blocks anything I didn’t plan, so the browser tells me when I get it wrong."
+        ]
+      },
+      {
+        "heading": "A place and a tool",
+        "body": [
+          "I wanted it to feel like a place and a tool at the same time. The background is warm, with sage pods and soft contour lines. The content sits in small instrument panels with thin borders, mono labels and LEDs. The spec panel on this page is one of them.",
+          "The home page is a live control panel: a clock, the real position of the sun over Montpellier, how long I have worked in digital projects, and the weight of the page itself. All of it is worked out in your browser from the clock. Nothing is fetched."
+        ]
+      },
+      {
+        "heading": "Motion and accessibility",
+        "body": [
+          "I wanted it alive without being tiring. Instruments move in small steps, background effects follow your scroll, and a switch in the header turns all of it off. It also follows your system’s reduced-motion setting by default.",
+          "I aim for WCAG 2.2 AA and I test for it, but I don’t claim the site is compliant: that takes real people and real assistive technology. I used native elements wherever I could, and colour never carries a meaning on its own."
+        ]
+      },
+      {
+        "heading": "Measuring it",
+        "body": [
+          "I set budgets and made the build fail when I break them: about 135 KB for the home page against a limit of 230, no third-party request, no inline style. There are checks for accessibility and for French typography too, like the non-breaking space before a colon or a question mark.",
+          "They caught real mistakes. Inline styles passed on my development server and were blocked by the real policy once the site was live."
+        ]
+      },
+      {
+        "heading": "What went wrong, and what is left",
+        "body": [
+          "Two effects used scroll features that Firefox-based browsers don’t have, so the Scope pipeline and the Experience timeline did nothing there. I rewrote them in script so they work everywhere. On a phone the page also lagged while scrolling, so the heavy background shaders now stay off on touch screens.",
+          "The 3D business card is switched off while I update it, and moving to a European host is still on my list."
+        ]
+      }
+    ]
   },
   "fr": {
     "title": "Ce site",
     "summary": "Ouvert, sobre et bilingue : un build statique sans cookies, sans analytique et sans requête tierce.",
     "role": "Conception et réalisation",
-    "architecture": "HTML statique d’abord. JavaScript seulement pour de petits instruments : horloge, schéma, bascules.",
+    "architecture": "HTML statique d’abord, avec un peu de TypeScript pour de petits instruments. Un seul shader WebGL, chargé à la demande, seulement quand les animations sont actives et que l’appareil peut le supporter.",
     "privacy": "Aucun cookie, aucune analytique, aucune requête tierce.",
     "hosting": "GitHub Pages (statique) ; portable vers n’importe quel hébergeur statique.",
     "license": null,
-    "sections": []
+    "sections": [
+      {
+        "heading": "Le besoin",
+        "body": [
+          "Je voulais un site qui fait ce que je fais au quotidien : ouvert, sobre et sous mon contrôle. Pas de cookies, pas d’analytique, rien qui vienne du serveur de quelqu’un d’autre.",
+          "Il devait aussi fonctionner en français et en anglais, parce que je travaille dans les deux langues, et je devais pouvoir continuer à le modifier moi-même."
+        ]
+      },
+      {
+        "heading": "Rester souverain",
+        "body": [
+          "J’ai choisi Astro parce qu’il produit du HTML simple : la page est lisible avant même qu’un script s’exécute. Tailwind et Untitled UI me donnent les tokens de design, et les polices sont hébergées sur le site, donc aucune requête ne part vers un fournisseur de polices.",
+          "Il tourne sur GitHub Pages pour l’instant, un service américain, et la page Infos du site le dit clairement. Rien n’y est attaché : le build est statique et peut aller chez n’importe quel hébergeur, européen compris. Une politique de sécurité stricte bloque tout ce que je n’ai pas prévu, c’est donc le navigateur qui me prévient quand je me trompe."
+        ]
+      },
+      {
+        "heading": "Un lieu et un outil",
+        "body": [
+          "Je voulais qu’il ressemble à la fois à un lieu et à un outil. Le fond est chaleureux, avec des pastilles vert sauge et de douces courbes de niveau. Le contenu est rangé dans de petits panneaux d’instrument, avec des bordures fines, des étiquettes en mono et des LED. Le panneau de fiche technique de cette page en fait partie.",
+          "L’accueil est un tableau de bord vivant : une horloge, la position réelle du soleil au-dessus de Montpellier, depuis combien de temps je travaille dans les projets numériques, et le poids de la page elle-même. Tout est calculé dans votre navigateur à partir de l’heure. Rien n’est téléchargé."
+        ]
+      },
+      {
+        "heading": "Animations et accessibilité",
+        "body": [
+          "Je voulais qu’il soit vivant sans fatiguer. Les instruments bougent par petits pas, les effets d’arrière-plan suivent votre défilement, et un interrupteur dans l’en-tête coupe tout. Par défaut, il suit aussi le réglage de réduction des animations de votre système.",
+          "Je vise le niveau AA des WCAG 2.2 et je le teste, mais je ne prétends pas que le site est conforme : cela demande de vraies personnes et de vraies technologies d’assistance. J’ai utilisé des éléments natifs partout où c’était possible, et la couleur ne porte jamais seule une information."
+        ]
+      },
+      {
+        "heading": "Le mesurer",
+        "body": [
+          "J’ai fixé des budgets et fait échouer le build quand je les dépasse : environ 135 Ko pour l’accueil, pour une limite de 230, aucune requête tierce, aucun style en ligne. Il y a aussi des contrôles d’accessibilité et de typographie française, comme l’espace insécable avant un deux-points ou un point d’interrogation.",
+          "Ils ont attrapé de vraies erreurs. Des styles en ligne passaient sur mon serveur de développement et ont été bloqués par la vraie politique de sécurité une fois le site en ligne."
+        ]
+      },
+      {
+        "heading": "Ce qui a mal tourné, et ce qu’il reste",
+        "body": [
+          "Deux effets utilisaient des fonctions de défilement que les navigateurs basés sur Firefox n’ont pas, donc le schéma du périmètre et la frise du parcours ne faisaient rien. Je les ai réécrits en script pour qu’ils marchent partout. Sur téléphone, la page saccadait aussi au défilement, donc les gros shaders d’arrière-plan restent désormais éteints sur les écrans tactiles.",
+          "La carte de visite 3D est désactivée le temps que je la mette à jour, et passer à un hébergeur européen reste sur ma liste."
+        ]
+      }
+    ]
   }
 }

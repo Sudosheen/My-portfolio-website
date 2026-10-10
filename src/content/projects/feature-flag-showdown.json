@@ -1,0 +1,115 @@
+{
+  "order": 4,
+  "featured": false,
+  "status": "done",
+  "start": "2025-04",
+  "end": "2025-04",
+  "stack": [
+    "Feature flags",
+    "Pull requests",
+    "Code review"
+  ],
+  "caseStudy": true,
+  "en": {
+    "title": "Feature Flag Showdown",
+    "summary": "A one-day cleanup at Xref where the whole dev team removed outdated feature flags from the codebase: 57 of 66 flags and 331 files cleaned.",
+    "role": "Organiser / Sheriff",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "The problem",
+        "body": [
+          "Our codebase at Xref was full of feature flags that had done their job months ago. They slowed everyone down and made the code harder to read, and nobody owned removing them, so they kept piling up."
+        ]
+      },
+      {
+        "heading": "The idea",
+        "body": [
+          "Instead of asking people to clean up a little, whenever they had time, we gave it one day. On Monday 7 April 2025 the whole dev team, from our two offices in different time zones, took the day to remove flags.",
+          "Everyone had two roles. As a bounty hunter you removed the flags assigned to you, and as a deputy you reviewed a teammate’s work. I was the organiser, or sheriff, of the day. We gave it a western theme so it would feel like an event, not a chore."
+        ]
+      },
+      {
+        "heading": "How it ran",
+        "body": [
+          "Before the day, I helped prepare the list of flags with the repositories and files each one touched, and every repository was assigned to a pair spread across the two offices. We met the Friday before so that everyone had their environment set up and their tests running.",
+          "On the day, we started with a kickoff meeting, then worked in small pull requests, reviewed each other quickly, and moved to other repositories when one was finished. Nothing went to production that day: the work stayed on the development environment, the testers checked each area over the next two or three days, and the senior developers deployed after QA approval."
+        ]
+      },
+      {
+        "heading": "Rules that kept it safe",
+        "body": [
+          "Removing a flag is not enough, so we checked the code around it, especially where several flags lived in the same place, and updated the tests that quietly depended on them.",
+          "We also agreed on one habit: small, focused pull requests, ideally one component or one backend file each, and never a pull request you would not enjoy reviewing yourself."
+        ]
+      },
+      {
+        "heading": "The result",
+        "body": [
+          "We cleaned 57 of the 66 flags, which meant 331 files cleaned in a single day.",
+          "The flags we did not remove were the biggest ones, one of them touching more than 150 files. We left them for the next cleanup instead of rushing them."
+        ]
+      },
+      {
+        "heading": "What I took from it",
+        "body": [
+          "A chore nobody owns becomes doable once it has a date, a deadline and a bit of fun. Small, reviewed pull requests do more than one big one, and a plan that shows who reviews whom makes the day run on its own."
+        ]
+      }
+    ]
+  },
+  "fr": {
+    "title": "Feature Flag Showdown",
+    "summary": "Une journée de nettoyage chez Xref où toute l’équipe de développement a supprimé les feature flags obsolètes du code : 57 flags sur 66 et 331 fichiers nettoyés.",
+    "role": "Organisateur / Shérif",
+    "architecture": null,
+    "privacy": null,
+    "hosting": null,
+    "license": null,
+    "sections": [
+      {
+        "heading": "Le problème",
+        "body": [
+          "Notre code chez Xref était rempli de feature flags qui avaient fait leur travail des mois plus tôt. Ils ralentissaient tout le monde et rendaient le code plus difficile à lire, et personne n’était chargé de les supprimer, alors ils s’accumulaient."
+        ]
+      },
+      {
+        "heading": "L’idée",
+        "body": [
+          "Plutôt que de demander à chacun de nettoyer un peu quand il en avait le temps, nous avons consacré une journée entière à cette tâche. Le lundi 7 avril 2025, toute l’équipe de développement de nos deux bureaux, dans des fuseaux horaires différents, a pris la journée pour supprimer des flags.",
+          "Chacun avait deux rôles. En chasseur de primes, on supprimait les flags qui nous étaient attribués, et en adjoint, on relisait le travail d’un collègue. J’étais l’organisateur, ou shérif, de la journée. Nous y avons mis un thème western pour que ce soit un événement plutôt qu’une corvée."
+        ]
+      },
+      {
+        "heading": "Le déroulé",
+        "body": [
+          "Avant la journée, j’ai aidé à préparer la liste des flags avec les dépôts et les fichiers concernés, et chaque dépôt a été confié à un binôme réparti entre les deux bureaux. Nous nous sommes retrouvés le vendredi précédent pour que chacun ait son environnement prêt et ses tests qui tournent.",
+          "Le jour J, nous avons commencé par une réunion de lancement, puis travaillé en petites pull requests, nous nous sommes relus rapidement et nous sommes passés à d’autres dépôts quand l’un était terminé. Rien n’est parti en production ce jour-là : le travail est resté sur l’environnement de développement, les testeurs ont vérifié chaque zone pendant les deux ou trois jours suivants, et les développeurs seniors ont déployé après validation de la recette."
+        ]
+      },
+      {
+        "heading": "Les règles qui sécurisaient le tout",
+        "body": [
+          "Supprimer un flag ne suffit pas, nous avons donc vérifié le code autour, surtout quand plusieurs flags se trouvaient au même endroit, et mis à jour les tests qui en dépendaient sans le dire.",
+          "Nous nous sommes aussi mis d’accord sur une habitude : des pull requests petites et ciblées, idéalement un composant ou un fichier backend chacune, et jamais une pull request que l’on n’aurait pas plaisir à relire soi-même."
+        ]
+      },
+      {
+        "heading": "Le résultat",
+        "body": [
+          "Nous avons nettoyé 57 des 66 flags, soit 331 fichiers nettoyés en une seule journée.",
+          "Les flags que nous n’avons pas supprimés étaient les plus gros, l’un d’eux touchant plus de 150 fichiers. Nous les avons laissés pour le prochain nettoyage plutôt que de les bâcler."
+        ]
+      },
+      {
+        "heading": "Ce que j’en retiens",
+        "body": [
+          "Une corvée dont personne n’a la charge devient faisable quand elle a une date, une échéance et un peu de plaisir. De petites pull requests relues valent mieux qu’une grosse, et un plan qui dit qui relit qui fait tourner la journée presque tout seul."
+        ]
+      }
+    ]
+  }
+}

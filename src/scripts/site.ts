@@ -10,6 +10,7 @@ import { initScrollFx } from './scrollfx';
 import { initSpy } from './spy';
 import { initTheme } from './theme';
 import { initTick } from './tick';
+import { initToTop } from './to-top';
 
 initTheme();
 initMotion();
@@ -22,4 +23,5 @@ initReadout();
 initSpy();
 initScope();
 initScrollFx();
+initToTop();
 initContact();

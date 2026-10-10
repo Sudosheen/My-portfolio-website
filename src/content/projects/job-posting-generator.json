@@ -2,8 +2,8 @@
   "order": 2,
   "featured": true,
   "status": "done",
-  "start": "2023-09",
-  "end": "2024-08",
+  "start": "2023-07",
+  "end": "2024-05",
   "stack": [
     "FlutterFlow",
     "Dart",
