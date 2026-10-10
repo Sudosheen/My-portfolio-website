@@ -174,10 +174,8 @@ const en = {
     },
     projects: {
         title: 'Projects',
-        intro: 'Each card exposes the technical metadata: stack, license, privacy impact, hosting. Unknowns are shown honestly.',
+        intro: 'Each card lists the technical details I can state: period, role, stack and architecture, plus license, privacy impact and hosting when they apply.',
         spec: 'Spec',
-        unknown: '—',
-        toDocument: 'To document',
         readCase: 'Read the case',
         noCase: 'No case study yet',
         back: 'All projects',
@@ -496,10 +494,8 @@ const fr: Dict = {
     },
     projects: {
         title: 'Projets',
-        intro: 'Chaque carte expose ses métadonnées techniques : stack, licence, impact sur la vie privée, hébergement. Les inconnues sont affichées honnêtement.',
+        intro: 'Chaque carte indique les détails techniques que je peux confirmer : période, rôle, stack et architecture, plus licence, impact sur la vie privée et hébergement quand ils s’appliquent.',
         spec: 'Fiche',
-        unknown: '—',
-        toDocument: 'À documenter',
         readCase: 'Lire l’étude de cas',
         noCase: 'Pas encore d’étude de cas',
         back: 'Tous les projets',

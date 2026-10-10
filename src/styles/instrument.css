@@ -311,10 +311,6 @@
         }
     }
 
-    .spec dd[data-empty] {
-        color: var(--ink-faint);
-    }
-
     /* Native <details> drawer: snaps open. Drawn as a bordered control so it reads as clickable;
        the chevron tile fills amber while open (the glyph, not colour alone, carries the state). */
     .drawer > summary {
