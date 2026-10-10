@@ -42,7 +42,7 @@ const en = {
     meta: {
         siteName: 'Osheen Turner',
         title: 'Osheen Turner ⠇ Digital sovereignty PM',
-        tabs: { card: 'Card', cv: 'CV', colophon: 'Site info', legal: 'Privacy' },
+        tabs: { card: 'Card', cv: 'CV', colophon: 'Site info', legal: 'Legal' },
         description:
             'Digital sovereignty project manager at Région Occitanie (DIN), Montpellier. I deliver digital projects, from specifications and procurement to testing and adoption, with a bias for open, sovereign technology.',
         ogAlt: 'Osheen Turner, digital sovereignty project manager',
@@ -72,6 +72,7 @@ const en = {
         education: 'Education',
         contact: 'Contact',
         card: 'Card',
+        back: 'Back to the site',
     },
     hero: {
         role: 'Digital sovereignty project manager',
@@ -168,6 +169,7 @@ const en = {
         current: 'Current',
         now: 'Now',
         earlier: 'Earlier',
+        keywords: 'Keywords',
     },
     projects: {
         title: 'Projects',
@@ -193,6 +195,7 @@ const en = {
     education: {
         title: 'Education',
         heading: 'Education and credentials',
+        expected: 'expected',
         languages: 'Languages and licences',
         languageList: [
             { name: 'French', level: 'Native' },
@@ -360,7 +363,7 @@ const fr: Dict = {
     meta: {
         siteName: 'Osheen Turner',
         title: 'Osheen Turner ⠇ Chef de projet souveraineté',
-        tabs: { card: 'Carte', cv: 'CV', colophon: 'Infos du site', legal: 'Confidentialité' },
+        tabs: { card: 'Carte', cv: 'CV', colophon: 'Infos du site', legal: 'Mentions légales' },
         description:
             'Chef de projet souveraineté numérique à la Région Occitanie (DIN), Montpellier. Je conduis des projets numériques, du cahier des charges à l’adoption par les utilisateurs, avec une préférence pour les technologies ouvertes et souveraines.',
         ogAlt: 'Osheen Turner, chef de projet souveraineté numérique',
@@ -390,6 +393,7 @@ const fr: Dict = {
         education: 'Formation',
         contact: 'Contact',
         card: 'Carte',
+        back: 'Retour au site',
     },
     hero: {
         role: 'Chef de projet souveraineté numérique',
@@ -486,6 +490,7 @@ const fr: Dict = {
         current: 'En cours',
         now: 'Auj.',
         earlier: 'Avant',
+        keywords: 'Mots-clés',
     },
     projects: {
         title: 'Projets',
@@ -511,6 +516,7 @@ const fr: Dict = {
     education: {
         title: 'Formation',
         heading: 'Formation et titres',
+        expected: 'prévu',
         languages: 'Langues et permis',
         languageList: [
             { name: 'Français', level: 'Langue maternelle' },

@@ -1,8 +1,9 @@
 ---
-/** Screen-reader note for a link that opens in a new tab (the visible cue is the arrow or the context). */
+/** Cue for a link that opens in a new tab: a small arrow (decorative) and a note for screen readers. */
+import { ArrowUpRight } from '@untitledui/icons';
 import { langFrom, useUi } from '../i18n/utils';
 
 const t = useUi(langFrom(Astro.currentLocale)).a11y;
 ---
 
-<span class="sr-only"> ({t.newTab})</span>
+<ArrowUpRight size={14} className="ml-0.5 inline-block align-text-bottom" aria-hidden="true" /><span class="sr-only"> ({t.newTab})</span>

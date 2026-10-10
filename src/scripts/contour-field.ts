@@ -3,8 +3,8 @@ import { onMotion } from './motion';
 
 /**
  * Live contour field (lazy chunk, see field.ts), used by the WebGL [data-field-host]s: the hero Location
- * tile (iso-lines) and the How I work pod (data-field-mode="relief": stepped filled bands with a
- * hillshade). One WebGL2 fragment shader draws iso-lines of a slowly drifting, domain-warped noise
+ * tile (iso-lines) and the How I work and Contact pods (data-field-mode="relief": stepped filled
+ * bands with a hillshade). One WebGL2 fragment shader draws iso-lines of a slowly drifting, domain-warped noise
  * field; the lines (or bands) can bend around the pointer.
  * Each host tunes it with data-field-* attributes (see lib/field.ts): opacity, zoom, seed, line
  * count, frame rate and render scale, so big surfaces render cheaper. Ambient motion: smooth, but
@@ -222,9 +222,9 @@ export function startField(tile: HTMLElement, canvas: HTMLCanvasElement): void {
     };
 
     readColour();
+    canvas.hidden = false; // measured at its real size (a hidden canvas is 1x1); the first draw follows in the same task
     resize();
-    draw(); // first frame right away, then reveal the canvas over the poster
-    canvas.hidden = false;
+    draw(); // first frame right away; the cross-fade over the poster starts at data-field-ready
     tile.setAttribute('data-field-ready', '');
 
     new ResizeObserver(() => {

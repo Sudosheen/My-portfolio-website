@@ -56,7 +56,7 @@ function range(start: string | null, end: string | null, current: boolean): stri
                                             <li>{p}</li>
                                         ))}
                                     </ul>
-                                    <ul class="keywords mt-4" aria-hidden="true">
+                                    <ul class="keywords mt-4" aria-label={t.keywords}>
                                         {text.tags.map((tag) => (
                                             <li>{tag}</li>
                                         ))}

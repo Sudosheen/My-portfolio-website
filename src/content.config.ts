@@ -62,6 +62,8 @@ const education = defineCollection({
         place: z.string(),
         start: month.nullable(),
         end: month.nullable(),
+        /** The end date is planned, not reached: shown with an "expected" note. */
+        expected: z.boolean().default(false),
         en: z.object({ title: z.string(), detail: z.string().optional() }),
         fr: z.object({ title: z.string(), detail: z.string().optional() }),
     }),

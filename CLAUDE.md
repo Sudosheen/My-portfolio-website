@@ -21,7 +21,7 @@ Scroll-linked effects must not sit inside `overflow: hidden/auto` boxes (those b
 
 **The /card/ pages are currently hidden** (owner is updating the Spline scene): the page files are `src/pages/_card.astro`
 and `src/pages/fr/_card.astro`, and `cardPublished` in `src/data/card.ts` is `false` (hides the hero, nav and footer links).
-To bring the card back, rename both files to `card.astro` and set the flag to `true`.
+To bring the card back, rename both files to `card.astro`, move `_card-assets/` back to `public/card/` and set the flag to `true`.
 
 ## Commands
 ```bash

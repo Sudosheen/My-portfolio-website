@@ -1,11 +1,11 @@
 {
-  "audited": "2026-10-09",
+  "audited": "2026-10-10",
   "home": {
-    "totalKb": 135.1,
-    "htmlKb": 16.3,
-    "cssKb": 16.1,
+    "totalKb": 135.9,
+    "htmlKb": 16.4,
+    "cssKb": 16.5,
     "jsKb": 5.9,
-    "jsLazyKb": 2.1,
+    "jsLazyKb": 2.4,
     "fontsKb": 94.7,
     "thirdParty": 0
   }

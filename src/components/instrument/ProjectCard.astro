@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { ArrowUpRight, ChevronDown } from '@untitledui/icons';
-import { href, langFrom, useUi } from '../../i18n/utils';
+import { colon, href, langFrom, useUi } from '../../i18n/utils';
 import { specRows } from '../../lib/project';
 
 interface Props {
@@ -90,7 +90,7 @@ const code = `MOD.04.${String(index + 1).padStart(2, '0')} / ${mod.project}`;
                         <a
                             class="sq-btn"
                             href={href(lang, `projects/${entry.id}/`)}
-                            aria-label={`${t.readCase}: ${text.title}`}
+                            aria-label={`${t.readCase}${colon(lang)} ${text.title}`}
                         >
                             {t.readCase}
                             <ArrowUpRight size={16} aria-hidden="true" />

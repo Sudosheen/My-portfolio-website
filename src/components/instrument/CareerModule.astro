@@ -6,10 +6,11 @@
 import { profile } from '../../data/profile';
 import { dotMatrix } from '../../lib/dotmatrix';
 import { idleValues } from '../../lib/snapshot';
-import { langFrom, monthYear, useUi } from '../../i18n/utils';
+import { colon, langFrom, monthYear, useUi } from '../../i18n/utils';
 
 const mod = useUi(langFrom(Astro.currentLocale)).mod;
-const t = useUi(langFrom(Astro.currentLocale)).hero.panel;
+const lang = langFrom(Astro.currentLocale);
+const t = useUi(lang).hero.panel;
 const idle = idleValues(new Date(), profile.digitalSince, profile.roleSince);
 const years = dotMatrix(idle['career-years']);
 const months = dotMatrix(idle['career-months']);
@@ -46,12 +47,12 @@ const months = dotMatrix(idle['career-months']);
             </div>
         </div>
         <p class="sr-only">
-            {t.career}: <span data-live="career-years">{idle['career-years']}</span> {t.years},
+            {t.career}{colon(lang)} <span data-live="career-years">{idle['career-years']}</span> {t.years},
             <span data-live="career-months">{idle['career-months']}</span> {t.months}
         </p>
         <p class="mono faint mt-2">{t.since} {monthYear(profile.digitalSince)}</p>
         <p class="mono mt-1">
-            {t.role}: <span data-live="role-months">{idle['role-months']}</span>
+            {t.role}{colon(lang)} <span data-live="role-months">{idle['role-months']}</span>
             {t.months}
         </p>
     </div>

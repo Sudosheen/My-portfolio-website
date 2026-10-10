@@ -69,13 +69,15 @@ export function initSpy(): void {
 
     // Switching language keeps the reader in the same section: the link gains that section's hash
     // just before it is followed (the two pages differ in height, so a section is the stable anchor).
-    document.querySelectorAll<HTMLAnchorElement>('a[hreflang]').forEach((link) => {
-        link.addEventListener('click', () => {
+    document.querySelectorAll<HTMLAnchorElement>('a[hreflang]:not([aria-current])').forEach((link) => {
+        const keepSection = () => {
             update();
             const url = new URL(link.href);
             url.hash = active > 0 ? IDS[active] : '';
             link.href = url.href;
-        });
+        };
+        link.addEventListener('click', keepSection);
+        link.addEventListener('auxclick', keepSection); // middle click opens the other language in a new tab
     });
 
     addEventListener('scroll', schedule, { passive: true });

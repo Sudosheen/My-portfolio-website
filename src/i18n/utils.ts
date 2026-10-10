@@ -9,6 +9,11 @@ export function useUi(lang: Lang): Dict {
     return ui[lang];
 }
 
+/** The colon for text a template assembles itself: French puts a no-break space before it (invariant 6). */
+export function colon(lang: Lang): string {
+    return lang === 'fr' ? '\u00a0:' : ':';
+}
+
 /** Locale-aware URL that respects the configured `base` (e.g. /My-portfolio-website/). */
 export function href(lang: Lang, path = ''): string {
     return getRelativeLocaleUrl(lang, path);

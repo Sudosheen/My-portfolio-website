@@ -27,10 +27,10 @@ The owner wants content to fill most of a wide screen. Containers are `max-w-[70
 - Astro static + Untitled UI tokens/icons; EN + FR; GitHub Pages for now (build is host-portable via `SITE_URL`, `SITE_BASE`).
 - Headings use Fraunces (the first choice, a condensed serif, looked too squished).
 - "How I work" is a pre-flight checklist (native `details`, one open at a time) with a plus/minus indicator.
-- "Contact" reuses the same sage pod with contour lines (`PodContours.astro`).
-- Hero buttons: "Get in touch", "CV", "3D card" (FR "Carte 3D", short so they fit on one row at 360 px+).
+- "Contact" uses the same sage pod and live relief as "How I work" (own seed and zoom; `PodContours.astro` is its static poster).
+- Hero buttons: "Get in touch", "CV" and, while the card page is published, "3D card" (FR "Carte 3D"); all fit one row at 360 px+.
 - Hover and focus on `.pill-btn` flip the pill (outlined to ink, ink to amber); copy button is icon-only with a status message.
-- The card page is a static poster until the visitor opts in to load the 3D scene.
+- The card page is a static poster until the visitor opts in to load the 3D scene (the page is hidden for now, see README).
 - Oct 2026, "too basic, make it dynamic": the arch with the sun/moon was replaced by a **live control panel**
   (clock with a solar dial showing the real sky over Montpellier, a sage Location tile, Build and Career tiles),
   a status readout strip, a header section meter with scroll-spy, a Scope pipeline with a scroll-linked

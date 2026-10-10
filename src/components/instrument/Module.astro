@@ -10,8 +10,11 @@ interface Props {
     status?: string;
     class?: string;
     bodyClass?: string;
+    /** Heading level of the title; 3 when the module sits under a section heading. */
+    level?: 2 | 3;
 }
-const { code, title, id, status, class: className = '', bodyClass = '' } = Astro.props;
+const { code, title, id, status, class: className = '', bodyClass = '', level = 2 } = Astro.props;
+const Heading = level === 3 ? 'h3' : 'h2';
 const headingId = id ? `${id}-title` : undefined;
 ---
 
@@ -21,7 +24,7 @@ const headingId = id ? `${id}-title` : undefined;
         {status && <span class="mono faint">{status}</span>}
     </div>
     <div class:list={['module-body', bodyClass]}>
-        <h2 id={headingId} class="module-title mb-3">{title}</h2>
+        <Heading id={headingId} class="module-title mb-3">{title}</Heading>
         <slot />
     </div>
 </section>

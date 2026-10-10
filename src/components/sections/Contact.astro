@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight, Check, Copy01 } from '@untitledui/icons';
+import { Check, Copy01 } from '@untitledui/icons';
 import { profile } from '../../data/profile';
 import NewTab from '../NewTab.astro';
 import { href, langFrom, useUi } from '../../i18n/utils';
@@ -67,7 +67,6 @@ const t = useUi(lang).contact;
                 <dd>
                     <a class="inline-flex items-center gap-1" href={profile.linkedin} target="_blank" rel="me noopener">
                         {profile.name}<NewTab />
-                        <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                 </dd>
 

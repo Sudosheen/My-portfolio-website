@@ -13,7 +13,7 @@ Not code bugs. Do not invent answers; ask.
 ## Outside the repo
 - 3D card is hidden until the scene is updated (see CLAUDE.md to re-enable). Spline editor only: the text and QR still show the dead `lordelowlow.github.io` URL, and Xref still reads
   "Current". Scene URLs live in `src/data/card.ts`. The live site is `sudosheen.github.io/My-portfolio-website/`.
-- Optional repository secret `PUBLIC_PHONE_FR_E164` (E.164, e.g. `+33612345678`) shows the "Reveal FR" button live.
+- Optional repository secret `PUBLIC_PHONE_FR_E164` (E.164, e.g. `+33XXXXXXXXX`) shows the "Reveal FR" button live.
 - Old Wix site: https://turnosh.wixsite.com/osheen-turner (unpublish or add a banner after launch).
 
 ## Motion redesign (home-motion branch)
