@@ -629,4 +629,74 @@
     :root[data-motion="on"] .check-toggle {
         transition: background var(--dur-snap) steps(2, end);
     }
+
+    /* Back to top (phones only; BackToTop.astro). A round button, bottom right, clear of the home bar; the ring
+       around it fills with the scroll progress (--p, set by to-top.ts). With scripts it appears once you are past
+       the first screen; without them it is always there as a plain "#top" link. */
+    .to-top {
+        position: fixed;
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: max(1rem, env(safe-area-inset-bottom));
+        z-index: 40;
+        display: grid;
+        place-items: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .to-top > * {
+        grid-area: 1 / 1;
+    }
+
+    .to-top-ring {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    .to-top-track,
+    .to-top-fill {
+        fill: none;
+        stroke-width: 1.5;
+    }
+
+    .to-top-track {
+        stroke: var(--edge);
+    }
+
+    .to-top-fill {
+        stroke: var(--ink);
+        stroke-dasharray: calc(var(--p, 0) * 100) 100;
+    }
+
+    .to-top:active {
+        background: var(--amber);
+        color: var(--on-amber);
+    }
+
+    .js .to-top:not([data-show]) {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    :root[data-motion="on"] .to-top {
+        transition:
+            opacity var(--dur-snap) steps(2, end),
+            visibility 0s linear var(--dur-snap);
+    }
+
+    :root[data-motion="on"] .to-top[data-show] {
+        transition-delay: 0s;
+    }
+
+    @media (min-width: 48rem) {
+        .to-top {
+            display: none;
+        }
+    }
 }

@@ -1,0 +1,19 @@
+---
+/**
+ * Back to top, for phones (the header scrolls away there): a round button, bottom right, that appears once
+ * you have scrolled past the first screen. A thin ring around it fills with the scroll progress. Without
+ * scripts it is a plain "#top" link that is always visible; see src/scripts/to-top.ts.
+ */
+import { ArrowUp } from '@untitledui/icons';
+import { langFrom, useUi } from '../i18n/utils';
+
+const t = useUi(langFrom(Astro.currentLocale)).a11y;
+---
+
+<a class="to-top no-print" href="#top" data-to-top aria-label={t.toTop}>
+    <svg class="to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle class="to-top-track" cx="22" cy="22" r="20.5" pathLength="100"></circle>
+        <circle class="to-top-fill" cx="22" cy="22" r="20.5" pathLength="100"></circle>
+    </svg>
+    <ArrowUp size={18} aria-hidden="true" />
+</a>

@@ -50,6 +50,7 @@ const en = {
     a11y: {
         skip: 'Skip to content',
         newTab: 'opens in a new tab',
+        toTop: 'Back to top',
         nav: 'Main navigation',
         language: 'Language',
         theme: 'Theme',
@@ -371,6 +372,7 @@ const fr: Dict = {
     a11y: {
         skip: 'Aller au contenu',
         newTab: 's’ouvre dans un nouvel onglet',
+        toTop: 'Haut de page',
         nav: 'Navigation principale',
         language: 'Langue',
         theme: 'Thème',

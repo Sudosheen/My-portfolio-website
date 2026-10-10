@@ -1,6 +1,7 @@
 ---
 import { cardPublished } from '../data/card';
 import { profile } from '../data/profile';
+import BackToTop from './BackToTop.astro';
 import NewTab from './NewTab.astro';
 import { buildInfo } from '../lib/build-info';
 import { href, langFrom, useUi } from '../i18n/utils';
@@ -42,4 +43,5 @@ const links = [
         </ul>
     </div>
     <p class="muted mt-4 text-sm">© {year} {profile.name} · {t.footer.rights}</p>
+    <BackToTop />
 </footer>
