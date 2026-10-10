@@ -5,6 +5,13 @@
  */
 import type { PageCsp } from '../lib/csp';
 
+/**
+ * The /card/ pages are switched off while the Spline scene is being updated: the page files are
+ * `src/pages/_card.astro` and `src/pages/fr/_card.astro` (Astro skips files starting with `_`) and every
+ * link to them hides behind this flag. To bring the card back: rename both files to `card.astro` and set true.
+ */
+export const cardPublished = false;
+
 export const splineOrigin = 'https://prod.spline.design';
 /** The scene's text objects reference Google Fonts files, fetched by the viewer at runtime. */
 export const fontsOrigin = 'https://fonts.gstatic.com';

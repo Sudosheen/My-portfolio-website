@@ -1,10 +1,12 @@
 ---
 import audit from '../../data/audit.json';
 import { profile } from '../../data/profile';
+import NewTab from '../NewTab.astro';
 import { href, langFrom, useUi } from '../../i18n/utils';
 import Section from '../Section.astro';
 import Module from '../instrument/Module.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const lang = langFrom(Astro.currentLocale);
 const ui = useUi(lang);
 const t = ui.colophon;
@@ -32,12 +34,12 @@ const rows = measured
 ---
 
 <Section class="pt-8 md:pt-12">
-    <p class="mono faint"><a class="no-underline hover:underline" href={href(lang)}>← {ui.card.back}</a></p>
+    <p class="mono faint"><a class="no-underline hover:underline" href={href(lang)}>← {ui.nav.back}</a></p>
     <h1 class="page-title mt-4">{t.title}</h1>
     <p class="muted mt-4 max-w-2xl text-lg">{t.intro}</p>
 
     <div class="mt-10 grid grid-cols-[minmax(0,1fr)] gap-4">
-        <Module id="stack" code="MOD.09 / STACK" title={t.stackTitle}>
+        <Module id="stack" code={`MOD.09 / ${mod.stack}`} title={t.stackTitle}>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <caption class="sr-only">{t.stackTitle}</caption>
@@ -63,7 +65,7 @@ const rows = measured
             </div>
         </Module>
 
-        <Module id="measured" code="MOD.10 / AUDIT" title={t.measuredTitle} status={audit.audited ?? undefined}>
+        <Module id="measured" code={`MOD.10 / ${mod.audit}`} title={t.measuredTitle} status={audit.audited ?? undefined}>
             <p class="muted max-w-2xl text-sm">{t.measuredNote}</p>
             {
                 measured ? (
@@ -84,15 +86,15 @@ const rows = measured
             <p class="mt-5 max-w-2xl text-sm">{t.enforcement}</p>
         </Module>
 
-        <Module id="a11y" code="MOD.11 / A11Y" title={t.a11yTitle}>
+        <Module id="a11y" code={`MOD.11 / ${mod.a11y}`} title={t.a11yTitle}>
             <p class="max-w-2xl">{t.a11y}</p>
             <p class="mt-3"><a href={`mailto:${profile.email}`}>{profile.email}</a></p>
         </Module>
 
-        <Module id="source" code="MOD.12 / SRC" title={t.sourceTitle}>
+        <Module id="source" code={`MOD.12 / ${mod.src}`} title={t.sourceTitle}>
             <p>
                 {t.source}
-                <a href={profile.repo} class="break-all">{profile.repo}</a>
+                <a href={profile.repo} target="_blank" rel="noopener" class="break-all">{profile.repo}<NewTab /></a>
             </p>
         </Module>
     </div>

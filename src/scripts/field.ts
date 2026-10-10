@@ -2,7 +2,7 @@ import { fieldAllowed } from '../lib/field';
 import { motionIsOn, onMotion } from './motion';
 
 /**
- * Gate for the live contour fields (hero tile, hero backdrop, sage pods, dividers). This part is tiny
+ * Gate for the live contour fields (the hero Location tile and the How I work and Contact pods). This part is tiny
  * and always loaded; the WebGL code is one shared lazy chunk, fetched only when motion is on, data
  * saving is off, the device is capable, and a field's host is near the viewport, then started when
  * the browser is idle. Each host starts on its own; otherwise its static poster simply stays.

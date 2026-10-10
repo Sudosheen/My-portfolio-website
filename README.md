@@ -16,7 +16,7 @@ Live: <https://sudosheen.github.io/My-portfolio-website/>
 | `npm run check` | `astro check` (types, templates) |
 | `npm test` | Unit tests (solar maths, EN/FR parity, art generators) |
 | `npm run audit:site` | Page-weight budgets, third-party origins, page structure |
-| `npm run audit:write` | Same, and records the numbers in `src/data/audit.json` (shown on the colophon) |
+| `npm run audit:write` | Same, and records the numbers in `src/data/audit.json` (shown on the site info page) |
 | `npm run a11y` | axe-core (WCAG 2.2 A/AA + best practices) on every built page |
 
 Telemetry is disabled in the scripts. If `npm` fails to write its cache in a locked-down sandbox,
@@ -77,6 +77,10 @@ whose hash is missing from the policy. A strict CSP (`default-src 'self'`) enfor
 
 ## The 3D card (`/card/`)
 
+> Currently hidden while the Spline scene is updated: the pages are `src/pages/_card.astro` and `src/pages/fr/_card.astro`,
+> `cardPublished` in `src/data/card.ts` is `false`, and the downloadable files live in `_card-assets/`. To bring it back, rename
+> both pages to `card.astro`, move `_card-assets/` to `public/card/` and set the flag to `true`.
+
 Spline's runtime is large (about 1.5 MB gzipped), so nothing loads until the visitor clicks.
 Production testing showed the viewer needs more than a bundled script, handled in `src/scripts/card.ts`
 and `src/data/card.ts`:
@@ -97,7 +101,7 @@ GitHub Actions (`.github/workflows/deploy.yml`) runs tests, type-check, build, a
 publishes `dist/`. One-time setup: repository Settings, Pages, Source: **GitHub Actions**.
 
 The phone number is not stored in the repository. It is read from `PUBLIC_PHONE_FR_E164` (E.164, for
-example `+33612345678`): put it in a local `.env` (git-ignored) and in a repository secret of the same
+example `+33XXXXXXXXX`): put it in a local `.env` (git-ignored) and in a repository secret of the same
 name for CI. When unset, the phone row is not rendered.
 
 The build is host-portable. For a custom domain or another static host:

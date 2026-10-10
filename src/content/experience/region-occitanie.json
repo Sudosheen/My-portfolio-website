@@ -3,15 +3,9 @@
   "org": "Région Occitanie",
   "unit": "Direction de l’Information et du Numérique (DIN)",
   "place": "Montpellier, France",
-  "start": null,
-  "end": null,
+  "start": "2025-09",
+  "end": "2027",
   "current": true,
-  "tags": [
-    "Competitive dialogue",
-    "Specifications",
-    "Budget",
-    "Training plan"
-  ],
   "en": {
     "role": "Digital sovereignty project manager",
     "contract": "Work-study (apprenticeship)",
@@ -21,6 +15,12 @@
       "Budget planning and follow-up in the project-management tool.",
       "Public procurement by competitive dialogue: running the dialogue and selecting solutions.",
       "Testing, deployment validation, and the training and user-support plan."
+    ],
+    "tags": [
+      "Competitive dialogue",
+      "Specifications",
+      "Budget",
+      "Training plan"
     ]
   },
   "fr": {
@@ -32,6 +32,12 @@
       "Planification et suivi du budget dans l’outil de gestion de projet.",
       "Marché public en dialogue compétitif : mise en œuvre du dialogue et sélection des solutions.",
       "Tests, validation du déploiement, plan de formation et d’accompagnement des utilisateurs."
+    ],
+    "tags": [
+      "Dialogue compétitif",
+      "Cahier des charges",
+      "Budget",
+      "Plan de formation"
     ]
   }
 }

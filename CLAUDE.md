@@ -1,7 +1,7 @@
 # Osheen Turner personal website
 
 Bilingual (EN `/`, FR `/fr/`) static portfolio for Osheen Turner, a digital-sovereignty project manager
-with a developer background (Montpellier). A 3D business card lives at `/card/`.
+with a developer background (Montpellier). A 3D business card lives at `/card/` (switched off for now, see below).
 Live: https://sudosheen.github.io/My-portfolio-website/ (base path `/My-portfolio-website/`).
 Default branch `main`; v2 rebuild landed from `site-v2` (PR #2).
 
@@ -15,9 +15,13 @@ through the Astro Fonts API (Fraunces display, IBM Plex Sans, IBM Plex Mono), Sp
 No animation library: CSS (scroll-driven animations inside `@supports`, static fallback), one shared tick loop
 (`src/scripts/tick.ts`), and one hand-written WebGL2 shader (`src/scripts/contour-field.ts`, a lazy chunk that only
 loads with motion on, no data saving and a capable device). Any element with `data-field-host` and a direct-child
-`canvas[data-field]` becomes a live contour field when near the viewport (hero Location tile, sage pods), tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback.
+`canvas[data-field]` becomes a live field when near the viewport, tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback. The hero Location tile is a WebGL contour field; the How I work and Contact pods use the same shader in `data-field-mode="relief"` (stepped filled bands with a hillshade; the poster is `PodContours filled`).
 Scroll-linked effects must not sit inside `overflow: hidden/auto` boxes (those become the scroller): use
 `overflow-clip` on pods.
+
+**The /card/ pages are currently hidden** (owner is updating the Spline scene): the page files are `src/pages/_card.astro`
+and `src/pages/fr/_card.astro`, and `cardPublished` in `src/data/card.ts` is `false` (hides the hero, nav and footer links).
+To bring the card back, rename both files to `card.astro`, move `_card-assets/` back to `public/card/` and set the flag to `true`.
 
 ## Commands
 ```bash
@@ -60,15 +64,17 @@ looked at in light AND dark mode, EN AND FR, at about 375 px and 1280 px.
 10. Motion. Instrument motion (modules, text, LEDs, readouts) is stepped (`steps()`) and never flickers. Ambient motion
     (contour drift, parallax) may be smooth but is scroll-linked or finite (< 5 s). The only continuous motion (clock
     colon, readout, optional shader) stops with the MOTION toggle. Everything animated is declared under
-    `:root[data-motion="on"]` (set before paint: a stored choice, else `prefers-reduced-motion`); `off` is instant.
+    `:root[data-motion="on"]` (set before paint: a stored choice, else `prefers-reduced-motion`); `off` is instant. That
+    includes transitions and hover pulses, and the page-transition groups. The one eased (non-stepped) piece of
+    instrument chrome is the 240 ms header/meter glide between pages (`globals.css`), a deliberate exception.
 11. No inline `style=""` attributes: the production CSP blocks them and `npm run audit:site` fails on any. Use classes,
     data attributes, SVG presentation attributes (`opacity`, `transform`) or CSSOM (`el.style.setProperty`). The dev
     server has no CSP, so verify policy issues on `npm run preview`.
 
 ## Publication rules (the repo and site are public)
 - Never commit referee quotes or contact details, Xref internals (client name, ticket IDs, colleague names),
-  the reference PDFs, or phone numbers. `src/assets/_pending/` screenshots are not served and need the owner's
-  permission before publishing.
+  the reference PDFs, client screenshots (removed from the repo; they stay in earlier commits' history), or phone
+  numbers. A client image needs the owner's explicit permission before it is committed.
 - The phone number is read from `PUBLIC_PHONE_FR_E164` (local `.env`, git-ignored; repository secret in CI).
   Unset, the phone row is not rendered. Never hard-code it.
 - Region/employer wording mirrors the public job posting and is draft until the owner supplies real achievements.

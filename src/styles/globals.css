@@ -80,6 +80,27 @@ a {
     text-underline-offset: 0.2em;
 }
 
+/*
+  Every plain link answers the pointer (and the keyboard): a heavier underline in the amber-ink accent.
+  Buttons and the nav have their own hover states, so they are left out. A link that is not underlined at
+  rest (the back links, the footer) gets its underline from its own utility, which sits above this layer.
+*/
+@layer base {
+    a[href]:not(.pill-btn, .sq-btn, .hdr-link, .seg *):focus-visible {
+        color: var(--amber-ink);
+        text-decoration-line: underline;
+        text-decoration-thickness: 0.125em;
+    }
+
+    @media (hover: hover) {
+        a[href]:not(.pill-btn, .sq-btn, .hdr-link, .seg *):hover {
+            color: var(--amber-ink);
+            text-decoration-line: underline;
+            text-decoration-thickness: 0.125em;
+        }
+    }
+}
+
 details summary::-webkit-details-marker {
     display: none;
 }
@@ -89,10 +110,77 @@ details summary::-webkit-details-marker {
     navigation: auto;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Everything below is declared under :root[data-motion="on"], so MOTION off captures no groups at all. */
+:root[data-motion="on"]::view-transition-old(root),
+:root[data-motion="on"]::view-transition-new(root) {
     animation-duration: 120ms;
     animation-timing-function: steps(4, end);
+}
+
+/*
+  The header keeps its place between pages instead of cross-fading with them: it is its own transition
+  group, so when the progress meter appears (home) or goes (other pages) the header glides to its new
+  height and the meter fades, rather than popping. Smooth on purpose: this 240ms glide is the one
+  exception to "instrument motion is stepped" (CLAUDE.md invariant 10). It is one short, finite move.
+
+  Wide screens only: the header is sticky there. Below md it scrolls away, so it would glide in from above.
+  The progress meter is a group of its own, because it exists on one page only. It does not slide: it fades
+  while riding the header's bottom border, which moves by the meter's room (0.25rem, see header-motion.css)
+  at the same pace as the header, so it vanishes at the new border and appears from the old one.
+*/
+@media (min-width: 48rem) {
+    :root[data-motion="on"] .site-header {
+        view-transition-name: site-header;
+    }
+
+    :root[data-motion="on"] .hdr-meter {
+        view-transition-name: site-meter;
+    }
+
+    /* The move matches the header's own (240ms, same easing) so the bar never lags the border; the fade is
+       shorter, finishing before the border arrives on the way out and as it arrives on the way in. */
+    :root[data-motion="on"]::view-transition-old(site-meter):only-child {
+        animation:
+            240ms ease-in-out both meter-out-move,
+            140ms ease-out both meter-out-fade;
+    }
+
+    :root[data-motion="on"]::view-transition-new(site-meter):only-child {
+        animation:
+            240ms ease-in-out both meter-in-move,
+            140ms ease-in 100ms both meter-in-fade;
+    }
+}
+
+@keyframes meter-out-move {
+    to {
+        transform: translateY(-0.25rem);
+    }
+}
+
+@keyframes meter-out-fade {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes meter-in-move {
+    from {
+        transform: translateY(-0.25rem);
+    }
+}
+
+@keyframes meter-in-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+:root[data-motion="on"]::view-transition-group(site-header),
+:root[data-motion="on"]::view-transition-old(site-header),
+:root[data-motion="on"]::view-transition-new(site-header) {
+    animation-duration: 240ms;
+    animation-timing-function: ease-in-out;
 }
 
 /*

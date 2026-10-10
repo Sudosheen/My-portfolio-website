@@ -1,11 +1,13 @@
 ---
-import { ArrowUpRight, Download01 } from '@untitledui/icons';
+import { Download01 } from '@untitledui/icons';
 import { cardScenes } from '../../data/card';
 import { profile } from '../../data/profile';
+import NewTab from '../NewTab.astro';
 import { href, langFrom, useUi } from '../../i18n/utils';
 import Section from '../Section.astro';
 import Module from '../instrument/Module.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const lang = langFrom(Astro.currentLocale);
 const ui = useUi(lang);
 const t = ui.card;
@@ -27,7 +29,7 @@ const vcard = `${import.meta.env.BASE_URL}card/osheen-turner-${lang}.vcf`;
         data-text-failed={t.failed}
     >
         <div class="module-head">
-            <span class="mono" aria-hidden="true">MOD.08 / CARD</span>
+            <span class="mono" aria-hidden="true">MOD.08 / {mod.card}</span>
             <span class="mono faint">{t.stageLabel}</span>
         </div>
 
@@ -57,15 +59,14 @@ const vcard = `${import.meta.env.BASE_URL}card/osheen-turner-${lang}.vcf`;
     </div>
 
     <div class="mt-10 grid gap-4 md:grid-cols-[1.2fr_1fr]">
-        <Module id="card-plain" code="MOD.08.1 / PLAIN" title={t.plain}>
+        <Module id="card-plain" code={`MOD.08.1 / ${mod.plain}`} title={t.plain}>
             <dl class="spec">
                 <dt>{ui.contact.email}</dt>
                 <dd><a href={`mailto:${profile.email}`} class="break-all">{profile.email}</a></dd>
                 <dt>{ui.contact.linkedin}</dt>
                 <dd>
-                    <a class="inline-flex items-center gap-1" href={profile.linkedin} rel="me noopener">
-                        {profile.name}
-                        <ArrowUpRight size={16} aria-hidden="true" />
+                    <a class="inline-flex items-center gap-1" href={profile.linkedin} target="_blank" rel="me noopener">
+                        {profile.name}<NewTab />
                     </a>
                 </dd>
                 <dt>{t.website}</dt>

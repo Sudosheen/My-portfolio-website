@@ -4,6 +4,7 @@ import audit from '../../data/audit.json';
 import { buildInfo } from '../../lib/build-info';
 import { langFrom, useUi } from '../../i18n/utils';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const t = useUi(langFrom(Astro.currentLocale));
 const p = t.hero.panel;
 const home = audit.home as { totalKb: number; jsKb: number; thirdParty: number } | null;
@@ -12,7 +13,7 @@ const kb = (n: number) => `${n} ${p.kb}`;
 
 <div class="module tk tile" role="group" aria-label={t.footer.build}>
     <div class="module-head">
-        <span class="mono" aria-hidden="true">MOD.01C / BUILD</span>
+        <span class="mono" aria-hidden="true">MOD.01C / {mod.build}</span>
         <i class="led" aria-hidden="true"></i>
     </div>
     <div class="tile-body">

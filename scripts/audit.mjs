@@ -163,6 +163,26 @@ function structure(html, rel) {
     return problems.map((p) => `${rel}: ${p}`);
 }
 
+/**
+ * French typography (CLAUDE.md invariant 6) in the built text, templates included: a no-break space belongs
+ * before : ; ! ? so a line never starts with one. ui.ts is covered by unit tests; this catches text that
+ * components put together themselves ("{label}: ..."). Reads visible text and aria-label/alt/title values.
+ */
+function frenchTypography(html, rel) {
+    const attrs = [...html.matchAll(/\b(?:aria-label|alt|title)="([^"]*)"/g)].map((m) => m[1]);
+    const text = html
+        .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
+        .replace(/<[^>]*>/g, ' ')
+        .concat(' ', attrs.join(' '))
+        .replace(/&#?\w+;/g, ' ');
+    const found = new Set();
+    for (const m of text.matchAll(/\p{L}[ ]?[:;!?](?=\s|$)/gu)) {
+        const at = m.index ?? 0;
+        found.add(text.slice(Math.max(0, at - 12), at + m[0].length + 2).replace(/\s+/g, ' ').trim());
+    }
+    return [...found].map((s) => `${rel}: French punctuation without a no-break space: "${s}"`);
+}
+
 const failures = [];
 
 // Third-party scan and structure check on every page.
@@ -171,6 +191,7 @@ for (const page of pages) {
     const html = await readFile(page, 'utf8');
     failures.push(...structure(html, relative(dist, page)));
     failures.push(...cspProblems(html, relative(dist, page)));
+    if (/<html[^>]+lang="fr"/.test(html)) failures.push(...frenchTypography(html, relative(dist, page)));
 }
 
 // A timeline is reset-only in the `animation` shorthand, so `animation: ... view()` is invalid CSS
@@ -204,7 +225,7 @@ for (const [label, h] of [['EN', home], ['FR', homeFr]]) {
     console.log(`  ${ok ? 'ok  ' : 'FAIL'} Third-party origins (${label}) ${h.thirdParty}${ok ? '' : '  ' + h.externalOrigins.join(', ')}`);
     if (!ok) failures.push(`${label}: third-party origins: ${h.externalOrigins.join(', ')}`);
 }
-console.log(`  pages checked: ${pages.length} (structure, CSP hashes, style attributes)`);
+console.log(`  pages checked: ${pages.length} (structure, CSP hashes, style attributes, French typography)`);
 
 if (write && failures.length === 0) {
     const r = (n) => Math.round(n * 10) / 10;

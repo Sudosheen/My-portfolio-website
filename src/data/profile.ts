@@ -17,6 +17,8 @@ export const profile = {
     repo: 'https://github.com/Sudosheen/My-portfolio-website',
     /** First role in digital projects (Younicorns, "YYYY-MM"): drives the live career counter. */
     digitalSince: '2023-04',
+    /** Start of the current work-study at Région Occitanie ("YYYY-MM"): drives the "time in role" figure. */
+    roleSince: '2025-09',
     location: {
         city: 'Montpellier',
         country: 'France',

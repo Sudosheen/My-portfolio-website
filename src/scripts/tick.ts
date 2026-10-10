@@ -21,7 +21,13 @@ function readConfig(): LiveConfig | null {
     const lat = Number(el.dataset.lat);
     const lon = Number(el.dataset.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
-    return { lat, lon, timeZone: el.dataset.tz ?? 'UTC', since: el.dataset.since ?? '2023-04' };
+    return {
+        lat,
+        lon,
+        timeZone: el.dataset.tz ?? 'UTC',
+        since: el.dataset.since ?? '2023-04',
+        roleSince: el.dataset.roleSince ?? '2025-09',
+    };
 }
 
 function render(snapshot: Snapshot): void {

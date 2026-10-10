@@ -3,7 +3,7 @@ import { monthsSince, yearsMonths } from './career';
 import { dialPoint } from './dial';
 import { buildSnapshot } from './snapshot';
 
-const CONFIG = { lat: 43.6108, lon: 3.8767, timeZone: 'Europe/Paris', since: '2023-04' };
+const CONFIG = { lat: 43.6108, lon: 3.8767, timeZone: 'Europe/Paris', since: '2023-04', roleSince: '2025-09' };
 
 describe('career counter', () => {
     it('counts whole calendar months', () => {
@@ -64,6 +64,7 @@ describe('live snapshot', () => {
         expect(s.values.elevation.startsWith('+')).toBe(true);
         expect(s.values['career-years']).toBe('03');
         expect(s.values['career-months']).toBe('06');
+        expect(s.values['role-months']).toBe('13');
         expect(s.phase.phase).toBe('day');
     });
 

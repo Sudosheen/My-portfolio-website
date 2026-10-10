@@ -50,6 +50,11 @@
         background: var(--sun);
     }
 
+    /* The divider fades out at both ends instead of stopping at a hard vertical edge. */
+    .wave {
+        mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+
     .contour-line {
         fill: none;
         stroke: var(--moss);
@@ -73,6 +78,9 @@
         text-decoration: none;
         background: transparent;
         cursor: pointer;
+    }
+
+    :root[data-motion="on"] .pill-btn {
         transition:
             transform var(--dur-snap) steps(2, end),
             background-color var(--dur-snap) steps(2, end),
@@ -201,5 +209,12 @@
         stroke-width: 1;
         opacity: 0.28;
         vector-effect: non-scaling-stroke;
+    }
+
+    /* Relief poster (How I work, Contact): the rings as nested filled bands; the live shader draws stepped bands and a hillshade. */
+    .pod-contours--filled path {
+        fill: var(--moss);
+        stroke: none;
+        opacity: 0.045;
     }
 }

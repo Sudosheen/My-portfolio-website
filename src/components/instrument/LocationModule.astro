@@ -9,6 +9,7 @@ import { idleValues } from '../../lib/snapshot';
 import { langFrom, useUi } from '../../i18n/utils';
 import PodContours from '../habitat/PodContours.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang).hero;
 const idle = idleValues(new Date(), profile.digitalSince);
@@ -23,7 +24,7 @@ const coords = `${decimal(Math.abs(lat))}° ${lat >= 0 ? 'N' : 'S'} · ${decimal
     <!-- Live contour field (WebGL, lazy, see src/scripts/field.ts); revealed over the poster once it draws. -->
     <canvas class="field-canvas" data-field aria-hidden="true" hidden></canvas>
     <div class="module-head relative">
-        <span class="mono" aria-hidden="true">MOD.01B / LOCATION</span>
+        <span class="mono" aria-hidden="true">MOD.01B / {mod.location}</span>
     </div>
     <div class="tile-body relative">
         <p class="display tile-place">{city}</p>

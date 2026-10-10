@@ -45,6 +45,8 @@ export interface FieldOptions {
     ratio: number;
     /** Whether the lines bend around the pointer. */
     pointer: boolean;
+    /** "lines" draws iso-lines; "relief" fills stepped elevation bands with a hillshade. */
+    mode: 'lines' | 'relief';
 }
 
 const number = (value: string | undefined, fallback: number): number => {
@@ -63,5 +65,6 @@ export function fieldOptions(data: Record<string, string | undefined>): FieldOpt
         fps: Math.min(60, Math.max(5, number(data.fieldFps, 30))),
         ratio: Math.min(2, Math.max(0.25, number(data.fieldRatio, 1.5))),
         pointer: data.fieldPointer !== 'off',
+        mode: data.fieldMode === 'relief' ? 'relief' : 'lines',
     };
 }

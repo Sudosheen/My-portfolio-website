@@ -2,7 +2,15 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const month = z.string().regex(/^\d{4}-\d{2}$/, 'Use YYYY-MM');
+const month = z.string().regex(/^\d{4}(-\d{2})?$/, 'Use YYYY-MM, or YYYY when the month is unknown');
+
+/** Per language, so the keyword tags are translated with the rest of the entry. */
+const experienceText = z.object({
+    role: z.string(),
+    contract: z.string().optional(),
+    points: z.array(z.string()),
+    tags: z.array(z.string()).default([]),
+});
 
 const experience = defineCollection({
     loader: glob({ pattern: '*.json', base: './src/content/experience' }),
@@ -14,9 +22,8 @@ const experience = defineCollection({
         start: month.nullable(),
         end: month.nullable(),
         current: z.boolean().default(false),
-        tags: z.array(z.string()).default([]),
-        en: z.object({ role: z.string(), contract: z.string().optional(), points: z.array(z.string()) }),
-        fr: z.object({ role: z.string(), contract: z.string().optional(), points: z.array(z.string()) }),
+        en: experienceText,
+        fr: experienceText,
     }),
 });
 
@@ -55,6 +62,8 @@ const education = defineCollection({
         place: z.string(),
         start: month.nullable(),
         end: month.nullable(),
+        /** The end date is planned, not reached: shown with an "expected" note. */
+        expected: z.boolean().default(false),
         en: z.object({ title: z.string(), detail: z.string().optional() }),
         fr: z.object({ title: z.string(), detail: z.string().optional() }),
     }),

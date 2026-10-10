@@ -1,5 +1,6 @@
 ---
 import { ArrowUpRight } from '@untitledui/icons';
+import { cardPublished } from '../../data/card';
 import { profile } from '../../data/profile';
 import { href, langFrom, useUi } from '../../i18n/utils';
 import BuildModule from '../instrument/BuildModule.astro';
@@ -26,10 +27,14 @@ const { lat, lon, timeZone } = profile.location;
             <div class="mt-8 flex flex-wrap gap-2 sm:gap-3">
                 <a class="pill-btn pill-btn--primary" href="#contact">{t.contact}</a>
                 <a class="pill-btn" href={href(lang, 'cv/')}>{t.cv}</a>
-                <a class="pill-btn" href={href(lang, 'card/')}>
-                    {t.card}
-                    <ArrowUpRight size={18} aria-hidden="true" />
-                </a>
+                {
+                    cardPublished && (
+                        <a class="pill-btn" href={href(lang, 'card/')}>
+                            {t.card}
+                            <ArrowUpRight size={18} aria-hidden="true" />
+                        </a>
+                    )
+                }
             </div>
         </div>
 
@@ -41,6 +46,7 @@ const { lat, lon, timeZone } = profile.location;
             data-lon={lon}
             data-tz={timeZone}
             data-since={profile.digitalSince}
+            data-role-since={profile.roleSince}
         >
             <Clock />
             <LocationModule />

@@ -1,0 +1,16 @@
+{
+  "order": 0,
+  "school": "IAE Montpellier",
+  "place": "Montpellier, France",
+  "start": "2025-09",
+  "end": "2027",
+  "expected": true,
+  "en": {
+    "title": "Master’s degree in Innovation Management",
+    "detail": "Innovative Project Management"
+  },
+  "fr": {
+    "title": "Master Management de l’Innovation",
+    "detail": "Management de Projet Innovant"
+  }
+}
