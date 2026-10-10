@@ -6,6 +6,7 @@ import Section from '../Section.astro';
 import PodContours from './PodContours.astro';
 import Wave from './Wave.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const t = useUi(langFrom(Astro.currentLocale)).principles;
 const count = dotMatrix(String(t.items.length).padStart(2, '0'));
 ---
@@ -17,13 +18,15 @@ const count = dotMatrix(String(t.items.length).padStart(2, '0'));
     <div
         class="pod relative mt-8 overflow-clip p-6 md:p-10 lg:p-12"
         data-field-host
-        data-field-alpha="0.32"
+        data-field-mode="relief"
+        data-field-alpha="0.2"
         data-field-zoom="0.7"
         data-field-seed="1"
+        data-field-lines="9"
         data-field-ratio="0.75"
         data-field-fps="24"
     >
-        <PodContours corner="left" seed={5} />
+        <PodContours corner="left" seed={5} filled />
         <canvas class="field-canvas" data-field aria-hidden="true" hidden></canvas>
 
         <div class="relative grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-14">
@@ -38,7 +41,7 @@ const count = dotMatrix(String(t.items.length).padStart(2, '0'));
 
             <div class="module tk">
                 <div class="module-head">
-                    <span class="mono" aria-hidden="true">MOD.02A / CHECKS</span>
+                    <span class="mono" aria-hidden="true">MOD.02A / {mod.checks}</span>
                     <span class="mono faint">{t.module}</span>
                 </div>
                 <div class="ruler" aria-hidden="true"></div>

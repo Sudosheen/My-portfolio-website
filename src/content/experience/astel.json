@@ -5,16 +5,16 @@
   "start": "2022-07",
   "end": "2022-08",
   "current": false,
-  "tags": [
-    "Customer service",
-    "Teamwork"
-  ],
   "en": {
     "role": "Multi-skilled employee",
     "contract": "Summer job",
     "points": [
       "Worked across the three leisure activities (bikes, rowing boats, golf carts) at a high-expectation heritage site.",
       "Learned customer service, and watched closely how teams and decisions are managed."
+    ],
+    "tags": [
+      "Customer service",
+      "Teamwork"
     ]
   },
   "fr": {
@@ -23,6 +23,10 @@
     "points": [
       "Passage par les trois activités de loisirs (vélos, barques, voiturettes de golf) d’un site patrimonial très exigeant.",
       "Apprentissage de la relation client et observation de la gestion des équipes et des décisions."
+    ],
+    "tags": [
+      "Service client",
+      "Travail d’équipe"
     ]
   }
 }

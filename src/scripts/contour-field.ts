@@ -2,9 +2,10 @@ import { fieldOptions, parseColor } from '../lib/field';
 import { onMotion } from './motion';
 
 /**
- * Live contour field (lazy chunk, see field.ts), used by every [data-field-host]: the hero Location
- * tile, the hero backdrop, the sage pods and the section dividers. One WebGL2 fragment shader draws
- * iso-lines of a slowly drifting, domain-warped noise field; the lines can bend around the pointer.
+ * Live contour field (lazy chunk, see field.ts), used by the WebGL [data-field-host]s: the hero Location
+ * tile (iso-lines) and the How I work pod (data-field-mode="relief": stepped filled bands with a
+ * hillshade). One WebGL2 fragment shader draws iso-lines of a slowly drifting, domain-warped noise
+ * field; the lines (or bands) can bend around the pointer.
  * Each host tunes it with data-field-* attributes (see lib/field.ts): opacity, zoom, seed, line
  * count, frame rate and render scale, so big surfaces render cheaper. Ambient motion: smooth, but
  * polite. Stopped when offscreen, when the tab is hidden and when motion is off (one still frame
@@ -26,6 +27,7 @@ uniform float uAlpha;
 uniform float uZoom;
 uniform float uSeed;
 uniform float uLines;
+uniform float uMode;
 out vec4 color;
 
 float hash(vec2 p) {
@@ -64,6 +66,20 @@ void main() {
     h += uPointerOn * 0.16 * exp(-dot(d, d) * 16.0);
 
     float f = h * uLines;
+
+    if (uMode > 0.5) {
+        // Relief: stepped elevation bands (higher ground is denser) and a stepped hillshade lit from the
+        // upper left, so the pod reads as a shaded map. Four tones only: instrument steps, never a smooth fade.
+        float band = floor(f) / uLines;
+        vec2 slope = vec2(dFdx(h), dFdy(h)) * uRes.y * 0.35;
+        float lit = floor(clamp(0.5 + dot(slope, vec2(-0.7, 0.7)) * 3.0, 0.0, 0.999) * 3.0) / 3.0;
+        float edge = 1.0 - smoothstep(0.0, fwidth(f) * 1.2, abs(fract(f - 0.5) - 0.5));
+        float r = (0.25 + 0.55 * band + 0.5 * lit) * 0.6 + edge * 0.5;
+        float ra = min(1.0, r) * uAlpha;
+        color = vec4(uLine * ra, ra);
+        return;
+    }
+
     float w = fwidth(f);
     float minor = 1.0 - smoothstep(0.0, w * 1.2, abs(fract(f - 0.5) - 0.5));
     float g = f / 5.0;
@@ -122,10 +138,12 @@ export function startField(tile: HTMLElement, canvas: HTMLCanvasElement): void {
         zoom: uniform('uZoom'),
         seed: uniform('uSeed'),
         lines: uniform('uLines'),
+        mode: uniform('uMode'),
     };
     gl.uniform1f(u.zoom, options.zoom);
     gl.uniform1f(u.seed, options.seed);
     gl.uniform1f(u.lines, options.lines);
+    gl.uniform1f(u.mode, options.mode === 'relief' ? 1 : 0);
 
     // Line colour: the theme's moss, read through a probe so any colour format resolves.
     const probe = document.createElement('i');

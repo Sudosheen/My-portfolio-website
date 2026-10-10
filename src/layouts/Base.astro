@@ -15,11 +15,13 @@ interface Props {
     icons?: { light: string; dark: string };
     /** Extra CSP for this page only. Applied here because the policy is rendered with <head>. */
     csp?: PageCsp;
+    /** The page has the home sections: the header shows its progress meter from the first paint. */
+    meter?: boolean;
 }
 
 const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang);
-const { title = t.meta.title, description = t.meta.description, noindex = false, icons, csp } = Astro.props;
+const { title = t.meta.title, description = t.meta.description, noindex = false, icons, csp, meter = false } = Astro.props;
 const base = import.meta.env.BASE_URL;
 applyCsp(Astro.csp, csp);
 
@@ -115,7 +117,7 @@ const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
         >
             {t.a11y.skip}
         </a>
-        <Header />
+        <Header meter={meter} />
         <main id="main">
             <slot />
         </main>

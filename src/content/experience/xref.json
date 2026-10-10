@@ -5,13 +5,6 @@
   "start": "2024-11",
   "end": "2025-05",
   "current": false,
-  "tags": [
-    "Jira",
-    "Confluence",
-    "Requirements",
-    "Deployments",
-    "WCAG"
-  ],
   "en": {
     "role": "Junior project manager",
     "points": [
@@ -20,6 +13,13 @@
       "Ran squad stand-ups and ticket triage across global, cross-functional teams.",
       "Ran squad projects such as accessibility (WCAG) fixes, a component library and language upgrades.",
       "Organised an internal collaboration day for the whole team."
+    ],
+    "tags": [
+      "Jira",
+      "Confluence",
+      "Requirements",
+      "Deployments",
+      "WCAG"
     ]
   },
   "fr": {
@@ -30,6 +30,13 @@
       "Animation des points quotidiens et tri des tickets au sein d’équipes internationales et pluridisciplinaires.",
       "Pilotage de projets d’équipe : corrections d’accessibilité (WCAG), bibliothèque de composants, montées de version de langages.",
       "Organisation d’une journée de collaboration interne pour toute l’équipe."
+    ],
+    "tags": [
+      "Jira",
+      "Confluence",
+      "Exigences",
+      "Déploiements",
+      "WCAG"
     ]
   }
 }

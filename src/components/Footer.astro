@@ -1,5 +1,7 @@
 ---
+import { cardPublished } from '../data/card';
 import { profile } from '../data/profile';
+import NewTab from './NewTab.astro';
 import { buildInfo } from '../lib/build-info';
 import { href, langFrom, useUi } from '../i18n/utils';
 
@@ -7,10 +9,10 @@ const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang);
 const year = buildInfo.date.slice(0, 4);
 const links = [
-    { label: t.footer.card, href: href(lang, 'card/') },
+    ...(cardPublished ? [{ label: t.footer.card, href: href(lang, 'card/') }] : []),
     { label: t.footer.colophon, href: href(lang, 'colophon/') },
     { label: t.footer.legal, href: href(lang, 'legal/') },
-    { label: t.footer.source, href: profile.repo },
+    { label: t.footer.source, href: profile.repo, external: true },
 ];
 ---
 
@@ -28,8 +30,11 @@ const links = [
                         <a
                             class="muted inline-flex min-h-6 items-center no-underline hover:text-ink hover:underline"
                             href={l.href}
+                            target={l.external ? '_blank' : undefined}
+                            rel={l.external ? 'noopener' : undefined}
                         >
                             {l.label}
+                            {l.external && <NewTab />}
                         </a>
                     </li>
                 ))

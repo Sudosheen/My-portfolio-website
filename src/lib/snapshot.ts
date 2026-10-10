@@ -7,6 +7,8 @@ export interface LiveConfig {
     timeZone: string;
     /** "YYYY-MM" of the first digital-project role. */
     since: string;
+    /** "YYYY-MM" the current role started. */
+    roleSince: string;
 }
 
 export interface Snapshot {
@@ -22,6 +24,8 @@ export interface Snapshot {
         elevation: string;
         'career-years': string;
         'career-months': string;
+        /** Whole months in the current role. */
+        'role-months': string;
     };
 }
 
@@ -29,7 +33,7 @@ export interface Snapshot {
  * What the page prints before the first tick (and with scripts off): honest placeholders for anything
  * time-sensitive, and the career counter, which only changes monthly, computed at build time.
  */
-export function idleValues(now: Date, since: string): Snapshot['values'] {
+export function idleValues(now: Date, since: string, roleSince = since): Snapshot['values'] {
     const { years, months } = yearsMonths(monthsSince(since, now));
     return {
         time: '--:--',
@@ -41,6 +45,7 @@ export function idleValues(now: Date, since: string): Snapshot['values'] {
         elevation: '--.-',
         'career-years': String(years).padStart(2, '0'),
         'career-months': String(months).padStart(2, '0'),
+        'role-months': String(monthsSince(roleSince, now)),
     };
 }
 
@@ -57,7 +62,7 @@ function zonePart(now: Date, timeZone: string, style: 'short' | 'shortOffset'): 
 }
 
 /** Everything the page shows "live", computed from the clock alone: no network, no API. */
-export function buildSnapshot(now: Date, { lat, lon, timeZone, since }: LiveConfig): Snapshot {
+export function buildSnapshot(now: Date, { lat, lon, timeZone, since, roleSince }: LiveConfig): Snapshot {
     const times = sunTimes(now, lat, lon);
     const { elevation } = solarPosition(now, lat, lon);
     const { years, months } = yearsMonths(monthsSince(since, now));
@@ -75,6 +80,7 @@ export function buildSnapshot(now: Date, { lat, lon, timeZone, since }: LiveConf
             elevation: `${elevation >= 0 ? '+' : '-'}${Math.abs(elevation).toFixed(1)}`,
             'career-years': String(years).padStart(2, '0'),
             'career-months': String(months).padStart(2, '0'),
+            'role-months': String(monthsSince(roleSince, now)),
         },
     };
 }

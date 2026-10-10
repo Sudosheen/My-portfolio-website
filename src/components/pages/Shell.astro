@@ -12,12 +12,7 @@ const { page } = Astro.props;
 const ui = useUi(langFrom(Astro.currentLocale));
 const base = import.meta.env.BASE_URL;
 
-const titles = {
-    card: ui.card.title,
-    cv: ui.cv.title,
-    colophon: ui.colophon.title,
-    legal: ui.legal.title,
-};
+const titles = ui.meta.tabs;
 const descriptions = {
     card: ui.card.intro,
     cv: ui.cv.summary,

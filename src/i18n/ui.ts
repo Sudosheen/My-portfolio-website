@@ -12,15 +12,44 @@ export const defaultLang: Lang = 'en';
 const NB = ' ';
 
 const en = {
+    /** Decorative module-strip labels ("MOD.05 / EDU"): hidden from assistive tech, uppercase on purpose. */
+    mod: {
+        clock: 'CLOCK',
+        location: 'LOCATION',
+        build: 'BUILD',
+        career: 'CAREER',
+        status: 'STATUS',
+        checks: 'CHECKS',
+        scope: 'SCOPE',
+        log: 'LOG',
+        project: 'PROJECT',
+        spec: 'SPEC',
+        edu: 'EDU',
+        lang: 'LANG',
+        contact: 'CONTACT',
+        card: 'CARD',
+        stack: 'STACK',
+        audit: 'AUDIT',
+        a11y: 'A11Y',
+        src: 'SRC',
+        pub: 'PUB',
+        host: 'HOST',
+        privacy: 'PRIVACY',
+        rights: 'RIGHTS',
+        content: 'CONTENT',
+        plain: 'PLAIN',
+    },
     meta: {
         siteName: 'Osheen Turner',
-        title: 'Osheen Turner ⠇ Digital sovereignty project manager',
+        title: 'Osheen Turner ⠇ Digital sovereignty PM',
+        tabs: { card: 'Card', cv: 'CV', colophon: 'Site info', legal: 'Privacy' },
         description:
             'Digital sovereignty project manager at Région Occitanie (DIN), Montpellier. I deliver digital projects, from specifications and procurement to testing and adoption, with a bias for open, sovereign technology.',
         ogAlt: 'Osheen Turner, digital sovereignty project manager',
     },
     a11y: {
         skip: 'Skip to content',
+        newTab: 'opens in a new tab',
         nav: 'Main navigation',
         language: 'Language',
         theme: 'Theme',
@@ -69,6 +98,7 @@ const en = {
             since: 'since',
             years: 'yr',
             months: 'mo',
+            role: 'Région Occitanie',
         },
     },
     principles: {
@@ -162,11 +192,13 @@ const en = {
     },
     education: {
         title: 'Education',
-        languages: 'Languages',
+        heading: 'Education and credentials',
+        languages: 'Languages and licences',
         languageList: [
             { name: 'French', level: 'Native' },
             { name: 'English', level: 'Native' },
             { name: 'Spanish', level: 'School level' },
+            { name: 'Driving licences', level: 'B and A2' },
         ],
     },
     contact: {
@@ -202,7 +234,7 @@ const en = {
         deployed: 'DEPLOYED',
         thirdParty: 'THIRD-PARTY REQUESTS',
         source: 'Source on GitHub',
-        colophon: 'Colophon',
+        colophon: 'Site info',
         legal: 'Legal',
         card: '3D card',
         rights: 'Built as an open, lean, accessible static site.',
@@ -228,7 +260,7 @@ const en = {
         experience: 'Experience',
         education: 'Education',
         skills: 'Skills',
-        languages: 'Languages',
+        languages: 'Languages and licences',
         contact: 'Contact',
         skillGroups: [
             { label: 'Project management', items: 'Planning, budget tracking, risk and estimation, Agile (Scrum), requirements and specifications' },
@@ -238,7 +270,7 @@ const en = {
         ],
     },
     colophon: {
-        title: 'Colophon',
+        title: 'Site info',
         intro: 'This site practices what I do for a living: open, lean, accessible, and under its owner’s control. Here is what it is made of, and what was measured.',
         stackTitle: 'What it is made of',
         stackHead: { layer: 'Layer', what: 'What', license: 'License' },
@@ -298,15 +330,44 @@ const en = {
 export type Dict = typeof en;
 
 const fr: Dict = {
+    /** Decorative module-strip labels ("MOD.05 / EDU"): hidden from assistive tech, uppercase on purpose. */
+    mod: {
+        clock: 'HORLOGE',
+        location: 'LIEU',
+        build: 'VERSION',
+        career: 'CARRIÈRE',
+        status: 'ÉTAT',
+        checks: 'CONTRÔLES',
+        scope: 'PÉRIMÈTRE',
+        log: 'PARCOURS',
+        project: 'PROJET',
+        spec: 'FICHE',
+        edu: 'FORMATION',
+        lang: 'LANGUES',
+        contact: 'CONTACT',
+        card: 'CARTE',
+        stack: 'OUTILS',
+        audit: 'AUDIT',
+        a11y: 'A11Y',
+        src: 'SOURCE',
+        pub: 'ÉDITEUR',
+        host: 'HÉBERGEUR',
+        privacy: 'VIE PRIVÉE',
+        rights: 'DROITS',
+        content: 'CONTENU',
+        plain: 'TEXTE',
+    },
     meta: {
         siteName: 'Osheen Turner',
-        title: 'Osheen Turner ⠇ Chef de projet souveraineté numérique',
+        title: 'Osheen Turner ⠇ Chef de projet souveraineté',
+        tabs: { card: 'Carte', cv: 'CV', colophon: 'Infos du site', legal: 'Confidentialité' },
         description:
             'Chef de projet souveraineté numérique à la Région Occitanie (DIN), Montpellier. Je conduis des projets numériques, du cahier des charges à l’adoption par les utilisateurs, avec une préférence pour les technologies ouvertes et souveraines.',
         ogAlt: 'Osheen Turner, chef de projet souveraineté numérique',
     },
     a11y: {
         skip: 'Aller au contenu',
+        newTab: 's’ouvre dans un nouvel onglet',
         nav: 'Navigation principale',
         language: 'Langue',
         theme: 'Thème',
@@ -317,8 +378,8 @@ const fr: Dict = {
         day: 'Jour',
         night: 'Nuit',
         motion: 'Animations',
-        motionOn: 'oui',
-        motionOff: 'non',
+        motionOn: 'on',
+        motionOff: 'off',
     },
     nav: {
         intro: 'Accueil',
@@ -355,6 +416,7 @@ const fr: Dict = {
             since: 'depuis',
             years: 'an',
             months: 'mois',
+            role: 'Région Occitanie',
         },
     },
     principles: {
@@ -366,17 +428,17 @@ const fr: Dict = {
         items: [
             {
                 code: 'OUVERT',
-                question: `Les données peuvent-elles sortir, dans un format ouvert, quand nous le décidons${NB}?`,
+                question: `Peut-on récupérer nos données, dans un format ouvert, quand on le veut${NB}?`,
                 practice: 'Standards ouverts et logiciel libre d’abord. Les exigences de sortie et d’export sont écrites dans le cahier des charges, pour que chaque choix reste réversible.',
             },
             {
                 code: 'SOUVERAIN',
-                question: `Qui détient les clés, et qui peut tout couper${NB}?`,
+                question: `Qui détient les clés, et qui peut couper l’accès${NB}?`,
                 practice: 'Les données, les outils et les décisions restent sous le contrôle de celles et ceux qui en dépendent, dans une juridiction qu’ils peuvent interpeller.',
             },
             {
-                code: 'SOLIDE',
-                question: `Que se passe-t-il le pire jour, et la sortie est-elle documentée${NB}?`,
+                code: 'RÉSILIENT',
+                question: `Le jour où tout s’arrête, la sortie est-elle prévue et documentée${NB}?`,
                 practice: 'Anticiper l’urgence, tester avant de s’engager, documenter la sortie avant d’en avoir besoin.',
             },
             {
@@ -448,11 +510,13 @@ const fr: Dict = {
     },
     education: {
         title: 'Formation',
-        languages: 'Langues',
+        heading: 'Formation et titres',
+        languages: 'Langues et permis',
         languageList: [
             { name: 'Français', level: 'Langue maternelle' },
             { name: 'Anglais', level: 'Langue maternelle' },
             { name: 'Espagnol', level: 'Niveau scolaire' },
+            { name: 'Permis de conduire', level: 'B et A2' },
         ],
     },
     contact: {
@@ -487,7 +551,7 @@ const fr: Dict = {
         deployed: 'DÉPLOYÉ',
         thirdParty: 'REQUÊTES TIERCES',
         source: 'Code source sur GitHub',
-        colophon: 'Colophon',
+        colophon: 'Infos du site',
         legal: 'Mentions légales',
         card: 'Carte 3D',
         rights: 'Un site statique ouvert, sobre et accessible.',
@@ -513,7 +577,7 @@ const fr: Dict = {
         experience: 'Expérience',
         education: 'Formation',
         skills: 'Compétences',
-        languages: 'Langues',
+        languages: 'Langues et permis',
         contact: 'Contact',
         skillGroups: [
             { label: 'Gestion de projet', items: 'Planification, suivi budgétaire, risques et estimation, méthodes agiles (Scrum), expression de besoin et cahier des charges' },
@@ -523,7 +587,7 @@ const fr: Dict = {
         ],
     },
     colophon: {
-        title: 'Colophon',
+        title: 'Infos du site',
         intro: 'Ce site met en pratique mon métier : ouvert, sobre, accessible et maîtrisé par son propriétaire. Voici de quoi il est fait, et ce qui a été mesuré.',
         stackTitle: 'De quoi il est fait',
         stackHead: { layer: 'Couche', what: 'Quoi', license: 'Licence' },

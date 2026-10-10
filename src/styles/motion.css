@@ -197,6 +197,10 @@
     :root[data-motion="on"] main h2.display {
         mask-image: radial-gradient(circle at center, #000 var(--r), transparent calc(var(--r) + 0.5px));
         mask-size: 0.5rem 0.5rem;
+        /* A mask clips to the element's box, and the display face's j, g and y hang below a tight line
+           box: pad the box and cancel the padding with a negative margin so layout does not move. */
+        padding-block: 0.15em;
+        margin-block: -0.15em;
         animation-name: resolve;
         animation-duration: 1ms;
         animation-timing-function: steps(6, end);

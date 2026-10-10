@@ -1,22 +1,23 @@
 ---
 /**
  * Career tile: "in digital projects" since the first developer role, counted live in the browser
- * (tick.ts). No "time in role" figure: that needs a start date that is not known yet.
+ * (tick.ts), plus the months spent in the current role.
  */
 import { profile } from '../../data/profile';
 import { dotMatrix } from '../../lib/dotmatrix';
 import { idleValues } from '../../lib/snapshot';
 import { langFrom, monthYear, useUi } from '../../i18n/utils';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const t = useUi(langFrom(Astro.currentLocale)).hero.panel;
-const idle = idleValues(new Date(), profile.digitalSince);
+const idle = idleValues(new Date(), profile.digitalSince, profile.roleSince);
 const years = dotMatrix(idle['career-years']);
 const months = dotMatrix(idle['career-months']);
 ---
 
 <div class="module tk tile" role="group" aria-label={t.career}>
     <div class="module-head">
-        <span class="mono" aria-hidden="true">MOD.01D / CAREER</span>
+        <span class="mono" aria-hidden="true">MOD.01D / {mod.career}</span>
     </div>
     <div class="tile-body">
         <p class="mono faint">{t.career}</p>
@@ -49,5 +50,9 @@ const months = dotMatrix(idle['career-months']);
             <span data-live="career-months">{idle['career-months']}</span> {t.months}
         </p>
         <p class="mono faint mt-2">{t.since} {monthYear(profile.digitalSince)}</p>
+        <p class="mono mt-1">
+            {t.role}: <span data-live="role-months">{idle['role-months']}</span>
+            {t.months}
+        </p>
     </div>
 </div>

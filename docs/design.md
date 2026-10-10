@@ -4,7 +4,7 @@
 A warm solarpunk **habitat** (narrative: large radii, sage pods, contour lines) with an open-hardware
 **instrument** interface set inside it (hairline modules, mono labels, LEDs, dot-matrix, corner ticks, snapping
 motion). Narrative content lives on the habitat; factual or structured content (log, specs, scope, contact,
-colophon) lives in instrument modules.
+site info page) lives in instrument modules.
 
 | | Habitat | Instrument |
 |---|---|---|

@@ -26,5 +26,5 @@ export function otherLangHref(pathname: string, to: Lang): string {
 export function monthYear(value: string | null | undefined): string | null {
     if (!value) return null;
     const [y, m] = value.split('-');
-    return `${m}/${y}`;
+    return m ? `${m}/${y}` : y;
 }

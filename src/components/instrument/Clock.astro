@@ -5,6 +5,7 @@ import { idleValues } from '../../lib/snapshot';
 import { langFrom, useUi } from '../../i18n/utils';
 import SolarDial from './SolarDial.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const t = useUi(langFrom(Astro.currentLocale)).hero;
 const idle = idleValues(new Date(), profile.digitalSince);
 const dots = dotMatrix(idle.time);
@@ -12,7 +13,7 @@ const dots = dotMatrix(idle.time);
 
 <div class="module tk has-led" role="group" aria-label={t.clock} data-clock>
     <div class="module-head">
-        <span class="mono" aria-hidden="true">MOD.01 / CLOCK</span>
+        <span class="mono" aria-hidden="true">MOD.01 / {mod.clock}</span>
         <i class="led" aria-hidden="true"></i>
     </div>
     <div class="clock-body">

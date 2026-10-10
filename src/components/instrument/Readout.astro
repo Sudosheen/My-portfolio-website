@@ -6,6 +6,7 @@ import { buildInfo } from '../../lib/build-info';
 import { factHtml } from '../../lib/readout';
 import { idleValues } from '../../lib/snapshot';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const lang = langFrom(Astro.currentLocale);
 const ui = useUi(lang);
 const t = ui.readout;
@@ -16,7 +17,7 @@ const facts = [ui.chrome.state, ...t.facts].map((fact) => factHtml(fact, idle, b
 
 <div class="readout no-print mx-auto w-full max-w-[70rem] px-4 md:px-6" role="group" aria-label={t.label} data-readout>
     <div class="readout-bar tk">
-        <span class="mono faint readout-code">MOD.01E / STATUS</span>
+        <span class="mono faint readout-code">MOD.01E / {mod.status}</span>
         <span class="led" aria-hidden="true"></span>
         <div class="readout-window" aria-hidden="true">
             <ul class="readout-facts">

@@ -1,7 +1,7 @@
 # Osheen Turner personal website
 
 Bilingual (EN `/`, FR `/fr/`) static portfolio for Osheen Turner, a digital-sovereignty project manager
-with a developer background (Montpellier). A 3D business card lives at `/card/`.
+with a developer background (Montpellier). A 3D business card lives at `/card/` (switched off for now, see below).
 Live: https://sudosheen.github.io/My-portfolio-website/ (base path `/My-portfolio-website/`).
 Default branch `main`; v2 rebuild landed from `site-v2` (PR #2).
 
@@ -15,9 +15,13 @@ through the Astro Fonts API (Fraunces display, IBM Plex Sans, IBM Plex Mono), Sp
 No animation library: CSS (scroll-driven animations inside `@supports`, static fallback), one shared tick loop
 (`src/scripts/tick.ts`), and one hand-written WebGL2 shader (`src/scripts/contour-field.ts`, a lazy chunk that only
 loads with motion on, no data saving and a capable device). Any element with `data-field-host` and a direct-child
-`canvas[data-field]` becomes a live contour field when near the viewport (hero Location tile, sage pods), tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback.
+`canvas[data-field]` becomes a live field when near the viewport, tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback. The hero Location tile is a WebGL contour field; the How I work and Contact pods use the same shader in `data-field-mode="relief"` (stepped filled bands with a hillshade; the poster is `PodContours filled`).
 Scroll-linked effects must not sit inside `overflow: hidden/auto` boxes (those become the scroller): use
 `overflow-clip` on pods.
+
+**The /card/ pages are currently hidden** (owner is updating the Spline scene): the page files are `src/pages/_card.astro`
+and `src/pages/fr/_card.astro`, and `cardPublished` in `src/data/card.ts` is `false` (hides the hero, nav and footer links).
+To bring the card back, rename both files to `card.astro` and set the flag to `true`.
 
 ## Commands
 ```bash

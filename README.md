@@ -16,7 +16,7 @@ Live: <https://sudosheen.github.io/My-portfolio-website/>
 | `npm run check` | `astro check` (types, templates) |
 | `npm test` | Unit tests (solar maths, EN/FR parity, art generators) |
 | `npm run audit:site` | Page-weight budgets, third-party origins, page structure |
-| `npm run audit:write` | Same, and records the numbers in `src/data/audit.json` (shown on the colophon) |
+| `npm run audit:write` | Same, and records the numbers in `src/data/audit.json` (shown on the site info page) |
 | `npm run a11y` | axe-core (WCAG 2.2 A/AA + best practices) on every built page |
 
 Telemetry is disabled in the scripts. If `npm` fails to write its cache in a locked-down sandbox,

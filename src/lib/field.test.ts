@@ -22,7 +22,7 @@ describe('contour field helpers', () => {
 
 describe('fieldOptions', () => {
     it('has sensible defaults', () => {
-        expect(fieldOptions({})).toEqual({ alpha: 0.3, zoom: 1, seed: 0, lines: 16, fps: 30, ratio: 1.5, pointer: true });
+        expect(fieldOptions({})).toEqual({ alpha: 0.3, zoom: 1, seed: 0, lines: 16, fps: 30, ratio: 1.5, pointer: true, mode: 'lines' });
     });
 
     it('reads and clamps data attributes', () => {

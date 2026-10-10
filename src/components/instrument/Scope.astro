@@ -2,10 +2,11 @@
 import { langFrom, useUi } from '../../i18n/utils';
 import Module from './Module.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const t = useUi(langFrom(Astro.currentLocale)).scope;
 ---
 
-<Module id="scope" code="MOD.02 / SCOPE" title={t.title} status={t.hint}>
+<Module id="scope" code={`MOD.02B / ${mod.scope}`} title={t.title} status={t.hint}>
     <p class="muted max-w-xl">{t.intro}</p>
 
     <div class="mt-5" data-scope>

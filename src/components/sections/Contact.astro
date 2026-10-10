@@ -1,10 +1,12 @@
 ---
 import { ArrowUpRight, Check, Copy01 } from '@untitledui/icons';
 import { profile } from '../../data/profile';
+import NewTab from '../NewTab.astro';
 import { href, langFrom, useUi } from '../../i18n/utils';
 import PodContours from '../habitat/PodContours.astro';
 import Wave from '../habitat/Wave.astro';
 
+const mod = useUi(langFrom(Astro.currentLocale)).mod;
 const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang).contact;
 ---
@@ -16,17 +18,19 @@ const t = useUi(lang).contact;
 >
     <Wave />
 
-    <!-- Same habitat pod as "How I work": contour lines behind, the instrument module set inside. -->
+    <!-- Same habitat pod as "How I work": live relief behind (a different seed), the instrument module set inside. -->
     <div
         class="pod relative mt-8 overflow-clip p-6 md:p-12"
         data-field-host
-        data-field-alpha="0.32"
-        data-field-zoom="0.7"
-        data-field-seed="3"
+        data-field-mode="relief"
+        data-field-alpha="0.2"
+        data-field-zoom="0.5"
+        data-field-seed="5"
+        data-field-lines="13"
         data-field-ratio="0.75"
         data-field-fps="24"
     >
-        <PodContours corner="left" seed={9} />
+        <PodContours corner="right" seed={9} filled />
         <canvas class="field-canvas" data-field aria-hidden="true" hidden></canvas>
 
         <div class="relative grid gap-10 lg:grid-cols-[1fr_1.15fr]">
@@ -37,7 +41,7 @@ const t = useUi(lang).contact;
 
             <div class="module tk">
                 <div class="module-head">
-                    <span class="mono" aria-hidden="true">MOD.07 / CONTACT</span>
+                    <span class="mono" aria-hidden="true">MOD.07 / {mod.contact}</span>
                     <i class="led" aria-hidden="true"></i>
                 </div>
                 <div class="ruler" aria-hidden="true"></div>
@@ -61,8 +65,8 @@ const t = useUi(lang).contact;
 
                 <dt>{t.linkedin}</dt>
                 <dd>
-                    <a class="inline-flex items-center gap-1" href={profile.linkedin} rel="me noopener">
-                        {profile.name}
+                    <a class="inline-flex items-center gap-1" href={profile.linkedin} target="_blank" rel="me noopener">
+                        {profile.name}<NewTab />
                         <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                 </dd>

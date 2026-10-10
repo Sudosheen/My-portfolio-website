@@ -1,0 +1,8 @@
+---
+/** Screen-reader note for a link that opens in a new tab (the visible cue is the arrow or the context). */
+import { langFrom, useUi } from '../i18n/utils';
+
+const t = useUi(langFrom(Astro.currentLocale)).a11y;
+---
+
+<span class="sr-only"> ({t.newTab})</span>

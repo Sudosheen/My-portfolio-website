@@ -5,19 +5,23 @@ import { contourRings } from '../../lib/contour';
 interface Props {
     corner?: 'left' | 'right';
     seed?: number;
+    /** Stepped relief: nested filled bands instead of lines (the poster for the live relief shader). */
+    filled?: boolean;
 }
 
-const { corner = 'left', seed = 5 } = Astro.props;
+const { corner = 'left', seed = 5, filled = false } = Astro.props;
 const right = corner === 'right';
 const rings = contourRings({ cx: right ? 400 : 0, cy: 400, rings: 8, r0: 60, step: 44, seed });
+// Filled bands paint the outer rings first, so each inner ring darkens the one below it.
+const paths = filled ? [...rings].reverse() : rings;
 ---
 
 <svg
-    class="pod-contours"
+    class:list={['pod-contours', filled && 'pod-contours--filled']}
     viewBox="0 0 400 400"
     preserveAspectRatio={right ? 'xMaxYMax slice' : 'xMinYMax slice'}
     aria-hidden="true"
     focusable="false"
 >
-    {rings.map((d) => <path d={d} />)}
+    {paths.map((d) => <path d={d} />)}
 </svg>

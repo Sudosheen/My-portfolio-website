@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import { profile } from '../../data/profile';
-import { langFrom, monthYear, useUi } from '../../i18n/utils';
+import NewTab from '../NewTab.astro';
+import { href, langFrom, monthYear, useUi } from '../../i18n/utils';
 import Section from '../Section.astro';
 
 const lang = langFrom(Astro.currentLocale);
@@ -21,6 +22,7 @@ function range(start: string | null, end: string | null, current = false): strin
 ---
 
 <Section class="max-w-[54rem]">
+    <p class="mono faint no-print mb-4"><a class="no-underline hover:underline" href={href(lang)}>← {ui.card.back}</a></p>
     <article class="cv">
         <header class="flex flex-wrap items-end justify-between gap-6 border-b border-hair pb-6">
             <div>
@@ -36,7 +38,7 @@ function range(start: string | null, end: string | null, current = false): strin
             <dt>{ui.contact.email}</dt>
             <dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd>
             <dt>{ui.contact.linkedin}</dt>
-            <dd><a href={profile.linkedin} rel="me noopener" class="break-all">{profile.linkedin}</a></dd>
+            <dd><a href={profile.linkedin} target="_blank" rel="me noopener" class="break-all">{profile.linkedin}<NewTab /></a></dd>
             <dt>Web</dt>
             <dd><a href={siteUrl} class="break-all">{siteUrl}</a></dd>
             {
@@ -74,7 +76,7 @@ function range(start: string | null, end: string | null, current = false): strin
                         const d = entry.data;
                         const text = d[lang];
                         return (
-                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:gap-5">
+                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:items-baseline md:gap-5">
                                 <p class="mono faint">{range(d.start, d.end, d.current)}</p>
                                 <div>
                                     <h3 class="font-medium">{text.role}</h3>
@@ -104,7 +106,7 @@ function range(start: string | null, end: string | null, current = false): strin
                         const d = entry.data;
                         const text = d[lang];
                         return (
-                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:gap-5">
+                            <li class="cv-item grid gap-1 md:grid-cols-[8.5rem_1fr] md:items-baseline md:gap-5">
                                 <p class="mono faint">{range(d.start, d.end)}</p>
                                 <div>
                                     <h3 class="font-medium">{text.title}</h3>

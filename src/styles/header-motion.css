@@ -80,6 +80,18 @@
         height: 0.375rem;
     }
 
+    /* Pages without the meter keep equal space above and below the controls; with the meter (wide screens),
+       the bottom gains room for it so the controls do not touch it. */
+    .hdr {
+        padding-block: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .hdr[data-meter] {
+            padding-bottom: 0.75rem;
+        }
+    }
+
     /* Meter: 7 cells on the module's bottom edge. Done = ink, active = taller lit block with an
        ink outline, upcoming = hairline. Decorative. */
     .hdr-meter {
