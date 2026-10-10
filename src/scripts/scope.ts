@@ -1,4 +1,5 @@
-import { motionIsOn } from './motion';
+import { between, coverProgress, reachedIndex } from '../lib/scrollfx';
+import { addScrollEffect } from './scrollfx';
 
 /**
  * Scope schematic. Without JavaScript every readout is visible as a plain list.
@@ -37,30 +38,43 @@ function mount(root: HTMLElement): void {
     select(0, true);
 
     if (!packet) return;
+    const track = packet.parentElement;
+    if (!track) return;
 
-    // Which node has the packet reached? Read its real (animated) position, so this always agrees
-    // with what is on screen, whatever the layout (a row, or a column on small screens).
-    let frame = 0;
-    const follow = () => {
-        frame = 0;
-        if (!motionIsOn() || getComputedStyle(packet).display === 'none') return;
-        const vertical = wires ? getComputedStyle(wires).flexDirection === 'column' : false;
-        const p = packet.getBoundingClientRect();
-        const at = vertical ? p.top + p.height / 2 : p.left + p.width / 2;
-        let reached = 0;
-        nodes.forEach((node, i) => {
-            const n = node.getBoundingClientRect();
-            if (at >= (vertical ? n.top : n.left)) reached = i;
-        });
-        select(reached, false);
-    };
-    addEventListener(
-        'scroll',
-        () => {
-            if (!frame) frame = requestAnimationFrame(follow);
+    // The packet travels the pipeline as the section passes through the viewport, and the node it has
+    // reached is selected. Position and node starts are measured once per layout change; each scroll frame
+    // is arithmetic and one transform (see scrollfx.ts).
+    let vertical = false;
+    let length = 0;
+    let trackTop = 0;
+    let trackHeight = 0;
+    let size = 0;
+    let starts: number[] = [];
+    addScrollEffect({
+        measure() {
+            vertical = wires ? getComputedStyle(wires).flexDirection === 'column' : false;
+            const t = track.getBoundingClientRect();
+            trackTop = t.top + window.scrollY;
+            trackHeight = t.height;
+            length = vertical ? t.height : t.width;
+            size = vertical ? packet.offsetHeight : packet.offsetWidth;
+            starts = nodes.map((node) => {
+                const n = node.getBoundingClientRect();
+                return vertical ? n.top - t.top : n.left - t.left;
+            });
         },
-        { passive: true },
-    );
+        apply(y, vh) {
+            const p = between(coverProgress(trackTop - y, trackHeight, vh), 0.2, 0.8);
+            const at = p * Math.max(0, length - size);
+            packet.setAttribute('data-live', '');
+            packet.style.transform = vertical ? `translateY(${at}px)` : `translateX(${at}px)`;
+            select(reachedIndex(starts, at + size / 2), false);
+        },
+        clear() {
+            packet.removeAttribute('data-live');
+            packet.style.transform = '';
+        },
+    });
 }
 
 export function initScope(): void {

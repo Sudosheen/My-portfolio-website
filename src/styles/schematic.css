@@ -1,11 +1,12 @@
 /*
   Schematic motion: the Scope pipeline (wires and signal) and the Log timeline spine.
-  Static structure first (final state: energized path shown, spine drawn, every log node lit);
-  animation only under :root[data-motion="on"] and @supports scroll timelines. Packet moves smoothly (it was stepped and felt laggy); stepped for
-  instrument things (packet, nodes), smooth allowed for the ambient spine fill.
+  Static structure first (final state: energized path shown, spine drawn, every log node lit). The
+  packet, the spine fill and the node lighting are driven by src/scripts/scrollfx.ts (transform and one
+  custom property per scroll frame, same in every browser) and only while motion is on; with motion off
+  or without JavaScript the static final state shows.
 */
 
-/* ---- Scope: the packet is hidden unless it can be scroll-linked. ---- */
+/* ---- Scope: the packet is hidden unless the script is driving it (scrollfx.ts sets data-live). ---- */
 .scope-packet {
     position: absolute;
     top: calc(50% - 0.25rem);
@@ -18,51 +19,20 @@
     pointer-events: none;
 }
 
+:root[data-motion="on"] .scope-packet[data-live] {
+    display: block;
+}
+
+@media (max-width: 639px) {
+    .scope-packet {
+        top: 0;
+        left: 1rem;
+    }
+}
+
 /* Wires re-colour in two steps when the selection moves (state change, not ambient motion). */
 :root[data-motion="on"] .scope-nodes > li + li::before {
     transition: background-color var(--dur-snap) steps(2, end);
-}
-
-@supports (animation-timeline: view()) {
-    /* The packet sits behind the nodes (z-index), so it travels wire to wire. It only moves
-       while the visitor scrolls: position follows the packet's own pass through the viewport. */
-    :root[data-motion="on"] .scope-packet {
-        display: block;
-        animation-name: packet-x;
-        animation-duration: 1ms;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: view();
-        animation-range: cover 20% cover 80%;
-    }
-
-    @media (max-width: 639px) {
-        :root[data-motion="on"] .scope-packet {
-            top: 0;
-            left: 1rem;
-            animation-name: packet-y;
-        }
-    }
-}
-
-@keyframes packet-x {
-    from {
-        left: 0;
-    }
-
-    to {
-        left: calc(100% - 0.5rem);
-    }
-}
-
-@keyframes packet-y {
-    from {
-        top: 0;
-    }
-
-    to {
-        top: calc(100% - 0.5rem);
-    }
 }
 
 /* ---- Log: a spine down the left of the experience list, one node per entry. ---- */
@@ -121,49 +91,13 @@
     background: var(--led);
 }
 
-@supports (animation-timeline: view()) {
-    /* The list's own view timeline, with the lower half of the viewport excluded, so the fill's
-       head sits on the viewport's middle line: it starts when the list top reaches that line and
-       ends when the list bottom does. */
-    :root[data-motion="on"] .log-list {
-        view-timeline-name: --log;
-        view-timeline-axis: block;
-        view-timeline-inset: 0 50%;
-    }
-
-    :root[data-motion="on"] .log-list::after {
-        animation-name: spine-fill;
-        animation-duration: 1ms;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: --log;
-        animation-range: entry 0% exit 0%;
-    }
-
-    /* Each node snaps lit when it crosses the middle of the viewport (monotonic, no flicker). */
-    :root[data-motion="on"] .log-list > li::before {
-        animation-name: node-lit;
-        animation-duration: 1ms;
-        animation-timing-function: steps(1, end);
-        animation-fill-mode: both;
-        animation-timeline: view();
-        animation-range: cover 49% cover 50%;
-    }
+/* Scripted (scrollfx.ts, motion on): the fill grows to the viewport's middle line, and each node is lit
+   only once it has passed that line (monotonic, no flicker). */
+:root[data-motion="on"] .log-list[data-fx]::after {
+    transform: scaleY(var(--fill, 0));
 }
 
-@keyframes spine-fill {
-    from {
-        transform: scaleY(0);
-    }
-
-    to {
-        transform: scaleY(1);
-    }
-}
-
-@keyframes node-lit {
-    from {
-        border-color: var(--edge);
-        background: transparent;
-    }
+:root[data-motion="on"] .log-list[data-fx] > li:not([data-lit])::before {
+    border-color: var(--edge);
+    background: transparent;
 }
