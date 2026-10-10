@@ -63,8 +63,8 @@
     }
 
     /* A stepped blink, not a fade (instrument motion never eases). Only while hovered or focused. */
-    .has-led:hover .led,
-    .has-led:focus-within .led {
+    :root[data-motion="on"] .has-led:hover .led,
+    :root[data-motion="on"] .has-led:focus-within .led {
         animation: led-pulse 1.2s steps(1, end) infinite;
     }
 
@@ -178,7 +178,6 @@
         text-decoration: none;
         background: transparent;
         cursor: pointer;
-        transition: transform var(--dur-snap) steps(2, end);
     }
 
     .sq-btn:hover {
@@ -344,7 +343,6 @@
         padding: 0.125rem;
         border: 1px solid var(--edge);
         border-radius: 0.125rem;
-        transition: transform var(--dur-snap) steps(2, end);
     }
 
     .drawer[open] > summary .chev {
@@ -565,7 +563,6 @@
         border: 1px solid var(--edge);
         border-radius: 0.125rem;
         color: var(--ink);
-        transition: background var(--dur-snap) steps(2, end);
     }
 
     .check-toggle svg {
@@ -618,4 +615,18 @@
     }
 
 
+
+    /* State changes snap in two steps (instrument motion). Declared here, under the motion switch, so
+       MOTION off is instant by construction. */
+    :root[data-motion="on"] .sq-btn {
+        transition: transform var(--dur-snap) steps(2, end);
+    }
+
+    :root[data-motion="on"] .drawer > summary .chev {
+        transition: transform var(--dur-snap) steps(2, end);
+    }
+
+    :root[data-motion="on"] .check-toggle {
+        transition: background var(--dur-snap) steps(2, end);
+    }
 }

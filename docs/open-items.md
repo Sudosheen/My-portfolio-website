@@ -5,7 +5,7 @@ Not code bugs. Do not invent answers; ask.
 ## Content
 - Région Occitanie: real achievements per role (start 09/2025, planned end 2027, same as the master at IAE).
 - All copy in `src/content/` and `src/i18n/ui.ts` is draft, taken from the public job posting, the old Wix site and the card.
-- Confirm project facts (CDC Habitat, AirBot) and permission for the client screenshots in `src/assets/_pending/`.
+- Confirm project facts (CDC Habitat, AirBot). The two client screenshots were removed from the repo; they stay in the history of earlier commits (a history rewrite is the owner's call).
 - Confirm Astel dates and the end of the CDC Habitat project (assumed Aug 2024).
 - Legal page review (hosting details), optional portrait and OG image.
 - Choose the site code licence (MIT or AGPL).

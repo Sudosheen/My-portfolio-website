@@ -78,6 +78,9 @@
         text-decoration: none;
         background: transparent;
         cursor: pointer;
+    }
+
+    :root[data-motion="on"] .pill-btn {
         transition:
             transform var(--dur-snap) steps(2, end),
             background-color var(--dur-snap) steps(2, end),

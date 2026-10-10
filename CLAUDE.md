@@ -64,15 +64,17 @@ looked at in light AND dark mode, EN AND FR, at about 375 px and 1280 px.
 10. Motion. Instrument motion (modules, text, LEDs, readouts) is stepped (`steps()`) and never flickers. Ambient motion
     (contour drift, parallax) may be smooth but is scroll-linked or finite (< 5 s). The only continuous motion (clock
     colon, readout, optional shader) stops with the MOTION toggle. Everything animated is declared under
-    `:root[data-motion="on"]` (set before paint: a stored choice, else `prefers-reduced-motion`); `off` is instant.
+    `:root[data-motion="on"]` (set before paint: a stored choice, else `prefers-reduced-motion`); `off` is instant. That
+    includes transitions and hover pulses, and the page-transition groups. The one eased (non-stepped) piece of
+    instrument chrome is the 240 ms header/meter glide between pages (`globals.css`), a deliberate exception.
 11. No inline `style=""` attributes: the production CSP blocks them and `npm run audit:site` fails on any. Use classes,
     data attributes, SVG presentation attributes (`opacity`, `transform`) or CSSOM (`el.style.setProperty`). The dev
     server has no CSP, so verify policy issues on `npm run preview`.
 
 ## Publication rules (the repo and site are public)
 - Never commit referee quotes or contact details, Xref internals (client name, ticket IDs, colleague names),
-  the reference PDFs, or phone numbers. `src/assets/_pending/` screenshots are not served and need the owner's
-  permission before publishing.
+  the reference PDFs, client screenshots (removed from the repo; they stay in earlier commits' history), or phone
+  numbers. A client image needs the owner's explicit permission before it is committed.
 - The phone number is read from `PUBLIC_PHONE_FR_E164` (local `.env`, git-ignored; repository secret in CI).
   Unset, the phone row is not rendered. Never hard-code it.
 - Region/employer wording mirrors the public job posting and is draft until the owner supplies real achievements.
