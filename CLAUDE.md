@@ -12,9 +12,12 @@ More detail: [docs/design.md](docs/design.md) (concept, tokens, decisions), [doc
 Astro 7 static, React 19 only for build-time Untitled UI icons (no islands), Tailwind v4, fonts self-hosted
 through the Astro Fonts API (Fraunces display, IBM Plex Sans, IBM Plex Mono), Spline viewer pinned to exact
 `1.9.44` (with matching `@splinetool/*-wasm@1.9.44`), loaded only on `/card/` after a click. Node 24.
-No animation library: CSS (scroll-driven animations inside `@supports`, static fallback), one shared tick loop
+No animation library: CSS (ambient scroll-driven animations inside `@supports`, static fallback; Firefox/Zen have none), scripted scroll
+effects for the two that must work everywhere (the Scope packet and the Log spine/nodes: `src/scripts/scrollfx.ts`, geometry
+measured once per layout change, a transform or one custom property per frame), one shared tick loop
 (`src/scripts/tick.ts`), and one hand-written WebGL2 shader (`src/scripts/contour-field.ts`, a lazy chunk that only
-loads with motion on, no data saving and a capable device). Any element with `data-field-host` and a direct-child
+loads with motion on, no data saving, a capable device and a hovering pointer; touch-first devices keep the poster, and it
+pauses while the page scrolls). Any element with `data-field-host` and a direct-child
 `canvas[data-field]` becomes a live field when near the viewport, tuned by `data-field-*` attributes (see `src/lib/field.ts`); its static poster is the fallback. The hero Location tile is a WebGL contour field; the How I work and Contact pods use the same shader in `data-field-mode="relief"` (stepped filled bands with a hillshade; the poster is `PodContours filled`).
 Scroll-linked effects must not sit inside `overflow: hidden/auto` boxes (those become the scroller): use
 `overflow-clip` on pods.

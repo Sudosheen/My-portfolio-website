@@ -19,14 +19,18 @@ export interface FieldEnvironment {
     saveData?: boolean;
     /** navigator.deviceMemory in GB, where the browser exposes it. */
     deviceMemory?: number;
+    /** The primary input is touch (no hovering mouse): phones and tablets. */
+    touch?: boolean;
 }
 
 /**
  * Whether the animated field may run at all; otherwise the static contour poster stays.
- * Respect motion off and data saving; skip low-memory devices (only Chromium reports memory).
+ * Respect motion off and data saving; skip low-memory devices (only Chromium reports memory) and
+ * touch-first devices, where a full-screen fragment shader competes with scrolling and there is no
+ * pointer to bend the lines around anyway: the static poster is what they get.
  */
-export function fieldAllowed({ motion, saveData, deviceMemory }: FieldEnvironment): boolean {
-    if (!motion || saveData) return false;
+export function fieldAllowed({ motion, saveData, deviceMemory, touch }: FieldEnvironment): boolean {
+    if (!motion || saveData || touch) return false;
     return deviceMemory === undefined || deviceMemory >= 4;
 }
 

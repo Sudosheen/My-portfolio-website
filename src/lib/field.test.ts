@@ -17,6 +17,8 @@ describe('contour field helpers', () => {
         expect(fieldAllowed({ motion: true, saveData: true })).toBe(false);
         expect(fieldAllowed({ motion: true, deviceMemory: 2 })).toBe(false);
         expect(fieldAllowed({ motion: true, deviceMemory: 8 })).toBe(true);
+        expect(fieldAllowed({ motion: true, touch: true })).toBe(false);
+        expect(fieldAllowed({ motion: true, touch: false })).toBe(true);
     });
 });
 

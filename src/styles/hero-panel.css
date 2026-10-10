@@ -238,6 +238,13 @@
     transition: opacity 240ms steps(3, end);
 }
 
+/* It never lights on touch (no hovering pointer), so the full-viewport layer is not even created there. */
+@media (hover: none) {
+    :root[data-motion="on"] .grid-glow {
+        display: none;
+    }
+}
+
 :root[data-motion="on"] .grid-glow[data-on] {
     opacity: 0.2;
 }

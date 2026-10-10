@@ -14,7 +14,13 @@ export function initField(): void {
 
     const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
     const allowed = () =>
-        motionIsOn() && fieldAllowed({ motion: true, saveData: nav.connection?.saveData, deviceMemory: nav.deviceMemory });
+        motionIsOn() &&
+        fieldAllowed({
+            motion: true,
+            saveData: nav.connection?.saveData,
+            deviceMemory: nav.deviceMemory,
+            touch: !window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+        });
     const whenIdle = window.requestIdleCallback ?? ((fn: () => void) => window.setTimeout(fn, 200));
 
     hosts.forEach((host) => {
