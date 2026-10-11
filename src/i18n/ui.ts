@@ -41,7 +41,7 @@ const en = {
     },
     meta: {
         siteName: 'Osheen Turner',
-        title: 'Osheen Turner ⠇ Digital sovereignty PM',
+        title: 'Osheen Turner · Digital sovereignty PM',
         tabs: { card: 'Card', cv: 'CV', colophon: 'Site info', legal: 'Legal' },
         description:
             'Digital sovereignty project manager at Région Occitanie (DIN), Montpellier. I deliver digital projects, from specifications and procurement to testing and adoption, with a bias for open, sovereign technology.',
@@ -361,7 +361,7 @@ const fr: Dict = {
     },
     meta: {
         siteName: 'Osheen Turner',
-        title: 'Osheen Turner ⠇ Chef de projet souveraineté',
+        title: 'Osheen Turner · Chef de projet souveraineté',
         tabs: { card: 'Carte', cv: 'CV', colophon: 'Infos du site', legal: 'Mentions légales' },
         description:
             'Chef de projet souveraineté numérique à la Région Occitanie (DIN), Montpellier. Je conduis des projets numériques, du cahier des charges à l’adoption par les utilisateurs, avec une préférence pour les technologies ouvertes et souveraines.',
