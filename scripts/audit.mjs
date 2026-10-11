@@ -9,8 +9,8 @@ import { gzipSync } from 'node:zlib';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
-const base = (process.env.SITE_BASE ?? '/My-portfolio-website/').replace(/\/?$/, '/');
-const siteOrigin = new URL(process.env.SITE_URL ?? 'https://sudosheen.github.io').origin;
+const base = (process.env.SITE_BASE ?? '/').replace(/\/?$/, '/');
+const siteOrigin = new URL(process.env.SITE_URL ?? 'https://osheenturner.com').origin;
 const write = process.argv.includes('--write');
 
 const BUDGET_KB = { html: 25, css: 20, js: 12, jsLazy: 8, fonts: 110, total: 230 };

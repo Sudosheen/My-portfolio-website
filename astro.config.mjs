@@ -4,10 +4,10 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Host-portable: a custom domain or EU static host is a config change
-// (SITE_URL=https://example.eu SITE_BASE=/ npm run build).
-const site = process.env.SITE_URL ?? 'https://sudosheen.github.io';
-const base = process.env.SITE_BASE ?? '/My-portfolio-website/';
+// Host-portable: the defaults are the production domain; another host is a config change
+// (SITE_URL=https://sudosheen.github.io SITE_BASE=/My-portfolio-website/ npm run build).
+const site = process.env.SITE_URL ?? 'https://osheenturner.com';
+const base = process.env.SITE_BASE ?? '/';
 
 // Fonts come from pinned npm packages (offline, reproducible builds) and are
 // self-hosted from the build output: no third-party font requests at runtime.

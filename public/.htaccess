@@ -1,0 +1,15 @@
+# OVHcloud shared hosting (Apache). One canonical address: https://osheenturner.com
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# osheenturner.fr, www and anything else go to the .com (one 301, keeps the path)
+RewriteCond %{HTTP_HOST} !^osheenturner\.com$ [NC]
+RewriteRule ^(.*)$ https://osheenturner.com/$1 [R=301,L]
+
+# plain http goes to https (the header covers a TLS-terminating proxy)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://osheenturner.com/$1 [R=301,L]
+</IfModule>
