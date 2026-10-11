@@ -170,6 +170,16 @@
             display: none;
         }
 
+        /* Same 11px text, tighter gaps and tracking, any slack spread evenly: the five links keep to one row. */
+        .hdr-nav ul {
+            justify-content: space-between;
+            column-gap: 0.4375rem;
+        }
+
+        .hdr-nav .hdr-link {
+            letter-spacing: 0.03em;
+        }
+
         .hdr .seg > :is(button, a),
         .motion-toggle {
             padding-inline: 0.375rem;
