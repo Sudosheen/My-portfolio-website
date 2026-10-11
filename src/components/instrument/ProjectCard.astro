@@ -24,6 +24,7 @@ const code = `MOD.04.${String(index + 1).padStart(2, '0')} / ${mod.project}`;
 
 <article
     class:list={['module tk project-card', featured && 'project-card--featured md:col-span-2']}
+    data-status={d.status}
     aria-labelledby={`project-${entry.id}`}
 >
     <div class="module-head">

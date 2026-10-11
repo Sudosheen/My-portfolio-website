@@ -34,7 +34,7 @@ function range(start: string | null, end: string | null, current = false, expect
             <button type="button" class="no-print pill-btn" data-print>{ui.contact.print}</button>
         </header>
 
-        <dl class="spec mt-6">
+        <dl class="spec spec--rows mt-6">
             <dt>{ui.contact.email}</dt>
             <dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd>
             <dt>{ui.contact.linkedin}</dt>
@@ -49,7 +49,7 @@ function range(start: string | null, end: string | null, current = false, expect
                             {profile.phones.map((p) => (
                                 <button
                                     type="button"
-                                    class="sq-btn"
+                                    class="sq-btn sq-btn--sm"
                                     data-reveal
                                     data-number={p.e164}
                                     data-display={p.display}

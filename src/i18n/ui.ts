@@ -266,7 +266,7 @@ const en = {
         contact: 'Contact',
         skillGroups: [
             { label: 'Project management', items: 'Planning, budget tracking, risk and estimation, Agile (Scrum), requirements and specifications' },
-            { label: 'Sovereignty and procurement', items: 'Needs analysis, cahier des charges, competitive dialogue, supplier selection' },
+            { label: 'Sovereignty and procurement', items: 'Needs analysis, specifications, competitive dialogue, supplier selection' },
             { label: 'Development', items: 'Java, JavaFX, PHP, JavaScript, HTML and CSS, SQL and PL/SQL, FlutterFlow with Dart, Git' },
             { label: 'Working style', items: 'Teamwork, communication, decision making' },
         ],
