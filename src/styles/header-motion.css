@@ -42,16 +42,11 @@
 
 @layer components {
     /* ---- Header: layout, nav with LEDs, section meter ---- */
+    /* Every link stays visible: on a narrow phone the row wraps instead of scrolling sideways. */
     .hdr-nav ul {
         display: flex;
-        flex-wrap: nowrap;
-        gap: 0 1rem;
-        overflow-x: auto;
-        scrollbar-width: none;
-    }
-
-    .hdr-nav ul::-webkit-scrollbar {
-        display: none;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.875rem;
     }
 
     .hdr-link {
@@ -160,8 +155,6 @@
         }
 
         .hdr-nav ul {
-            flex-wrap: wrap;
-            overflow: visible;
             gap: 0.25rem 0.75rem;
         }
     }
@@ -170,6 +163,11 @@
     @media (max-width: 47.99rem) {
         .hdr {
             column-gap: 0.5rem;
+        }
+
+        /* The nav LEDs make way so all five links fit one row; the current section stays underlined. */
+        .hdr-nav .hdr-link .led {
+            display: none;
         }
 
         .hdr .seg > :is(button, a),
