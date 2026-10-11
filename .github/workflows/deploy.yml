@@ -36,9 +36,47 @@ jobs:
           PUBLIC_PHONE_FR_E164: ${{ secrets.PUBLIC_PHONE_FR_E164 }}
       - run: npm run audit:site
       - run: npm run a11y
+      # The production build (https://osheenturner.com/) is kept for the OVH upload; GitHub Pages still
+      # serves the old address until the domain is live, so it gets its own build with the old base.
+      - run: mv dist ovh-dist
+      - run: npm run build
+        env:
+          SITE_URL: https://sudosheen.github.io
+          SITE_BASE: /My-portfolio-website/
+          PUBLIC_PHONE_FR_E164: ${{ secrets.PUBLIC_PHONE_FR_E164 }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ovh-dist
+          path: ovh-dist
+          include-hidden-files: true
+          retention-days: 7
+
+  # Uploads the production build to OVHcloud by FTP. Skipped until the three secrets exist
+  # (Settings > Secrets and variables > Actions): OVH_FTP_SERVER, OVH_FTP_USER, OVH_FTP_PASSWORD.
+  # Optional repository variable OVH_FTP_DIR (default www/) is the folder the domain points at.
+  deploy-ovh:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      OVH_FTP_SERVER: ${{ secrets.OVH_FTP_SERVER }}
+    steps:
+      - if: env.OVH_FTP_SERVER != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: ovh-dist
+          path: ovh-dist
+      - if: env.OVH_FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.OVH_FTP_SERVER }}
+          username: ${{ secrets.OVH_FTP_USER }}
+          password: ${{ secrets.OVH_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ovh-dist/
+          server-dir: ${{ vars.OVH_FTP_DIR || 'www/' }}
 
   deploy:
     needs: build

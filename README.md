@@ -4,13 +4,13 @@ Bilingual (EN at `/`, FR at `/fr/`) static site. Astro, Tailwind v4, Untitled UI
 Design concept: a warm, still **habitat** (narrative: intro, values, quotes) with an open-hardware
 **instrument** interface set inside it (facts: log, project specs, schematic, status, contact).
 
-Live: <https://sudosheen.github.io/My-portfolio-website/>
+Live: <https://osheenturner.com/> (`osheenturner.fr` and `www` redirect there; hosted on OVHcloud, see `docs/hosting.md`)
 
 ## Commands
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | Dev server at `http://localhost:4321/My-portfolio-website/` |
+| `npm run dev` | Dev server at `http://localhost:4321/` |
 | `npm run build` | Static build to `dist/`, then prunes unreferenced assets |
 | `npm run preview` | Serve `dist/` (use this to test the real CSP) |
 | `npm run check` | `astro check` (types, templates) |

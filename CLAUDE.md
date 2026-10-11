@@ -2,7 +2,7 @@
 
 Bilingual (EN `/`, FR `/fr/`) static portfolio for Osheen Turner, a digital-sovereignty project manager
 with a developer background (Montpellier). A 3D business card lives at `/card/` (switched off for now, see below).
-Live: https://sudosheen.github.io/My-portfolio-website/ (base path `/My-portfolio-website/`).
+Live: https://osheenturner.com/ (base path `/`; `osheenturner.fr` and `www` redirect to it). Hosting: [docs/hosting.md](docs/hosting.md).
 Default branch `main`; v2 rebuild landed from `site-v2` (PR #2).
 
 More detail: [docs/design.md](docs/design.md) (concept, tokens, decisions), [docs/agents.md](docs/agents.md)
@@ -29,7 +29,7 @@ To bring the card back, rename both files to `card.astro`, move `_card-assets/` 
 ## Commands
 ```bash
 npm ci
-npm run dev            # http://localhost:4321/My-portfolio-website/
+npm run dev            # http://localhost:4321/
 npm run check          # astro check: must be 0 errors, warnings, hints
 npm test               # vitest (solar, i18n parity + French typography, contour, dot matrix)
 npm run build          # also prunes orphan assets
