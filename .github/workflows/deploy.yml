@@ -54,14 +54,18 @@ jobs:
           include-hidden-files: true
           retention-days: 7
 
-  # Uploads the production build to OVHcloud by FTP. Skipped until the three secrets exist
+  # Uploads the production build to OVHcloud by SFTP (encrypted). Skipped until the secrets exist
   # (Settings > Secrets and variables > Actions): OVH_FTP_SERVER, OVH_FTP_USER, OVH_FTP_PASSWORD.
   # Optional repository variable OVH_FTP_DIR (default www/) is the folder the domain points at.
+  # Files already on the host are overwritten, never deleted, so nothing else in the folder is lost.
   deploy-ovh:
     needs: build
     runs-on: ubuntu-latest
     env:
       OVH_FTP_SERVER: ${{ secrets.OVH_FTP_SERVER }}
+      OVH_FTP_USER: ${{ secrets.OVH_FTP_USER }}
+      OVH_FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
+      OVH_FTP_DIR: ${{ vars.OVH_FTP_DIR || 'www/' }}
     steps:
       - if: env.OVH_FTP_SERVER != ''
         uses: actions/download-artifact@v4
@@ -69,14 +73,10 @@ jobs:
           name: ovh-dist
           path: ovh-dist
       - if: env.OVH_FTP_SERVER != ''
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.OVH_FTP_SERVER }}
-          username: ${{ secrets.OVH_FTP_USER }}
-          password: ${{ secrets.OVH_FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ovh-dist/
-          server-dir: ${{ vars.OVH_FTP_DIR || 'www/' }}
+        run: |
+          sudo apt-get install -y --no-install-recommends lftp
+          lftp -e "set sftp:auto-confirm yes; set net:max-retries 2; set net:timeout 20; mirror -R --parallel=3 --verbose ovh-dist/ \"$OVH_FTP_DIR\"; bye" \
+            -u "$OVH_FTP_USER","$OVH_FTP_PASSWORD" "sftp://$OVH_FTP_SERVER"
 
   deploy:
     needs: build
