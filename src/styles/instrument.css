@@ -58,6 +58,21 @@
         background: var(--led);
     }
 
+    .led[data-state="current"] {
+        background: var(--amber);
+    }
+
+    /* Education dates: a status dot (amber while ongoing, green once done) and the date. */
+    .edu-date {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .edu-date[data-current] {
+        color: var(--amber-ink);
+    }
+
     .led[data-state="idle"] {
         background: var(--ink-faint);
     }
@@ -358,6 +373,16 @@
         grid-row: span 3;
         grid-template-rows: subgrid;
         row-gap: 0;
+    }
+
+    /* Edge stripe: amber for the active project, LED green for finished ones (sage is too faint in
+       dark mode). The status tag says it in words too, so colour is never the only signal. */
+    .project-card {
+        box-shadow: inset 0.25rem 0 0 var(--led);
+    }
+
+    .project-card[data-status="active"] {
+        box-shadow: inset 0.25rem 0 0 var(--amber);
     }
 
     .project-card > .module-body {

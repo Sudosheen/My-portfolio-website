@@ -9,11 +9,10 @@ const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang).education;
 const entries = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
 
-function range(start: string | null, end: string | null, expected: boolean): string {
+function range(start: string | null, end: string | null): string {
     const s = monthYear(start);
     const e = monthYear(end);
-    const text = s && e ? `${s} → ${e}` : (e ?? s ?? '');
-    return expected ? `${text} (${t.expected})` : text;
+    return s && e ? `${s} → ${e}` : (e ?? s ?? '');
 }
 ---
 
@@ -28,7 +27,10 @@ function range(start: string | null, end: string | null, expected: boolean): str
                         const text = d[lang];
                         return (
                             <li class="grid gap-1 md:grid-cols-[9rem_1fr] md:items-baseline md:gap-4">
-                                <p class="mono faint">{range(d.start, d.end, d.expected)}</p>
+                                <p class="mono faint edu-date" data-current={d.expected ? '' : undefined}>
+                                    <i class="led" data-state={d.expected ? 'current' : undefined} aria-hidden="true" />
+                                    {range(d.start, d.end)}
+                                </p>
                                 <div>
                                     <p class="font-medium">{text.title}</p>
                                     <p class="muted text-sm">
