@@ -24,7 +24,7 @@ Root font size is `min(175%, max(100%, calc(1.311vw - 0.049rem)))`: 1.0x up to 1
 The owner wants content to fill most of a wide screen. Containers are `max-w-[70rem]`.
 
 ## Decisions taken with the owner
-- Astro static + Untitled UI tokens/icons; EN + FR; GitHub Pages for now (build is host-portable via `SITE_URL`, `SITE_BASE`).
+- Astro static + Untitled UI tokens/icons; EN + FR; OVHcloud free hosting at osheenturner.com, see hosting.md (build is host-portable via `SITE_URL`, `SITE_BASE`).
 - Headings use Fraunces (the first choice, a condensed serif, looked too squished).
 - "How I work" is a pre-flight checklist (native `details`, one open at a time) with a plus/minus indicator.
 - "Contact" uses the same sage pod and live relief as "How I work" (own seed and zoom; `PodContours.astro` is its static poster).

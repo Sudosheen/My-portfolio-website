@@ -36,21 +36,14 @@ jobs:
           PUBLIC_PHONE_FR_E164: ${{ secrets.PUBLIC_PHONE_FR_E164 }}
       - run: npm run audit:site
       - run: npm run a11y
-      # The production build (https://osheenturner.com/) is kept for the OVH upload; GitHub Pages still
-      # serves the old address until the domain is live, so it gets its own build with the old base.
-      - run: mv dist ovh-dist
-      - run: npm run build
-        env:
-          SITE_URL: https://sudosheen.github.io
-          SITE_BASE: /My-portfolio-website/
-          PUBLIC_PHONE_FR_E164: ${{ secrets.PUBLIC_PHONE_FR_E164 }}
+      # GitHub Pages only serves a redirect from the old address (pages-redirect/) to https://osheenturner.com/.
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: pages-redirect
       - uses: actions/upload-artifact@v4
         with:
           name: ovh-dist
-          path: ovh-dist
+          path: dist
           include-hidden-files: true
           retention-days: 7
 

@@ -20,5 +20,5 @@ Not code bugs. Do not invent answers; ask.
 
 ## Later
 - Custom domain and/or EU static host (build already portable); re-verify the card URL once.
-- GitHub Pages is Microsoft-hosted, which the site info page says plainly.
+- Hosting is OVHcloud (France); the Legal page names OVH SAS and links its legal notice. Check the host details still match OVH's page.
 - Save the sub-agent roster as `.claude/agents/` definitions once the test period ends.

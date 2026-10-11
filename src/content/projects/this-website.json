@@ -17,7 +17,7 @@
     "role": "Design and build",
     "architecture": "Static HTML first, with a little TypeScript for small instruments. One lazy WebGL shader that only loads where motion is on and the device can take it.",
     "privacy": "No cookies, no analytics, no third-party requests.",
-    "hosting": "GitHub Pages (static); portable to any static host.",
+    "hosting": "OVHcloud (France), static files; portable to any static host.",
     "license": null,
     "sections": [
       {
@@ -31,7 +31,7 @@
         "heading": "Keeping it sovereign",
         "body": [
           "I chose Astro because it builds plain HTML: the page is readable before any script runs. Tailwind and Untitled UI give me the design tokens, and the fonts are hosted on the site itself, so no request goes to a font provider.",
-          "It runs on GitHub Pages for now, which is American-owned, and the Site info page says so plainly. Nothing ties the site there: the build is static and can move to any host, including a European one. A strict content security policy blocks anything I didn’t plan, so the browser tells me when I get it wrong."
+          "It runs on OVHcloud, a French host, under a domain I own. Nothing ties the site there: the build is static and can move to any host. A strict content security policy blocks anything I didn’t plan, so the browser tells me when I get it wrong."
         ]
       },
       {
@@ -59,7 +59,7 @@
         "heading": "What went wrong, and what is left",
         "body": [
           "Two effects used scroll features that Firefox-based browsers don’t have, so the Scope pipeline and the Experience timeline did nothing there. I rewrote them in script so they work everywhere. On a phone the page also lagged while scrolling, so the heavy background shaders now stay off on touch screens.",
-          "The 3D business card is switched off while I update it, and moving to a European host is still on my list."
+          "The 3D business card is switched off while I update it."
         ]
       }
     ]
@@ -70,7 +70,7 @@
     "role": "Conception et réalisation",
     "architecture": "HTML statique d’abord, avec un peu de TypeScript pour de petits instruments. Un seul shader WebGL, chargé à la demande, seulement quand les animations sont actives et que l’appareil peut le supporter.",
     "privacy": "Aucun cookie, aucune analytique, aucune requête tierce.",
-    "hosting": "GitHub Pages (statique) ; portable vers n’importe quel hébergeur statique.",
+    "hosting": "OVHcloud (France), fichiers statiques ; portable vers n’importe quel hébergeur statique.",
     "license": null,
     "sections": [
       {
@@ -84,7 +84,7 @@
         "heading": "Rester souverain",
         "body": [
           "J’ai choisi Astro parce qu’il produit du HTML simple : la page est lisible avant même qu’un script s’exécute. Tailwind et Untitled UI me donnent les tokens de design, et les polices sont hébergées sur le site, donc aucune requête ne part vers un fournisseur de polices.",
-          "Il tourne sur GitHub Pages pour l’instant, un service américain, et la page Infos du site le dit clairement. Rien n’y est attaché : le build est statique et peut aller chez n’importe quel hébergeur, européen compris. Une politique de sécurité stricte bloque tout ce que je n’ai pas prévu, c’est donc le navigateur qui me prévient quand je me trompe."
+          "Il tourne chez OVHcloud, un hébergeur français, sur un nom de domaine qui m’appartient. Rien n’y est attaché : le build est statique et peut aller chez n’importe quel hébergeur. Une politique de sécurité stricte bloque tout ce que je n’ai pas prévu, c’est donc le navigateur qui me prévient quand je me trompe."
         ]
       },
       {
@@ -112,7 +112,7 @@
         "heading": "Ce qui a mal tourné, et ce qu’il reste",
         "body": [
           "Deux effets utilisaient des fonctions de défilement que les navigateurs basés sur Firefox n’ont pas, donc le schéma du périmètre et la frise du parcours ne faisaient rien. Je les ai réécrits en script pour qu’ils marchent partout. Sur téléphone, la page saccadait aussi au défilement, donc les gros shaders d’arrière-plan restent désormais éteints sur les écrans tactiles.",
-          "La carte de visite 3D est désactivée le temps que je la mette à jour, et passer à un hébergeur européen reste sur ma liste."
+          "La carte de visite 3D est désactivée le temps que je la mette à jour."
         ]
       }
     ]
