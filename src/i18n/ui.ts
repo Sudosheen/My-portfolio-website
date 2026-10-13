@@ -205,7 +205,7 @@ const en = {
     },
     contact: {
         title: 'Contact',
-        line: 'I answer in English or French.',
+        line: 'Feel free to get in touch, in English or French.',
         email: 'Email',
         copy: 'Copy',
         copied: 'Copied',
@@ -301,7 +301,7 @@ const en = {
         a11yTitle: 'Accessibility',
         a11y: 'Designed to WCAG 2.2 level AA: a contrast-checked palette in light and dark, visible focus, keyboard-operable controls, and no information carried by colour alone. Motion is yours to control: it follows your reduced-motion setting, the MOTION switch in the header turns every animation off, and nothing flashes. Scroll effects need a browser that supports scroll-driven animations; elsewhere the page is simply still. This is a self-assessment (automated checks and a keyboard walkthrough), not a formal RGAA audit. If something does not work for you, write to me.',
         sourceTitle: 'Source',
-        source: 'The source code is public.',
+        source: 'The source code is public. Built with Claude Code (Anthropic).',
     },
     legal: {
         title: 'Legal notice and privacy',
@@ -525,7 +525,7 @@ const fr: Dict = {
     },
     contact: {
         title: 'Contact',
-        line: 'Je réponds en français ou en anglais.',
+        line: 'Je serai ravi de vous lire, en français ou en anglais.',
         email: 'E-mail',
         copy: 'Copier',
         copied: 'Copié',
@@ -620,7 +620,7 @@ const fr: Dict = {
         a11yTitle: 'Accessibilité',
         a11y: `Conçu pour le niveau AA des WCAG 2.2${NB}: palette vérifiée pour le contraste en clair et en sombre, focus visible, commandes utilisables au clavier, aucune information portée par la seule couleur. Les animations restent sous votre contrôle${NB}: elles suivent votre réglage de réduction des animations, l’interrupteur ANIMATIONS de l’en-tête les coupe toutes, et rien ne clignote vivement. Les effets liés au défilement demandent un navigateur qui prend en charge les animations pilotées par le défilement${NB}; ailleurs, la page reste simplement immobile. Il s’agit d’une auto-évaluation (contrôles automatisés et parcours au clavier), pas d’un audit RGAA formel. Si quelque chose ne fonctionne pas pour vous, écrivez-moi.`,
         sourceTitle: 'Code source',
-        source: 'Le code source est public.',
+        source: 'Le code source est public. Construit avec Claude Code (Anthropic).',
     },
     legal: {
         title: 'Mentions légales et confidentialité',
