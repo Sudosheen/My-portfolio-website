@@ -75,12 +75,11 @@ looked at in light AND dark mode, EN AND FR, at about 375 px and 1280 px.
     server has no CSP, so verify policy issues on `npm run preview`.
 
 ## Publication rules (the repo and site are public)
-- Never commit referee quotes or contact details, Xref internals (client name, ticket IDs, colleague names),
-  the reference PDFs, client screenshots (removed from the repo; they stay in earlier commits' history), or phone
-  numbers. A client image needs the owner's explicit permission before it is committed.
-- The phone number is read from `PUBLIC_PHONE_FR_E164` (local `.env`, git-ignored; repository secret in CI).
-  Unset, the phone row is not rendered. Never hard-code it.
-- Region/employer wording mirrors the public job posting and is draft until the owner supplies real achievements.
+- Never commit personal contact details, phone numbers, third-party or client material, credentials or tokens.
+  When unsure whether something is safe to publish, ask the owner first.
+- The phone number comes from an environment variable (git-ignored `.env`, CI secret) and is never hard-coded.
+  Unset, the phone row is not rendered.
+- Private working notes live in the git-ignored `CLAUDE.local.md`, not in tracked files.
 
 ## Working rules
 - Commit, push and deploy only when the owner asks. Stage explicit paths, never `git add -A`.
