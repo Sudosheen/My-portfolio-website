@@ -6,20 +6,17 @@ import { specRows } from '../../lib/project';
 
 interface Props {
     entry: CollectionEntry<'projects'>;
-    index: number;
-    /** The lead project: a wide card with its spec always open. */
+    /** The lead project: a wide card. */
     featured?: boolean;
 }
 
-const { entry, index, featured = false } = Astro.props;
-const mod = useUi(langFrom(Astro.currentLocale)).mod;
+const { entry, featured = false } = Astro.props;
 const lang = langFrom(Astro.currentLocale);
 const t = useUi(lang).projects;
 const d = entry.data;
 const text = d[lang];
 const active = d.status === 'active';
 const shown = specRows(entry, lang, t);
-const code = `MOD.04.${String(index + 1).padStart(2, '0')} / ${mod.project}`;
 ---
 
 <article
@@ -27,63 +24,33 @@ const code = `MOD.04.${String(index + 1).padStart(2, '0')} / ${mod.project}`;
     data-status={d.status}
     aria-labelledby={`project-${entry.id}`}
 >
-    <div class="module-head">
-        <span class="mono" aria-hidden="true">{code}</span>
-        <span class="tag" data-current={active ? '' : undefined}>
-            <i class="led" data-state={active ? undefined : 'idle'} aria-hidden="true"></i>
-            {t.statuses[d.status]}
-        </span>
-    </div>
-
-    <div class:list={['module-body', featured ? 'project-feature' : 'project-body']}>
+    <div class="module-body project-body">
         <div class="project-main">
-            <h3 id={`project-${entry.id}`} class="module-title">{text.title}</h3>
+            <p class="tag" data-current={active ? '' : undefined}>
+                <i class="led" data-state={active ? undefined : 'idle'} aria-hidden="true"></i>
+                {t.statuses[d.status]}
+            </p>
+            <h3 id={`project-${entry.id}`} class="module-title mt-2">{text.title}</h3>
             <p class="muted mt-2">{text.summary}</p>
-
-            {
-                d.stack.length > 0 && (
-                    <ul class="keywords mt-4" aria-label={t.fields.stack}>
-                        {d.stack.map((s) => (
-                            <li>{s}</li>
-                        ))}
-                    </ul>
-                )
-            }
         </div>
 
-        <!-- Every card ends the same way: the spec (a drawer, or always open on the featured card),
+        <!-- Every card ends the same way: the spec drawer (stack included),
              then one case row (the link, or a quiet note), so footers line up across the grid. -->
         <div class="project-foot">
-            {
-                featured ? (
-                    <div class="border-t border-hair pt-2">
-                        <p class="mono faint">{t.spec}</p>
-                        <dl class="spec mt-3 pb-1">
-                            {shown.map((r) => (
-                                <>
-                                    <dt>{r.label}</dt>
-                                    <dd>{r.value}</dd>
-                                </>
-                            ))}
-                        </dl>
-                    </div>
-                ) : (
-                    <details class="drawer">
-                        <summary class="mono">
-                            {t.spec}
-                            <ChevronDown className="chev" size={16} aria-hidden="true" />
-                        </summary>
-                        <dl class="spec mt-3 pb-1">
-                            {shown.map((r) => (
-                                <>
-                                    <dt>{r.label}</dt>
-                                    <dd>{r.value}</dd>
-                                </>
-                            ))}
-                        </dl>
-                    </details>
-                )
-            }
+            <details class="drawer">
+                <summary class="mono">
+                    {t.spec}
+                    <ChevronDown className="chev" size={16} aria-hidden="true" />
+                </summary>
+                <dl class="spec mt-3 pb-1">
+                    {shown.map((r) => (
+                        <>
+                            <dt>{r.label}</dt>
+                            <dd>{r.value}</dd>
+                        </>
+                    ))}
+                </dl>
+            </details>
 
             <div class="project-case">
                 {

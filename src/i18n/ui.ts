@@ -239,7 +239,6 @@ const en = {
         colophon: 'Site info',
         legal: 'Legal',
         card: '3D card',
-        rights: 'Built as an open, lean, accessible static site.',
     },
     card: {
         title: 'Digital card',
@@ -558,7 +557,6 @@ const fr: Dict = {
         colophon: 'Infos du site',
         legal: 'Mentions légales',
         card: 'Carte 3D',
-        rights: 'Un site statique ouvert, sobre et accessible.',
     },
     card: {
         title: 'Carte numérique',
