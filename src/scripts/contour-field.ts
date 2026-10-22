@@ -107,27 +107,6 @@ function link(gl: WebGL2RenderingContext): WebGLProgram | null {
     return gl.getProgramParameter(program, gl.LINK_STATUS) ? program : null;
 }
 
-// While the page scrolls, no field draws: the compositor and the main thread are busy keeping the scroll
-// smooth, and a drifting background can wait the ~150 ms until it stops.
-let scrolling = false;
-const scrollListeners = new Set<() => void>();
-let scrollTimer = 0;
-window.addEventListener(
-    'scroll',
-    () => {
-        if (!scrolling) {
-            scrolling = true;
-            scrollListeners.forEach((fn) => fn());
-        }
-        window.clearTimeout(scrollTimer);
-        scrollTimer = window.setTimeout(() => {
-            scrolling = false;
-            scrollListeners.forEach((fn) => fn());
-        }, 150);
-    },
-    { passive: true },
-);
-
 export function startField(tile: HTMLElement, canvas: HTMLCanvasElement): void {
     const options = fieldOptions(tile.dataset);
     const gl = canvas.getContext('webgl2', {
@@ -232,7 +211,7 @@ export function startField(tile: HTMLElement, canvas: HTMLCanvasElement): void {
     };
 
     const update = () => {
-        const run = motion && visible && !document.hidden && !lost && !scrolling;
+        const run = motion && visible && !document.hidden && !lost;
         if (run && !running) {
             running = true;
             frame = requestAnimationFrame(loop);
@@ -261,7 +240,6 @@ export function startField(tile: HTMLElement, canvas: HTMLCanvasElement): void {
         update();
     }).observe(tile);
     document.addEventListener('visibilitychange', update);
-    scrollListeners.add(update);
     onMotion((on) => {
         motion = on;
         update();
