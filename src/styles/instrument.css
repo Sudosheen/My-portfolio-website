@@ -364,13 +364,13 @@
     }
 
     /*
-      Project cards: each card spans three rows of the section grid and shares them (subgrid), so the
+      Project cards: each card spans two rows of the section grid and shares them (subgrid), so the
       spec row lines up across a row of cards. Opening one spec only grows the shared row: the card
       beside it keeps its own spec at the top of that row and does not move.
     */
     .project-card {
         display: grid;
-        grid-row: span 3;
+        grid-row: span 2;
         grid-template-rows: subgrid;
         row-gap: 0;
     }
@@ -404,25 +404,6 @@
         align-items: center;
         min-height: 2.25rem;
         margin-top: 0.5rem;
-    }
-
-    /* The featured card: summary on the left, the spec always open on the right (wide screens). */
-    @media (min-width: 768px) {
-        .project-feature {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-            gap: 0 2rem;
-            align-items: stretch;
-        }
-
-        .project-feature .project-foot {
-            margin-top: 0;
-        }
-
-        .project-feature .project-foot > .border-t {
-            border-top: 0;
-            padding-top: 0;
-        }
     }
 
     /* Scope schematic: nodes spread across the module, flexible wires between them. */
