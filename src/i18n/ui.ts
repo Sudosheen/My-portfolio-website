@@ -1,7 +1,6 @@
 /**
  * UI strings, EN source of truth; FR is type-checked against it (same keys, same shape).
- * DRAFT COPY: everything here is derived from the public Région Occitanie posting,
- * the old Wix site and the business card. Review before launch.
+ * DRAFT COPY: derived from the public Région Occitanie posting and the business card.
  * French typography: U+00A0 before : ; ! ? and inside « ».
  */
 
