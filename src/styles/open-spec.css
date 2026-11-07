@@ -51,10 +51,10 @@
 .dark-mode {
     color-scheme: dark;
 
-    --canvas: #121713;
-    --surface: #1a211b;
-    --sunken: #0e120f;
-    --sunken-2: #0a0d0b;
+    --canvas: #0a0d0a;
+    --surface: #121713;
+    --sunken: #060806;
+    --sunken-2: #040504;
     --sage: #243024;
     --sage-strong: #2f4030;
     --clay: #3a2a22;
@@ -66,7 +66,7 @@
     --ink-hover: #f7f3e8;
     --ink-muted: #b8bdb0;
     --ink-faint: #919888;
-    --on-ink: #121713;
+    --on-ink: #0a0d0a;
 
     --moss: #a8d08d;
     --leaf: #7fb069;
