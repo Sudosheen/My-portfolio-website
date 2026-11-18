@@ -23,11 +23,11 @@
     "tailwindcss-react-aria-components": "^2.2.0"
   },
   "scripts": {
-    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/prune-orphans.mjs",
-    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/prune-orphans.mjs",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
     "test": "vitest run",
     "audit:site": "node scripts/audit.mjs",
     "audit:write": "node scripts/audit.mjs --write",
@@ -39,6 +39,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "axe-core": "^4.14.0",
+    "cross-env": "^10.1.0",
     "jsdom": "^29.1.1",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"
