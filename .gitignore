@@ -29,3 +29,6 @@ yarn-error.log*
 
 # private notes
 CLAUDE.local.md
+
+# graphify knowledge graph (local paths)
+graphify-out/
